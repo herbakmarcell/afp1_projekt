@@ -1,4 +1,6 @@
 
+## 2. Projektterv
+
 ### 2.2 Projectmunkások és felelősségek
 * Frontend:
   - Szkleván Richárd
