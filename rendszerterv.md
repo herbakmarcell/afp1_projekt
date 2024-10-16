@@ -1,4 +1,6 @@
 ## 2. Projektterv
+
+
 ### 2.1 Projektszerepkörök, felelőségek
 * Scrum master:
   -   Herbák Marcell 
@@ -6,3 +8,5 @@
   -   Herbák Marcell 
 * Üzleti szereplő:
   -  Györkis Tamás
+
+## 12. Karbantartási terv
