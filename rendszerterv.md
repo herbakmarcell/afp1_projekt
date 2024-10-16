@@ -9,3 +9,5 @@
   -  Györkis Tamás
 
 ## 7. Architechtúrális terv
+
+## 12. Karbantartási terv
