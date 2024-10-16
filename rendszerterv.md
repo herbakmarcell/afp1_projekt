@@ -1,5 +1,17 @@
 ## 2. Projektterv
 
+
+
+
+### 2.1 Projektszerepkörök, felelőségek
+* Scrum master:
+  -   Herbák Marcell 
+* Product owner:
+  -   Herbák Marcell 
+* Üzleti szereplő:
+  -  Györkis Tamás
+
+
 ### 2.3 Ütemterv
 |Funkció                  | Feladat                   | Prioritás | Becslés (nap) | Aktuális becslés (nap) | Eltelt idő (nap) | Határidő (nap) |
 |-------------------------|---------------------------|-----------|---------------|------------------------|------------------|---------------------|
@@ -11,3 +23,5 @@
 |Program                  |Alapfunkciók elkészítése   |         3 |             15 |                      0 |                0 |                   0 |
 |Program                  |Extra funkciók elkészítése |         3 |             10 |                      0 |                0 |                   0 |
 |Program                  |Tesztelés                  |         4 |             4 |                      0 |                0 |                   0 |
+
+## 12. Karbantartási terv
