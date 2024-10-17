@@ -1,0 +1,3 @@
+# Követelmény Specifikáció
+## 1. Áttekintés
+A Professzorok azt a megbízást kapta, hogy készítsenek egy szoftvert, amely segíti a tanulóvezetőket, oktatókat, valamint vizsgabiztosokat az órák, vizsgák könnyebb lebonyolításában, rendszerezésében. Célunk egy olyan oldal készítése, amely elérhetővé teszi az akadálymentes információszerzést az autósiskolának, mind az órák, mind a vizsgák időpontjait tekintve, vizsgára jelentkezéssel, valamint vizsgára küldéssel. Így minden szükséges feladat teljesen digitális lesz, akár pár kattintással el lehet intézni őket. Így egy sokkal kényelmesebb rendszert bevezetve a régi, hagyományos rendszerhez képest. 
