@@ -20,6 +20,9 @@
 |Program                  |Extra funkciók elkészítése |         3 |             10 |                      0 |                0 |                   0 |
 |Program                  |Tesztelés                  |         4 |             4 |                      0 |                0 |                   0 |
 
+## 3. Üzleti folyamatok modellje
+![Üzleti folyamatok](../Img/uzleti_folyamatok_modellje.png)
+
 ## 7. Architechtúrális terv
 
 ## 12. Karbantartási terv
