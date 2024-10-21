@@ -28,5 +28,6 @@ A vizsgák teljesítéséhez egy megadott összeget kell befizetni és csak akko
 |Program                  |Tesztelés                  |         4 |             4 |                      0 |                0 |                   0 |
 
 ## 7. Architechtúrális terv
-
+## 8. Adatbázis terv
+![Adatbázis](./img/adatbazis.png)
 ## 12. Karbantartási terv
