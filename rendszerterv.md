@@ -20,6 +20,37 @@
 |Program                  |Extra funkciók elkészítése |         3 |             10 |                      0 |                0 |                   0 |
 |Program                  |Tesztelés                  |         4 |             4 |                      0 |                0 |                   0 |
 
+### 5.2 Menü-hierarchia
+* Felhasználó
+  - Regisztráció
+  - Bejelentkezés
+  - Főoldal megtekintése
+* Bejelentkezett felhasználó:
+  - Tanuló:
+    - Órarend
+    - Saját felhasználói adatok módosítása
+    - Számlakiegyenlítés
+    - Vizsgára jelentkezés
+  - Oktató:
+    - Órarend
+    - Saját felhasználói adatok módosítása
+    - Tanulók listája
+    - Egy adott tanuló előrehaladásának megtekintése
+    - Vizsgadíjak és Óradíjak meghatározása
+    - Vizsgaidőpontok rögzítése
+  - Vizsgabiztos:
+    - Órarend
+    - Saját felhasználói adatok módosítása
+    - Vizsgadíj meghatározása
+    - Vizsgaidőpontok létrehozása, kezelése
+  - Admin:
+    - Összes felhasználó listája
+    - Felhasználók kezelése (törlés, adatok módosítása)
+    - Felhasználók órarendjeinek módosítása
+    - Díjszabások módosítása
+    - Vizsgaidőpontok kezelése (törlés, módosítás)
+    - Tanulók előrehaladásának módosítása
+
 ## 7. Architechtúrális terv
 
 ## 12. Karbantartási terv
