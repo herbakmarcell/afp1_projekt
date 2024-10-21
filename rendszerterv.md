@@ -15,7 +15,18 @@ A vizsgák teljesítéséhez egy megadott összeget kell befizetni és csak akko
   -   Herbák Marcell 
 * Üzleti szereplő:
   -  Györkis Tamás
-
+### 2.2 Projekmunkások és felelősségek
+* Frontend:
+  - Szkleván Richárd
+  - Seres Szabolcs
+* Backend:
+  - Szabó Richárd
+  - Vastag Demeter
+* Tesztelés:
+  - Seres Szabolcs
+  - Vastag Demeter
+  - Szkleván Richárd
+  - Szabó Richárd 
 ### 2.3 Ütemterv
 |Funkció                  | Feladat                   | Prioritás | Becslés (nap) | Aktuális becslés (nap) | Eltelt idő (nap) | Határidő (nap) |
 |-------------------------|---------------------------|-----------|---------------|------------------------|------------------|---------------------|
