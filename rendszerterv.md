@@ -66,7 +66,7 @@ Az oldal meglátogatása után a felhasználó megtekintheti a főoldalt, ahol h
 | K7   | Felület | Vizsga | A vizsgákat az oktatók és vizsgabiztosok is meg tudnak hirdetni |
 | K8   | Felület | Vizsgára jelentkezés  | A tanulók tudnak jelentkezni különféle vizsgákra | 
 | K9   | Felület | Vizsga kifizetése  | A tanulók kifizetik a vizsgákat és csak akkor tudják teljesíteni azokat |
-| K10 | Felület | Tanulók értékelése | Az oktatók értékelik a tanulókat a vizsgákon  
+| K10 | Felület | Tanulók értékelése | A vizsgabiztosok értékelik a tanulókat a vizsgákon  
 
 ### Funkcionális
 - A regisztráció során adatok eltárolása az adatbázisba
