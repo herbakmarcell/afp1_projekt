@@ -20,6 +20,14 @@
 |Program                  |Extra funkciók elkészítése |         3 |             10 |                      0 |                0 |                   0 |
 |Program                  |Tesztelés                  |         4 |             4 |                      0 |                0 |                   0 |
 
+### 2.4 Mérföldkövek
+   * - Követelményspecifikáció elkészítve
+   * - Funkcionális specifikáció elkészítve
+   * - Rendszerterv elkészítve
+   * - Backend és Front-end elkészítve
+   * - Előzetes tesztelések elkészítve
+   * - Kész oldal prezentálása
+
 ## 7. Architechtúrális terv
 
 ## 12. Karbantartási terv
