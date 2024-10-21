@@ -129,4 +129,23 @@ Az alkalmazás MySQL adatbázist használ, amelyhez az Express.js Prisma ORM-en 
 * Felhasználói felület: Webes alkalmazás
 * A felhasználói felületet React.js segítségével építjük fel. Az adatokat Express.js-en keresztül kezeljük. Az Express.js backendben a Prisma ORM-et használjuk a MySQL adatbázissal való interakciókhoz (lekérdezések, beszúrások, módosítások, törlések). A felhasználók által beküldött adatokat feldolgozzuk, validáljuk, majd tároljuk a MySQL adatbázisban.
 
+## 11. Telepítési terv
+
+### Fizikai telepítési terv
+  * A felhasználónak szüksége van egy internetelérésre alkalmas eszközzel, amely rendelkezik egy modern böngészővel (pl. Chrome, Firefox, Edge, Safari... stb.)
+  * Távoli webszerver: Az alkalmazás egy távoli szerveren fut, amelyen a következő elemeket kell telepíteni és konfigurálni:
+    - Node.js
+    - MySQL
+    - Prisma ORM
+  * A szervernek folyamatosan csatlakoznia kell az internethez, hogy a felhasználók bármikor hozzáférhessenek az alkalmazáshoz.
+
+### Szoftver telepítési terv
+* Távoli webszerver esetén nem kell külön telepíteni a felhasználók eszközeire, mivel ez egy webes alkalmazás, amely böngészőben futtatható.
+* Fejlesztési és helyi környezetben a következő eszközökre van szükség:
+  - Node.js: A React és Express.js projektek futtatásához szükséges.
+  - XAMPP: tartalmazza a MySQL adatbázist
+  - Visual Studio Code: Backend és Frontend fejlesztéshez
+  - Prisma ORM: az adatbázis kezeléséhez
+* Miután az összes szükséges komponenst teleptették és konfigurálták, a webes alkalmazás böngészőn keresztül elérhető.
+
 ## 12. Karbantartási terv
