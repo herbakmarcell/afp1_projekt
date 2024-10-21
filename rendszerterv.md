@@ -48,7 +48,7 @@ A vizsgák teljesítéséhez egy megadott összeget kell befizetni és csak akko
    * - Kész oldal prezentálása
 
 ## 3. Üzleti folyamatok modellje
-![Üzleti folyamatok](../Img/uzleti_folyamatok_modellje.png)
+![Üzleti folyamatok](/Img/uzleti_folyamatok_modellje.png)
 
 ### 3.2 Üzleti folyamatok
 Az oldal meglátogatása után a felhasználó megtekintheti a főoldalt, ahol hasznos információkat talál a weboldalról és annak használatáról. Ezen felül regisztrálhat és bejelentkezhet az oldalra, regisztrációnál 3 féle szerepkör közül választhat: tanuló, oktató és vizsgabiztos. Bejelentkezés után a szerepkörhöz megfelelő funkciók lesznek elérhetők. Az összes szerepkörnek elérhető egy órarend és a saját felhasználói adatainak módosítása. Tanulóként elérhető még egy számlakiegyenlítés és egy vizsgára jelentkezés menüpont. Oktatóként megtekinthető a saját tanulók listája, vizsgadíjak, óradíjak rögzítése, tanuló előrehaladásának megtekintése valamint a vizsga időpontok rögzítése a tanuló számára. Vizsgabiztosként pedig vizsgadíj és vizsgaidőpont rögzíthető.
@@ -65,6 +65,37 @@ A rendszer egy szerveren (host) gépen fut, amelyet a felhasználók (kliensek) 
 | Oktató | Órarend megtekintése, Saját felhasználói adatok módosítása, Saját tanulók listája, Vizsgadíjak/Óradíjak rögzítése és módosítása, Tanuló előrehaladásának megtekintése, Vizsga időpontok rögzítése a tanuló számára |
 | Vizsgabiztos | Órarend megtekintése, Saját felhasználói adatok módosítása, Vizsgadíj rögzítése/módosítása, Vizsgaidőpontok rögzítése/módosítása |
 | Admin | Tanuló + Oktató + Vizsgabiztos, Más felhasználók adatainak módosítása, Felhasználók törlése |
+
+### 5.2 Menü-hierarchia
+* Felhasználó
+  - Regisztráció
+  - Bejelentkezés
+  - Főoldal megtekintése
+* Bejelentkezett felhasználó:
+  - Tanuló:
+    - Órarend
+    - Saját felhasználói adatok módosítása
+    - Számlakiegyenlítés
+    - Vizsgára jelentkezés
+  - Oktató:
+    - Órarend
+    - Saját felhasználói adatok módosítása
+    - Tanulók listája
+    - Egy adott tanuló előrehaladásának megtekintése
+    - Vizsgadíjak és Óradíjak meghatározása
+    - Vizsgaidőpontok rögzítése
+  - Vizsgabiztos:
+    - Órarend
+    - Saját felhasználói adatok módosítása
+    - Vizsgadíj meghatározása
+    - Vizsgaidőpontok létrehozása, kezelése
+  - Admin:
+    - Összes felhasználó listája
+    - Felhasználók kezelése (törlés, adatok módosítása)
+    - Felhasználók órarendjeinek módosítása
+    - Díjszabások módosítása
+    - Vizsgaidőpontok kezelése (törlés, módosítás)
+    - Tanulók előrehaladásának módosítása
 
 ## 7. Architechtúrális terv
 
