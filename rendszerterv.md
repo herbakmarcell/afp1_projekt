@@ -5,6 +5,7 @@ Az oktató meg tudja tekinteni, hogy egy héten hány tanuló van beírva az ór
 A tanulóknak segítséget nyújt, hogy az oldal monitorozza, hogy éppen hol tart a vizsgákban, információkat ad hogy melyiket teljesítette vagy nem teljesítette, vagy pedig még nem jelentkezett az adott vizsgára ami legyen elméleti, egészségügyi vagy gyakorlati(vezetési) vizsgaalkalmak.
 A vizsgabiztos tud kiírni vizsgaalkalmakat és módosítani is tudja azokat.
 A vizsgák teljesítéséhez egy megadott összeget kell befizetni és csak akkor kezdheti el a tanuló a vizsgát.
+
 ## 2. Projektterv
 
 ### 2.1 Projektszerepkörök, felelőségek
@@ -27,11 +28,24 @@ A vizsgák teljesítéséhez egy megadott összeget kell befizetni és csak akko
 |Program                  |Extra funkciók elkészítése |         3 |             10 |                      0 |                0 |                   0 |
 |Program                  |Tesztelés                  |         4 |             4 |                      0 |                0 |                   0 |
 
+## 3. Üzleti folyamatok modellje
+![Üzleti folyamatok](../Img/uzleti_folyamatok_modellje.png)
+
 ### 3.2 Üzleti folyamatok
 Az oldal meglátogatása után a felhasználó megtekintheti a főoldalt, ahol hasznos információkat talál a weboldalról és annak használatáról. Ezen felül regisztrálhat és bejelentkezhet az oldalra, regisztrációnál 3 féle szerepkör közül választhat: tanuló, oktató és vizsgabiztos. Bejelentkezés után a szerepkörhöz megfelelő funkciók lesznek elérhetők. Az összes szerepkörnek elérhető egy órarend és a saját felhasználói adatainak módosítása. Tanulóként elérhető még egy számlakiegyenlítés és egy vizsgára jelentkezés menüpont. Oktatóként megtekinthető a saját tanulók listája, vizsgadíjak, óradíjak rögzítése, tanuló előrehaladásának megtekintése valamint a vizsga időpontok rögzítése a tanuló számára. Vizsgabiztosként pedig vizsgadíj és vizsgaidőpont rögzíthető.
 
-## 3. Üzleti folyamatok modellje
-![Üzleti folyamatok](../Img/uzleti_folyamatok_modellje.png)
+## 5. Funkcionális terv
+
+### 5.1 Rendszerszereplők
+A rendszer egy szerveren (host) gépen fut, amelyet a felhasználók (kliensek) egy webböngészőn keresztül érnek el. A felhasználók között az alabbi jogosultságok oszlanak meg:
+
+| Felhasználói jogkör | Jogok |
+|---------------------|-------|
+| no_login | Regisztráció és bejelentkezés, Főoldal információk megtekintése |
+| Tanuló | Órarend megtekintése, Saját felhasználói adatok módosítása, Számlakiegyenlítés, Vizsgára jelentkezés |
+| Oktató | Órarend megtekintése, Saját felhasználói adatok módosítása, Saját tanulók listája, Vizsgadíjak/Óradíjak rögzítése és módosítása, Tanuló előrehaladásának megtekintése, Vizsga időpontok rögzítése a tanuló számára |
+| Vizsgabiztos | Órarend megtekintése, Saját felhasználói adatok módosítása, Vizsgadíj rögzítése/módosítása, Vizsgaidőpontok rögzítése/módosítása |
+| Admin | Tanuló + Oktató + Vizsgabiztos, Más felhasználók adatainak módosítása, Felhasználók törlése |
 
 ## 7. Architechtúrális terv
 
