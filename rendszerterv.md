@@ -22,4 +22,9 @@
 
 ## 7. Architechtúrális terv
 
+## 9. Implementációs terv
+
+* Felhasználói felület: Webes alkalmazás
+* A felhasználói felületet React.js segítségével építjük fel. Az adatokat Express.js-en keresztül kezeljük. Az Express.js backendben a Prisma ORM-et használjuk a MySQL adatbázissal való interakciókhoz (lekérdezések, beszúrások, módosítások, törlések). A felhasználók által beküldött adatokat feldolgozzuk, validáljuk, majd tároljuk a MySQL adatbázisban.
+
 ## 12. Karbantartási terv
