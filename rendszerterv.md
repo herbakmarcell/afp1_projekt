@@ -124,6 +124,19 @@ A rendszer egy szerveren (host) gépen fut, amelyet a felhasználók (kliensek) 
     - Vizsgaidőpontok kezelése (törlés, módosítás)
     - Tanulók előrehaladásának módosítása
 
+
+## 6. Fizikai környezet
+### Hardver környezet
+Minden régebbi és új Windowst támogat ami tudja futtatni megfelelően a weboldal egyes komponenseit.
+### Fizikai alrendszerek
+A követelményeknek megfelelő, Windows-ra alkalmas számítógépek, amik tudják futtatni a böngészőben megjelenő weboldalt.
+Az oldal egy lokális, helyi adatbázis szervert használ az adatok tárolására és megjelenítésére. 
+
+### Fejlesztői eszközök
+- Visual Studio Code.
+- Postman
+
+
 ## 7. Architechtúrális terv
 
 ### Webszerver
