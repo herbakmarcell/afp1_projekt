@@ -50,6 +50,9 @@ A vizsgák teljesítéséhez egy megadott összeget kell befizetni és csak akko
 ## 3. Üzleti folyamatok modellje
 ![Üzleti folyamatok](/Img/uzleti_folyamatok_modellje.png)
 
+## 3.1 Üzleti szereplők
+Az oldal használatához regisztrációra és bejelentkezésre lesz szükség a felhasználóknak. Az oktató csak akkor tud hozzáadni az órarendjéhez tanulót ha mindkettőjüknek van accountja. A különböző műveleteket amiket végezhetnek a felhasználók függetlenül, hogy ők tanulók, oktatók, vagy vizsgabiztosok elengedhetetlen hogy be legyenek jelentkezve a felületre.
+
 ### 3.2 Üzleti folyamatok
 Az oldal meglátogatása után a felhasználó megtekintheti a főoldalt, ahol hasznos információkat talál a weboldalról és annak használatáról. Ezen felül regisztrálhat és bejelentkezhet az oldalra, regisztrációnál 3 féle szerepkör közül választhat: tanuló, oktató és vizsgabiztos. Bejelentkezés után a szerepkörhöz megfelelő funkciók lesznek elérhetők. Az összes szerepkörnek elérhető egy órarend és a saját felhasználói adatainak módosítása. Tanulóként elérhető még egy számlakiegyenlítés és egy vizsgára jelentkezés menüpont. Oktatóként megtekinthető a saját tanulók listája, vizsgadíjak, óradíjak rögzítése, tanuló előrehaladásának megtekintése valamint a vizsga időpontok rögzítése a tanuló számára. Vizsgabiztosként pedig vizsgadíj és vizsgaidőpont rögzíthető.
 
