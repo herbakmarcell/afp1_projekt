@@ -18,8 +18,11 @@ Jelenleg az autósiskolák különféle vezetési tanfolyamokat kínálnak, pél
  | K1  | Hibamentes működés, 3NF| Az adatbázis a megfelelő normálformában van. |
  | K2  | Hibamentes működés, letisztult megjelenités, ellenőrzött regisztráció| A felhasználók ellenőrzött módon tudnak regisztrálni az oldalra. Adott feltételeknek megfelelő e-mail címet és jelszót adnak meg. Megfelelő módon kerülnek tárolásra a megadott adatok az adatbázisban. |
  | K3  | Hibamentes működés, letisztult megjelenités, ellenőrzött bejelentkezés| A regisztrált e-mail cím és a hozzá tartozó jelszó megadását követően az oldal bejelentkezteti a felhasználók a felületre. |
- | K4  | Hibamentes működés, letisztult megjelenités| Tisztán, elkülöníthetően és táblázatba rendezett módon jelennek meg az órék. Órarend elrendezésben. |
- | K5  | Hibamentes működés, letisztult megjelenités| Minden tanuló csak akkor jelentkezhet vizsgára, ha megfelel a követelményeknek. Sikeres KRESZ vizsga, elérte a gyakorlati órák megadott számát. |
- | K6  | Hibamentes működés, letisztult megjelenítés | Adott tanulók a jogosítvány megszerzésekor fizetnek az adott autósiskolának az oktatásért, az adott vizsgaközpontnak a vizsgadíjakért |
- | K7  | Hibamentes működés, letisztult megjelenítés | Bejelentkezést lehetősége van arra minden felhasználónak, hogy átírja a korábban már megadott adatait. Majd a módosítások után a mentésre kattintva az adatbázisban felülíródnak a megfelelő adatok. |
+ | K4  | Letisztult megjelenités| Tisztán, elkülöníthetően és táblázatba rendezett módon jelennek meg az órák. Órarend elrendezésben. |
+ | K5  | Hibamentes működés| Az oktatók által felvett órák a megfelelő helyre kerülnek a táblázatban. Az adott tanulóknál a megtett órák száma megfelelően jelenik meg az oktatóknak. |
+ | K6  | Hibamentes működés| Minden vizsgabiztos kijelöl egy adott időpontot a különböző vizsgák számára, ami megjelenik az órarendben. |
+ | K7  | Hibamentes működés, letisztult megjelenités| Minden tanuló csak akkor jelentkezhet vizsgára, ha megfelel a követelményeknek. Sikeres KRESZ vizsga, elérte a gyakorlati órák megadott számát. |
+ | K8  | Hibamentes működés | Adott tanulók a vizsgák teljesítését követően a vizsgabiztosoktól kapnak egy értékelést, ami jelzi számukra, hogy sikeresen teljesítették a vizsgákat vagy valamelyiken esetleg megbuktak.|
+ | K9  | Hibamentes működés | A tanulók a jogosítvány megszerzésekor fizetnek az adott autósiskolának az oktatásért, az adott vizsgaközpontnak a vizsgadíjakért. Utalással történik a fizetés. |
+ | K10 | Bejelentkezést lehetősége van arra minden felhasználónak, hogy átírja a korábban már megadott adatait. Majd a módosítások után a mentésre kattintva az adatbázisban felülíródnak a megfelelő adatok. |
  
