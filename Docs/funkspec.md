@@ -60,6 +60,21 @@ A felhasználó, amennyiben tanuló joggal rendelkezik, a főoldalon láthatja a
 |K9| A tanuló embereknek kötelességük fizetni a szolgáltatásért. Bankkártyás utalással tehetik ezt meg.|
 |K10| A regisztrált felhasználók módosíthatnak a már korábban megadott adatokon, ami felülírásra kerül az adatbázisban.|
 
+## 10. Funkció - követelmény megfeleltetése
+
+ | Id | Követelmény | Funkció |
+ | :---: | --- | --- |
+ | K1  | Hibamentes működés, 3NF| Az adatbázis a megfelelő normálformában van. |
+ | K2  | Hibamentes működés, letisztult megjelenités, ellenőrzött regisztráció | A felhasználók ellenőrzött módon tudnak regisztrálni az oldalra. Adott feltételeknek megfelelő e-mail címet és jelszót adnak meg. Megfelelő módon kerülnek tárolásra a megadott adatok az adatbázisban. |
+ | K3  | Hibamentes működés, letisztult megjelenités, ellenőrzött bejelentkezés | A regisztrált e-mail cím és a hozzá tartozó jelszó megadását követően az oldal bejelentkezteti a felhasználók a felületre. |
+ | K4  | Letisztult megjelenités | Tisztán, elkülöníthetően és táblázatba rendezett módon jelennek meg az órák. Órarend elrendezésben. |
+ | K5  | Hibamentes működés | Az oktatók által felvett órák a megfelelő helyre kerülnek a táblázatban. Az adott tanulóknál a megtett órák száma megfelelően jelenik meg az oktatóknak. |
+ | K6  | Hibamentes vizsgaidőpont felvitel | Minden vizsgabiztos kijelöl egy adott időpontot a különböző vizsgák számára, ami megjelenik az órarendben. |
+ | K7  | Hibamentes jelentkezés vizsgára, letisztult megjelenités| Minden tanuló csak akkor jelentkezhet vizsgára, ha megfelel a követelményeknek. Sikeres KRESZ vizsga, elérte a gyakorlati órák megadott számát. |
+ | K8  | Hibamentes értékelés | Adott tanulók a vizsgák teljesítését követően a vizsgabiztosoktól kapnak egy értékelést, ami jelzi számukra, hogy sikeresen teljesítették a vizsgákat vagy valamelyiken esetleg megbuktak.|
+ | K9  | Hibamentes kifizetés | A tanulók a jogosítvány megszerzésekor fizetnek az adott autósiskolának az oktatásért, az adott vizsgaközpontnak a vizsgadíjakért. Utalással történik a fizetés. |
+ | K10 | Hibamentes módosítás | Bejelentkezést lehetősége van arra minden felhasználónak, hogy átírja a korábban már megadott adatait. Majd a módosítások után a mentésre kattintva az adatbázisban felülíródnak a megfelelő adatok. |
+
 ## 11. Fogalomszótár
 
 * **Normálforma:** A harmadik normálforma (3NF) egy adatbázisséma, amely kapcsolódik a relációs adatbázisokat használó normalizáló elvekhez, amely csökkentse a párhuzamos adatokat, elkerülje adatok anomáliáit és hibáit, biztosítják a hivatkozási integritást és egyszerűsítsék az adatkezelést.
