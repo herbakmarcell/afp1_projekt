@@ -151,6 +151,9 @@ Az alkalmazás MySQL adatbázist használ, amelyhez az Express.js Prisma ORM-en 
   - React.js: A frontend kód megfelelő megjelenítése.
   - MySQL adatbázis: A MySQL adatbázis a szervergépen fut, és a Prisma ORM ezen keresztül kommunikál az Express.js-szel.
 
+## 8. Adatbázis terv
+![Adatbázis](./img/adatbazis.png)
+
 ## 9. Implementációs terv
 
 * Felhasználói felület: Webes alkalmazás
