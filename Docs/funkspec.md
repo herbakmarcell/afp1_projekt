@@ -40,3 +40,7 @@ Egy olyan weboldal, amely átlátható, alkalmas felületet nyújt az autóiskol
 | K8 | Felület | Tanulók értékelése  | A vizsgabiztos eldönti, hogy egy adott tanuló sikeresen teljesítette a vizsgákat |
 | K9  | Felület | Fizetés utalással | A szolgáltatás kifizetése bankkártyás utalással |
 | K10  | Felület | Adatok módosítása | Minden bejelentkezett felhasználó a jogának megfelelően módosíthat adatokat |
+
+## 6. Használati esetek
+
+A felhasználó, amennyiben tanuló joggal rendelkezik, a főoldalon láthatja a felvett óráit, képes módosítani az alap adatain, jelentkezhet vizsgákra, valamint kifizethetni a szolgáltatást, amit átutalással teheti meg. Amennyiben a felhasználó, oktatóként lép be a rendszerbe, akkor listázhatja a saját tanulóit, valamint nyomonkövetheti, hogy melyik tanulók mennyi gyakorlati órát teljesített, rögzítheti az elméleti vizsga, egészségügyi vizsga és a gyakorlati órák díjait, ha kell módosítani is tudja. Vizsgabiztos joggal rendelkező felhasználók képesek a végső vizsgák időpontjainak megadására, és a tanulók értékelésére, ezzel együtt képesek inaktívvá tenni a tanulókat, akik sikertelenül zárták a vizsgákat.
