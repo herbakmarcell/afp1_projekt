@@ -44,3 +44,18 @@ Egy olyan weboldal, amely átlátható, alkalmas felületet nyújt az autóiskol
 ## 6. Használati esetek
 
 A felhasználó, amennyiben tanuló joggal rendelkezik, a főoldalon láthatja a felvett óráit, képes módosítani az alap adatain, jelentkezhet vizsgákra, valamint kifizethetni a szolgáltatást, amit átutalással teheti meg. Amennyiben a felhasználó, oktatóként lép be a rendszerbe, akkor listázhatja a saját tanulóit, valamint nyomonkövetheti, hogy melyik tanulók mennyi gyakorlati órát teljesített, rögzítheti az elméleti vizsga, egészségügyi vizsga és a gyakorlati órák díjait, ha kell módosítani is tudja. Vizsgabiztos joggal rendelkező felhasználók képesek a végső vizsgák időpontjainak megadására, és a tanulók értékelésére, ezzel együtt képesek inaktívvá tenni a tanulókat, akik sikertelenül zárták a vizsgákat.
+
+## 7. Megfeleltetés, hogyan fedik le a használati eseteket a követelményeket
+
+|ID|Leírás           |
+|-------------------------|---------------------------|
+|K1| Minden regisztrált felhasználóról a nevet, az e-mail címet és a jelszót, valamint a bankszámlaszámot tároljuk el. Kap minden felhaszná egy jogosultságot azonosító id-t, aminek segítségével az adott jogosultsághoz tartozó funkciók válnak elérhetővé. Eltároljuk a vizsgák (elméleti, gyakorlati) időpontjait, a hozzájuk tartozó oktatókkal és vizsgabiztosokkal együtt.|          
+|K2| A felhasználónak regisztrálnia kell ha jogosítványt szeretne szerezni, vagy ha órát szeretne adni oktatóként vagy éppen ha vizsgabiztos szerepet kap. Név, e-mail cím és jelszó megadásával teheti meg ezt.|
+|K3| A felhasználó a regisztrált e-mail címet és jelszót használva tud bejelentkezni az oldalra. Ezután lesznek elérhetők számára a jogosultságának megfelelő funkciók.|
+|K4| Az órarend információt ad arról egy tanulónak, hogy mikor lesz a soron következő órája, az oktatónak segítséget nyújt az óraszámok nyomonkövetésében.|
+|K5| Az oktatók nyomon tudják követni, hogy adott tanulók mennyi teljesített óraszámnál tartanak, megadhatják a következő órák időpontjait.|
+|K6| A vizsgabiztosok képesek megadni a vizsgák időpontjait, amikre a követelményeknek megfelelő tanulók jelentkezhetnek.|
+|K7| Amint egy tanuló elérte a megfelelő gyakorlati óraszámot, a KRESZ vizsgán is sikeresen átment, jelentkezhet vizsgára. |
+|K8| A tanulókat a vizsgák után a vizsgabiztosok értékelhetik.|
+|K9| A tanuló embereknek kötelességük fizetni a szolgáltatásért. Bankkártyás utalással tehetik ezt meg.|
+|K10| A regisztrált felhasználók módosíthatnak a már korábban megadott adatokon, ami felülírásra kerül az adatbázisban.|
