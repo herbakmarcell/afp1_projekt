@@ -10,3 +10,18 @@ Célunk egy olyan oldal készítése, amely elérhetővé teszi az akadálymente
 ## 3. Jelenlegi üzleti folyamatok modellje
 
 Jelenleg az autósiskolák különféle vezetési tanfolyamokat kínálnak, például „B” kategóriás jogosítvány megszerzésére irányuló tanfolyamokat, motoros képzéseket („A” kategória), illetve teherautó vagy buszvezetői képzéseket is. Különböző csomagokat és árkategóriákat kínálnak, attól függően, hogy hány elméleti és gyakorlati órát tartalmaznak, illetve milyen extra szolgáltatások (pl. elméleti vizsga-felkészítő kurzusok, online tananyagok, stb.) érhetők el. A tanulók gyakran választhatnak olcsóbb alapcsomagot vagy bővített, több órát és konzultációt tartalmazó prémium csomagot. Az autósiskolák elméleti képzéseket is biztosítanak, melyeket gyakran online vagy tantermi formában tartanak. A gyakorlati órák általában előre meghatározott időpontokban zajlanak, és a diákok a saját tempójukban vehetik fel a szükséges óraszámot. 
+
+## 4. Igényelt üzleti folyamatok modellje
+
+Egy olyan weboldal, amely átlátható, alkalmas felületet nyújt az autóiskolák működésére, jogosítvány szerzésére. Az alapmodellre épülő oldalunk a következőket tartalmazza:
+
+ - Bejelentkezés
+ - Regisztráció
+ - Órarend megjelenítése
+ - Saját adatok módosítása
+ - Fizetés utalással
+ - Órák követése, számlálása
+ - Vizsgaidőpontok megadása
+ - Vizsgajelentkezés
+ - Tanulók értékelése
+ - Jogokhoz kötött adatok módosítása
