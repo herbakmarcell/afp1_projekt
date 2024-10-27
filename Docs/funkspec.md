@@ -19,6 +19,9 @@ Jelenleg az autósiskolák különféle vezetési tanfolyamokat kínálnak, pél
 |K2| A felhasználónak regisztrálnia kell ha jogosítványt szeretne szerezni, vagy ha órát szeretne adni oktatóként vagy éppen ha vizsgabiztos szerepet kap. Név, e-mail cím és jelszó megadásával teheti meg ezt.|
 |K3| A felhasználó a regisztrált e-mail címet és jelszót használva tud bejelentkezni az oldalra. Ezután lesznek elérhetők számára a jogosultságának megfelelő funkciók.|
 |K4| Az órarend információt ad arról egy tanulónak, hogy mikor lesz a soron következő órája, az oktatónak segítséget nyújt az óraszámok nyomonkövetésében.|
-|K5| Amint egy tanuló elérte a megfelelő gyakorlati óraszámot, a KRESZ vizsgán is sikeresen átment, jelentkezhet vizsgára. |
-|K6| A tanuló embereknek kötelességük fizetni a szolgáltatásért.|
-|K7| A regisztrált felhasználók módosíthatnak a már korábban megadott adatokon, ami felülírásra kerül az adatbázisban.|
+|K5| Az oktatók nyomon tudják követni, hogy adott tanulók mennyi teljesített óraszámnál tartanak, megadhatják a következő órák időpontjait.|
+|K6| A vizsgabiztosok képesek megadni a vizsgák időpontjait, amikre a követelményeknek megfelelő tanulók jelentkezhetnek.|
+|K7| Amint egy tanuló elérte a megfelelő gyakorlati óraszámot, a KRESZ vizsgán is sikeresen átment, jelentkezhet vizsgára. |
+|K8| A tanulókat a vizsgák után a vizsgabiztosok értékelhetik.|
+|K9| A tanuló embereknek kötelességük fizetni a szolgáltatásért. Bankkártyás utalással tehetik ezt meg.|
+|K10| A regisztrált felhasználók módosíthatnak a már korábban megadott adatokon, ami felülírásra kerül az adatbázisban.|
