@@ -47,7 +47,7 @@ A felhasználó, amennyiben tanuló joggal rendelkezik, a főoldalon láthatja a
 
 ## 7. Megfeleltetés, hogyan fedik le a használati eseteket a követelményeket
 
-|ID|Leírás           |                                |
+|ID|Leírás           |
 |-------------------------|---------------------------|
 |K1| Minden regisztrált felhasználóról a nevet, az e-mail címet és a jelszót, valamint a bankszámlaszámot tároljuk el. Kap minden felhaszná egy jogosultságot azonosító id-t, aminek segítségével az adott jogosultsághoz tartozó funkciók válnak elérhetővé. Eltároljuk a vizsgák (elméleti, gyakorlati) időpontjait, a hozzájuk tartozó oktatókkal és vizsgabiztosokkal együtt.|          
 |K2| A felhasználónak regisztrálnia kell ha jogosítványt szeretne szerezni, vagy ha órát szeretne adni oktatóként vagy éppen ha vizsgabiztos szerepet kap. Név, e-mail cím és jelszó megadásával teheti meg ezt.|
