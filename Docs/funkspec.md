@@ -10,6 +10,9 @@ Jelenleg több mint ezer autósiskola működik az országban, akik különböz�
 | K2  | Felület | Regisztráció  | Felhasználó regisztrációja |
 | K3  | Felület | Bejelentkezés  | Felhasználó bejelentkezése |
 | K4  | Felület | Órarend  | A tanuló emberek órarendje |
-| K5  | Felület | Vizsgajelentkezés | A tanuló emberek vizsgákra jelentkezhetnek |
-| K6  | Felület | Fizetés  | A szolgáltatás kifizetése |
-| K7  | Felület | Adatok módosítása | Minden bejelentkezett felhasználó a jogának megfelelően módosíthat adatokat |
+| K5  | Felület | Óraszámok követése  |Az oktatók nyomonkövetik, hogy egyes tanulók hány óránál tartanak |
+| K6  | Felület | Vizsgaidőpontok megadása  | A vizsgabiztosok időpontot adnak meg a vizsgáknak |
+| K7  | Felület | Vizsgajelentkezés | A tanuló emberek vizsgákra jelentkezhetnek |
+| K8 | Felület | Tanulók értékelése  | A vizsgabiztos eldönti, hogy egy adott tanuló sikeresen teljesítette a vizsgákat |
+| K9  | Felület | Fizetés utalással | A szolgáltatás kifizetése bankkártyás utalással |
+| K10  | Felület | Adatok módosítása | Minden bejelentkezett felhasználó a jogának megfelelően módosíthat adatokat |
