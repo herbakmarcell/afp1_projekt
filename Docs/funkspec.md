@@ -10,6 +10,9 @@ Egy olyan weboldal, amely átlátható, alkalmas felületet nyújt az autóiskol
  - Regisztráció
  - Órarend megjelenítése
  - Saját adatok módosítása
- - Fizetés
+ - Fizetés utalással
+ - Órák követése, számlálása
+ - Vizsgaidőpontok megadása
  - Vizsgajelentkezés
+ - Tanulók értékelése
  - Jogokhoz kötött adatok módosítása
