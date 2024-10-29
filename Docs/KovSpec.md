@@ -14,7 +14,7 @@ Jelenleg az iskola egy régi rendszert használ, amelyben az információküldé
  | K4 | Weboldal | Profil | A már regisztrált felhasználó profiljának megtekintése. |
  | K5 | Felhasználókezelés | Regisztáció | Új felhasználó létrehozása. |
  | K6 | Felhasználókezelés | Bejelentkezés | Egy, már létező felhasználó bejelentkezése. |
- | K7 | Felhasználó | Profilkezelés | A felhasználó adatainak szerkesztése |
+ | K7 | Felhasználókezelés | Profilkezelés | A felhasználó adatainak szerkesztése. |
  | K8 | Weboldal | Vizsga | Vizsgák kiírása és megtekintése. |
  | K9 | Weboldal | Óra | Órák létrehozása és megtekintése az órarendben. |
  | K10 | Weboldal | Módosítások | Órák és vizsgák módosítása az órarendben. |
