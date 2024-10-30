@@ -60,6 +60,13 @@ A felhasználó, amennyiben tanuló joggal rendelkezik, a főoldalon láthatja a
 |K9| A tanuló embereknek kötelességük fizetni a szolgáltatásért. Bankkártyás utalással tehetik ezt meg.|
 |K10| A regisztrált felhasználók módosíthatnak a már korábban megadott adatokon, ami felülírásra kerül az adatbázisban.|
 
+## 8. Képernyőtervek
+
+![bejelentkezes](../Img/bejelentkezes.png)
+![regisztracio](../Img/regisztracio.png)
+![sajat_profil](../Img/sajat_profil.png)
+![orarend](../Img/orarend.png)
+
 ## 9. Forgatókönyvek
 
 Minden felhasználónak elsősorban főoldal jelenik meg:
