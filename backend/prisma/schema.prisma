@@ -1,0 +1,99 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Felhasznalok {
+  felhasznalo_id Int @id @default(autoincrement())
+  vezeteknev String @db.VarChar(50)
+  keresztnev String @db.VarChar(50)
+  email String @unique @db.VarChar(100)
+  jelszo String @db.VarChar(255)
+  bankszamla String @db.VarChar(24)
+  jogkor_id Int
+  Jogkorok Jogkorok @relation(fields: [jogkor_id], references: [jogkor_id], onDelete: Cascade, onUpdate: Cascade)
+  Orarend Orarend[]
+  Vizsgak Vizsgak[]
+
+  TanuloElorehaladas TanuloElorehaladas[] @relation("FelhasznalokTanulo")
+  TanuloElorehaladasV TanuloElorehaladas[] @relation("FelhasznalokOktato")
+}
+
+model Jogkorok {
+  jogkor_id Int @id @default(autoincrement())
+  jogkor Int
+  Felhasznalok Felhasznalok[]
+}
+
+model Kifizetesek {
+  kifizetes_id Int @id @default(autoincrement())
+  elorehaladas_id Int
+  targy String @db.VarChar(50)
+  osszeg Int
+  kifizetve Boolean @default(false)
+  TanuloElorehaladas TanuloElorehaladas @relation(fields: [elorehaladas_id], references: [elorehaladas_id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model Orak {
+  ora_id Int @id @default(autoincrement())
+  idopont_eleje DateTime
+  idopont_vege DateTime
+  cim String? @db.VarChar(100)
+  helyszin String? @db.VarChar(100)
+  Orarend Orarend[]
+}
+
+model Orarend {
+  orarend_id Int @id @default(autoincrement())
+  ora_id Int
+  felhasznalo_id Int
+  Felhasznalok Felhasznalok @relation(fields: [felhasznalo_id], references: [felhasznalo_id], onDelete: Cascade, onUpdate: Cascade)
+  Orak Orak @relation(fields: [ora_id], references: [ora_id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model TanuloElorehaladas {
+  elorehaladas_id Int @id @default(autoincrement())
+  tanulo_id Int
+  oktato_id Int
+  levezetett_orak Int @default(0)
+  Kifizetesek Kifizetesek[]
+  FelhasznalokTanulo Felhasznalok @relation("FelhasznalokTanulo", fields: [tanulo_id], references: [felhasznalo_id], onDelete: Cascade, onUpdate: Cascade)
+  FelhasznalokOktato Felhasznalok @relation("FelhasznalokOktato", fields: [oktato_id], references: [felhasznalo_id], onDelete: Cascade, onUpdate: Cascade)
+  Vizsgajelentkezes Vizsgajelentkezes[]
+}
+
+model Vizsgajelentkezes {
+  vizsgajelentkezes_id Int @id @default(autoincrement())
+  tanulo_elorehaladas_id Int
+  vizsga_id Int
+  oktato_jovahagyas Boolean @default(false)
+  TanuloElorehaladasV TanuloElorehaladas @relation(fields: [tanulo_elorehaladas_id], references: [elorehaladas_id], onDelete: Cascade, onUpdate: Cascade)
+  Vizsgak Vizsgak @relation(fields: [vizsga_id], references: [vizsga_id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model Vizsgak {
+  vizsga_id Int @id @default(autoincrement())
+  vizsgabiztos_id Int?
+  vizsga_datuma DateTime
+  tipus_id Int
+  sikeres Boolean @default(false)
+  Felhasznalok Felhasznalok? @relation(fields: [vizsgabiztos_id], references: [felhasznalo_id], onDelete: Cascade, onUpdate: Cascade)
+  VizsgaTipus VizsgaTipus  @relation(fields: [tipus_id], references: [vizsga_tipus_id], onDelete: Cascade, onUpdate: Cascade)
+  Vizsgajelentkezes Vizsgajelentkezes[]
+}
+
+model VizsgaTipus {
+  vizsga_tipus_id Int @id @default(autoincrement())
+  tipus String @db.VarChar(10)
+  Vizsgak Vizsgak[]
+}
