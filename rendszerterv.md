@@ -194,3 +194,4 @@ Az alkalmazás MySQL adatbázist használ, amelyhez az Express.js Prisma ORM-en 
 * Miután az összes szükséges komponenst teleptették és konfigurálták, a webes alkalmazás böngészőn keresztül elérhető.
 
 ## 12. Karbantartási terv
+Miután eljuttatjuk az alkalmazást a megrendelőnek, a fejlesztés nem ér véget, mivel egy jó szoftver életciklusa folyamatosan tart. Mindig felmerülhetnek új funkciók és igények, amelyeket érdemes figyelembe venni. A szoftver karbantartása és frissítése elengedhetetlen ahhoz, hogy lépést tartsunk a felhasználói elvárásokkal és a piaci trendekkel, biztosítva ezzel a termék hosszú távú sikerét.
