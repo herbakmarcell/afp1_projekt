@@ -11,36 +11,46 @@ const prisma = new PrismaClient()
 //@route POST /api/users/register
 //@access public
 const registerUser = (async (req, res) => {
-  const { username, email, password } = req.body;
-  if (!username || !email || !password) {
-    return res.status(400).json("All fields are mandatory!");
+
+
+  const { vezeteknev, keresztnev, email, jelszo, bankszamla, jogkor_id } = req.body;
+  if (!vezeteknev || !keresztnev || !email || !jelszo || !bankszamla || !jogkor_id) {
+    return res.status(400).json("Nincsen minden mező kitöltve.");
   }
   
-  const userAvailable = await prisma.user.findFirst({
+
+  const userAvailable = await prisma.felhasznalok.findFirst({
     where:{
         email: email
     }
   })
   
   if (userAvailable) {
-    return res.status(400).json("User already registered!");
+    return res.status(400).json("A felhasználó már regisztrálva van.");
   }
 
   //Hash password
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = await bcrypt.hash(jelszo, 10);
   console.log("Hashed Password: ", hashedPassword);
-  const user = await prisma.user.create({
+  const user = await prisma.felhasznalok.create({
     data:{
-        username,
-        email,
-        password: hashedPassword,
+      vezeteknev, 
+      keresztnev, 
+      email, 
+      jelszo : hashedPassword, 
+      bankszamla,
+      jogkor_id: jogkor_id
     }
   })
 
+
+  console.log({user})
+
+
   if (user) {
-    return res.status(201).json({ _id: user.id, email: user.email });
+    return res.status(201).json({ email: user.email });
   } else {
-    return res.status(400).json("User data is not valid");
+    return res.status(400).json("Nem sikerült létrehozni a felhasználót.");
   }
   //res.json({ message: "Register the user" });
 });
@@ -51,23 +61,26 @@ const registerUser = (async (req, res) => {
 //@route POST /api/users/login
 //@access public
 const loginUser = (async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
+  console.log(req.body)
+  const { email, jelszo } = req.body;
+  if (!email || !jelszo) {
     return res.status(400).json("All fields are mandatory!");
   }
-  const user = await prisma.user.findFirst({
+  const user = await prisma.felhasznalok.findFirst({
     where:{
         email: email
     }
   })
   //compare password with hashedpassword
-  if (user && (await bcrypt.compare(password, user.password))) {
+  if (user && (await bcrypt.compare(jelszo, user.jelszo))) {
     const accessToken = jwt.sign(
       {
         user: {
-          username: user.username,
+          vezeteknev: user.vezeteknev,
+          keresztnev: user.keresztnev,
           email: user.email,
-          id: user.id,
+          id: user.felhasznalo_id,
+          jogkor_id: user.jogkor_id
         },
       },
       process.env.ACCESS_TOKEN_SECRET,
@@ -87,46 +100,6 @@ const loginUser = (async (req, res) => {
   }
 });
 
-//@desc Current user info
-//@route GET /api/users/current
-//@access private
-const currentUser = (async (req, res) => {
-  //   try {
-  //     const cookie = req.cookies['jwt']
-      
-
-  //     const claims = jwt.verify(cookie, process.env.ACCESS_TOKEN_SECRET)
-
-  //     if (!claims) {
-  //         return res.status(401).send({
-  //             message: 'unauthenticated1'
-  //         })
-  //     }
-      
-  //       const user = await prisma.user.findMany()
-  //       return res.json(user)
-      
-  // } catch (e) {
-  //     return res.status(401).send({
-  //         message: 'Nincs tokened'
-  //     })
-  // }
-  const {id} = req.user.user // A claims-ból kiolvassuk az ID-t
-  
-  console.log("userid " + id)
-  // Ellenőrizzük, hogy az ID 1-e
-  if (id === 1) {
-    return res.status(403).send({
-      message: 'Hozzáférés megtagadva'
-    });
-  }
-
-  // Ha a felhasználó ID-ja nem 1, lekérdezzük a felhasználókat
-  const users = await prisma.user.findMany();
-  return res.json(users);
-
-});
-
 const logout =  (req, res) => {
     res.cookie('jwt', '', {maxAge: 0})
 
@@ -135,4 +108,4 @@ const logout =  (req, res) => {
     })
 }
 
-export { registerUser, loginUser, currentUser, logout };
+export { registerUser, loginUser, logout };

@@ -1,6 +1,6 @@
 import express from 'express'
 import users from './routes/userRoutes.js'
-
+import orarend from './routes/orarendRoutes.js'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 
@@ -19,7 +19,7 @@ app.use(cors({
 
 
 app.use("/api/users", users);
-
+app.use("/api/orarend", orarend)
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
