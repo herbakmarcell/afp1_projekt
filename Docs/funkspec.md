@@ -64,6 +64,7 @@ A felhasználó, amennyiben tanuló joggal rendelkezik, a főoldalon láthatja a
 
 ![bejelentkezes](../Img/bejelentkezes.png)
 ![regisztracio](../Img/regisztracio.png)
+![autosiskolafooldal](../Img/autosiskolafooldal.png)
 ![sajat_profil](../Img/sajat_profil.png)
 ![orarend](../Img/orarend.png)
 
