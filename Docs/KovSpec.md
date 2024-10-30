@@ -10,3 +10,16 @@ Célunk egy olyan oldal fejlesztése, amely mindenki számára könnyen kezelhet
 
 ## 4. Jelenlegi üzleti folyamatok modellje
 Manapság az ilyen rendszerek már sokkal modernebb és előrehaladottabb szoftvereken alapulnak, amelyek gyorsabbak és egyszerűbbek. A régi technikák pedig elvesztik támogatásukat, ezért nem mindig tudják kielégíteni a felhasználók igényeit, mivel egyes funkciók már nem elérhetők. Jelenleg az ilyen szoftverek több jogkört is kezelnek, így minden felhasználó, csakis a saját jogkörébe tartozó információkat éri el, valamint tudja azokat módosítani. Az iskola jelenlegi rendszerében ezek a jogkörök megvannak, azonban már nem hatékonyak. A tranzakciók lebonyolítása sem végezhető el mindig az oldal lefagyása, vagy az adatok elvesztése miatt. Az oldalon megjelenő funkciók gyakran nem működnek. Összességében elmondható az, hogy a manapság már sokkal hatékonyabb és kezelhetőbb szoftvereket alkalmaznak az ilyen típusú feladatok ellátására, ezért nem meglepő, hogy a jelenleg használt, elavult szoftver már nem képes ellátni a feladatát.
+
+## 5. Igényelt üzleti folyamatok modellje
+Egy olyan oldal létrehozása, amely elérhetővé teszi a felhasználók számára az autósiskola ügyeinek egyszerű lebonyolitását. A tanulóknak lehetőségük lesz megtekinteni az órarendjüket, kifizetni a vizsga-, valamint óradíjakat. Az oktatók órákat hoznak létre, a vizsgabiztosok pedig vizsgákat. A tranzakcíókat pedig teljes mértékben az oldal intézi, így a tanulóknak elég csupán pát kattintás. Így egy könnyen kezelhető, valamint karbantartható rendszer jöhet létre, amely a friss, modern technológiákon alapszik. 
+Az oldal nem sokban tér el a hasonló funckiót ellátó weboldalaktól. Az oldal tartalmazza:
+ - Regisztráció, jogkör megadása
+ - Bejelentkezés
+ - Felhasználói adatok megváltoztatása
+ - Óra-, vizsgadíjak kifizetése
+ - Órák megtekintése
+ - Új órák kiírása
+ - Új vizsgák kíírása
+ - Órák és vizsgák megtekintése
+ - Tanuló küldése vizsgára
