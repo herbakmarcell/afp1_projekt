@@ -127,9 +127,8 @@ A rendszer egy szerveren (host) gépen fut, amelyet a felhasználók (kliensek) 
 
 ## 6. Fizikai környezet
 ### Hardver környezet
-Minden régebbi és új Windowst támogat ami tudja futtatni megfelelően a weboldal egyes komponenseit.
+Bármely eszközön lévő böngésző amely meg tudja jeleníteni az oldalt legyen az számítógép, laptop vagy mobiltelefon.
 ### Fizikai alrendszerek
-A követelményeknek megfelelő, Windows-ra alkalmas számítógépek, amik tudják futtatni a böngészőben megjelenő weboldalt.
 Az oldal egy lokális, helyi adatbázis szervert használ az adatok tárolására és megjelenítésére. 
 
 ### Fejlesztői eszközök
