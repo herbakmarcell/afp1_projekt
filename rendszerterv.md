@@ -174,6 +174,22 @@ Az alkalmazás MySQL adatbázist használ, amelyhez az Express.js Prisma ORM-en 
 * Felhasználói felület: Webes alkalmazás
 * A felhasználói felületet React.js segítségével építjük fel. Az adatokat Express.js-en keresztül kezeljük. Az Express.js backendben a Prisma ORM-et használjuk a MySQL adatbázissal való interakciókhoz (lekérdezések, beszúrások, módosítások, törlések). A felhasználók által beküldött adatokat feldolgozzuk, validáljuk, majd tároljuk a MySQL adatbázisban.
 
+## 10. Tesztterv
+A szoftver vagy weboldal tesztelése során fontos, hogy alaposan dokumentáljuk az eredményeket és a tapasztalatainkat. Ennek érdekében tesztnaplót vezetünk, amely lehetővé teszi számunkra, hogy nyomon követhessük a tesztelés folyamatát, az észlelt hibákat, valamint a program működésének különböző aspektusait.
+
+A tesztnapló nemcsak a hibás részeket tartalmazza, hanem részletesen dokumentáljuk benne a végrehajtott teszteket is. Ez magában foglalja a különböző funkciók és elemek működésének ellenőrzését, a felhasználói élmény értékelését, valamint a teljesítmény és a biztonság tesztelését is. Az összegyűjtött információk segítenek a fejlesztőcsapat számára abban, hogy azonosítsa és javítsa a problémás területeket, továbbá biztosítják, hogy a végtermék a megrendelő elvárásainak megfelelően működjön.
+
+### Tesztelési jegyzőkönyv  minta
+
+**Tesztelő:** Vezetéknév Keresztnév
+
+**Tesztelés dátuma:** Év.Hónap.Nap
+
+Tesztszám | Rövid leírás | Várt eredmény | Eredmény | Megjegyzés
+----------|--------------|---------------|----------|-----------
+... | ... | ... | ... | ...
+
+
 ## 11. Telepítési terv
 
 ### Fizikai telepítési terv
