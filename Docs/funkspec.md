@@ -60,12 +60,48 @@ A felhasználó, amennyiben tanuló joggal rendelkezik, a főoldalon láthatja a
 |K9| A tanuló embereknek kötelességük fizetni a szolgáltatásért. Bankkártyás utalással tehetik ezt meg.|
 |K10| A regisztrált felhasználók módosíthatnak a már korábban megadott adatokon, ami felülírásra kerül az adatbázisban.|
 
-## 8. Képernyő képek
+## 8. Képernyőtervek
 
 ![bejelentkezes](../Img/bejelentkezes.png)
 ![regisztracio](../Img/regisztracio.png)
 ![sajat_profil](../Img/sajat_profil.png)
 ![orarend](../Img/orarend.png)
+
+## 9. Forgatókönyvek
+
+Minden felhasználónak elsősorban főoldal jelenik meg:
+
+ * Ha szeretné használni a weboldal funkcióit akkor regisztráció gombra kattintva, megadott követelményeknek megfelelő adatokat megadva kell regisztrálnia.
+ * A belépés gombra kattintva a regisztrált felhasználók bejelentkezhetnek a felületre.
+
+Belépés után visszakerül a felhasználó a főoldalra ahol:
+* Ha a felhasználó tanuló:
+ * A profiljára kattintva szerkesztheti szerkesztheti azt.
+
+ * Új tanulók számára rögtön felajánlja az oldal, hogy szerezhet jogosítványt, ahol oktatók kell választania. 
+ 
+ * Azon tanulóknak, akik már folyamatban vannak a jogosítvány szerzésében órarend formájában jelennek meg az órái, és hogy eddig hány százaléknál tart a kötelező óraszámot tekintve.
+ * Emellett láthatja azt, hogy melyik oktatónál tanul vezetni.
+
+ * Lehetősége lesz kifizetni a szolgáltatást.
+
+* Ha a felhasználó oktató:
+ * A profiljára kattintva szerkesztheti szerkesztheti azt.
+
+ * Szintén órarend formájában jelennek meg az órák.
+
+ * Látja azokat a tanulókat, akiket ő oktat.
+
+ * Lehetősége lesz új időpontokat megadni a gyakorlati óráknak.
+
+* Ha a felhasználó vizsgabiztos:
+ * A profiljára kattintva szerkesztheti szerkesztheti azt.
+ 
+ * Szintén órarend formájában jelennek meg az órák.
+
+ * Látja azokat a tanulókat, akik nála vizsgáztak.
+
+ * Lehetősége lesz új időpontokat megadni a vizsgáknak.
 
 ## 10. Funkció - követelmény megfeleltetése
 
