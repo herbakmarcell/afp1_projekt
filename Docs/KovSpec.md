@@ -23,3 +23,17 @@ Az oldal nem sokban tér el a hasonló funckiót ellátó weboldalaktól. Az old
  - Új vizsgák kíírása
  - Órák és vizsgák megtekintése
  - Tanuló küldése vizsgára
+
+ ## 6. Követelménylista
+ | ID | Modul | Név | Kifejtés|
+ | :---: | :---: | :---: | :---: |
+ | K1 | Weboldal | Főoldal | Főoldal dizájnja.|
+ | K2 | Weboldal | Órarend | Órarend megtekintése. |
+ | K3 | Weboldal | Felhasználó | A regisztrációs és bejelentkező felület. |
+ | K4 | Weboldal | Profil | A már regisztrált felhasználó profiljának megtekintése. |
+ | K5 | Felhasználókezelés | Regisztáció | Új felhasználó létrehozása. |
+ | K6 | Felhasználókezelés | Bejelentkezés | Egy, már létező felhasználó bejelentkezése. |
+ | K7 | Felhasználókezelés | Profilkezelés | A felhasználó adatainak szerkesztése. |
+ | K8 | Weboldal | Vizsga | Vizsgák kiírása és megtekintése. |
+ | K9 | Weboldal | Óra | Órák létrehozása és megtekintése az órarendben. |
+ | K10 | Weboldal | Módosítások | Órák és vizsgák módosítása az órarendben. |
