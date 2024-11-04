@@ -14,9 +14,24 @@ const orarendModositas = (async (req, res) => {
       return res.status(403).send({
         message: 'Hozzáférés megtagadva'
       });
-    }
-  
+  }
     //orarend adatainak szerkesztése
   
   });
-export { orarendModositas }
+
+const orarendLekeres = (async (req, res) => { 
+  const { id } = req.user.user;
+  const user_id = id;
+  console.log(user_id);
+  const orak = await prisma.orarend.findMany({
+    where: {
+      felhasznalo_id: user_id
+    },
+     include: {
+      Orak: true
+    }
+  });
+  res.status(202).json(orak);
+}); 
+
+export { orarendModositas, orarendLekeres }
