@@ -20,10 +20,16 @@ const orarendModositas = (async (req, res) => {
   
 });
   
+//@desc Új óra létrehozása
+//@route POST /api/orarend/oraLetrehozas
+//@access private
 const oraLetrehozas = (async (req, res) => {
   const { jogkor_id } = req.user.user;
   if (jogkor_id == 1) {
     return res.status(403).json("Tanuló nem hozhat létre új órát!");
   }
+
+  
+
 });
 export { orarendModositas, oraLetrehozas }

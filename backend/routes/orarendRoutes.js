@@ -7,5 +7,5 @@ const router = express.Router();
 
 router.get("/orarendModositas",  validateToken , orarendModositas);
 
-router.get("/oraLetrehozas", validateToken, oraLetrehozas)
+router.post("/oraLetrehozas", validateToken, oraLetrehozas)
 export default router
