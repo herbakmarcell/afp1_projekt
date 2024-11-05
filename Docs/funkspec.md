@@ -67,7 +67,8 @@ A felhasználó, amennyiben tanuló joggal rendelkezik, a főoldalon láthatja a
 ![autosiskolafooldal](../Img/autosiskolafooldal.png)
 ![sajat_profil](../Img/sajat_profil.png)
 ![orarend](../Img/orarend.png)
-
+![admin_oldal](../Img/admin_oldal.png)
+![tanulo_elorehaladas](../Img/elorehaladas.png)
 ## 9. Forgatókönyvek
 
 Minden felhasználónak elsősorban főoldal jelenik meg:
