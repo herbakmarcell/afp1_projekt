@@ -8,13 +8,10 @@ const prisma = new PrismaClient()
 //@access private
 const orarendModositas = (async (req, res) => {
 
-    const {jogkor_id} = req.user.user // A claims-ból kiolvassuk az ID-t
+    const {jogkor_id, email} = req.user.user // A claims-ból kiolvassuk az ID-t
     
-    if (jogkor_id == 1)  { // tanulo_id
-      return res.status(403).send({
-        message: 'Hozzáférés megtagadva'
-      });
-  }
+    res.json({user: req.user.user})
+ 
     //orarend adatainak szerkesztése
   
 });

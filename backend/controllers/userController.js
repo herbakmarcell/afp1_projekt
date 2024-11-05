@@ -13,8 +13,8 @@ const prisma = new PrismaClient()
 const registerUser = (async (req, res) => {
 
 
-  const { vezeteknev, keresztnev, email, jelszo, bankszamla, jogkor_id } = req.body;
-  if (!vezeteknev || !keresztnev || !email || !jelszo || !bankszamla || !jogkor_id) {
+  const { vezeteknev, keresztnev, email, jelszo, bankszamla, jogosultsag } = req.body;
+  if (!vezeteknev || !keresztnev || !email || !jelszo || !bankszamla || !jogosultsag) {
     return res.status(400).json("Nincsen minden mező kitöltve.");
   }
   
@@ -39,7 +39,7 @@ const registerUser = (async (req, res) => {
       email, 
       jelszo : hashedPassword, 
       bankszamla,
-      jogkor_id: jogkor_id
+      jogkor_id: parseInt(jogosultsag)
     }
   })
 
@@ -48,7 +48,7 @@ const registerUser = (async (req, res) => {
 
 
   if (user) {
-    return res.status(201).json({ email: user.email });
+    return res.status(201).json({ sikeres: "Success" });
   } else {
     return res.status(400).json("Nem sikerült létrehozni a felhasználót.");
   }
@@ -61,8 +61,9 @@ const registerUser = (async (req, res) => {
 //@route POST /api/users/login
 //@access public
 const loginUser = (async (req, res) => {
-  console.log(req.body)
+  
   const { email, jelszo } = req.body;
+  console.log(email, jelszo)
   if (!email || !jelszo) {
     return res.status(400).json("All fields are mandatory!");
   }
@@ -73,7 +74,7 @@ const loginUser = (async (req, res) => {
   })
   //compare password with hashedpassword
   if (user && (await bcrypt.compare(jelszo, user.jelszo))) {
-    const accessToken = jwt.sign(
+    const token = jwt.sign(
       {
         user: {
           vezeteknev: user.vezeteknev,
@@ -84,17 +85,17 @@ const loginUser = (async (req, res) => {
         },
       },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "15m" }
+      { expiresIn: "50m" }
     );
     
 
-    const cookie =  res.cookie('jwt', accessToken, {
+    res.cookie('jwt', token, {
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000 // 1 day
     })
 
-    console.log(cookie)
-    res.status(200).json( 'success' );
+    
+    res.json( { token } )
   } else {
     res.status(401).json("email or password is not valid");
   }
@@ -107,5 +108,7 @@ const logout =  (req, res) => {
         message: 'token törlése'
     })
 }
+
+
 
 export { registerUser, loginUser, logout };
