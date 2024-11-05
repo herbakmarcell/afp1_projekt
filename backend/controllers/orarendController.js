@@ -14,8 +14,7 @@ const orarendModositas = (async (req, res) => {
       return res.status(403).send({
         message: 'Hozzáférés megtagadva'
       });
-    }
-  
+  }
     //orarend adatainak szerkesztése
   
 });
@@ -76,6 +75,7 @@ const oraLetrehozas = (async (req, res) => {
       ora_id: true
     }
   });
+
   const felvitt_ora_id = felvitt_ora_max_id._max.ora_id
   console.log("felvitt óra id-je:" + felvitt_ora_id);
   
@@ -91,4 +91,20 @@ const oraLetrehozas = (async (req, res) => {
   res.status(201).json("Az óra sikeresen felkerült a rendszerbe!");
 
 });
-export { orarendModositas, oraLetrehozas }
+
+const orarendLekeres = (async (req, res) => { 
+  const { id } = req.user.user;
+  const user_id = id;
+  console.log(user_id);
+  const orak = await prisma.orarend.findMany({
+    where: {
+      felhasznalo_id: user_id
+    },
+     include: {
+      Orak: true
+    }
+  });
+  res.status(202).json(orak);
+}); 
+
+export { orarendModositas, orarendLekeres }
