@@ -89,10 +89,12 @@ const oraLetrehozas = (async (req, res) => {
 
 });
 
+//@desc Órák lekérdezése
+//@route GET /api/orarend/orarendLekeres
+//@access private
 const orarendLekeres = (async (req, res) => { 
   const { id } = req.user.user;
   const user_id = id;
-  console.log(user_id);
   const orak = await prisma.orarend.findMany({
     where: {
       felhasznalo_id: user_id
@@ -101,6 +103,9 @@ const orarendLekeres = (async (req, res) => {
       Orak: true
     }
   });
+  
+  if (!orak)
+    return res.status(500).json({error: "Az órákat nem sikerült lekérdezni"});
   res.status(202).json(orak);
 }); 
 
