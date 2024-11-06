@@ -27,6 +27,32 @@ nav {
   background-color: var(--navBlue);
 }
 
+nav .menu {
+  display: none;
+  position: absolute;
+  top: 1.5rem;
+  right: 1rem;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 2.25rem;
+  height: 2rem;
+}
+
+nav .menu span {
+  height: 0.4rem;
+  width: 100%;
+  background-color: white;
+  border-radius: 0.2rem;
+}
+
+nav a {
+  font-size: larger;
+  color: white;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: 700;
+}
+
 .navbarTitleImg {
   display: flex;
   justify-content: space-around;
@@ -43,6 +69,7 @@ nav {
   width: 20%;
   display: flex;
   justify-content: space-around;
+  list-style: none;
 }
 
 .navButtons a {
@@ -51,21 +78,29 @@ nav {
   color: white;
   padding: 10px;
   border: none;
-  text-decoration: none;
+  text-transform: none;
+  font-weight: normal;
 }
 
 .navButtons a:hover {
   background-color: var(--navButtonActive);
 }
 
-.navButtons .activeButton {
+.navButtons .active {
   background-color: var(--navButtonActive);
+}
+
+.navButtons .bejelentkezettUser {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  text-transform: capitalize;
 }
 
 .formDiv {
   display: flex;
   width: 40%;
-  margin: 10em auto;
+  margin: 10em auto auto auto;
   padding: 10px;
   justify-content: center;
 }
@@ -107,4 +142,131 @@ input:active {
 .FormDivElement img {
   width: 40px;
   height: 40px;
+}
+
+.infoDiv {
+  width: 65%;
+  margin: 10rem auto auto auto;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  background-color: rgb(236, 236, 236);
+  border-radius: 20px 20px 0 0;
+  padding: 10px 0 0 0;
+}
+
+.infoDiv h2 {
+  text-align: center;
+  text-transform: capitalize;
+}
+
+/* ha nincs bejelentkezve */
+
+.infoDivNo {
+  width: 65%;
+  margin: 10rem auto auto auto;
+  color: black;
+  background-color: rgb(236, 236, 236);
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.infoDivNo h2 {
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.infoTablaDiv {
+  display: flex;
+  width: 99.5%;
+  border: 2px solid black;
+}
+
+.infoTablaDiv h2 {
+  background-color: var(--navBlue);
+  color: white;
+  padding: 10px;
+}
+
+.infoTablaDiv .infoTablaTableDiv {
+  width: 100%;
+}
+
+.infoTablaTableDiv table {
+  width: 80%;
+  margin: 20px auto;
+  border-collapse: separate;
+  border-spacing: 10px;
+}
+
+.infoTablaTableDiv table tr {
+  height: 30px;
+}
+
+.infoTablaTableDiv table tr td {
+  background-color: lightgray;
+  width: 50%;
+  padding: 10px;
+  text-align: center;
+}
+
+.infoTablaTableDiv table tr td:first-child {
+  background-color: var(--navButtonActive);
+  color: white;
+  /* width: 50%; */
+}
+@media (max-width: 1200px) {
+  .navButtons {
+    width: 30%;
+  }
+}
+
+@media (max-width: 900px) {
+  .navButtons {
+    width: 40%;
+  }
+}
+
+@media (max-width: 770px) {
+  .infoTablaImgDiv {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  nav .menu {
+    display: flex;
+  }
+
+  nav {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  nav .navButtons {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    gap: 30px;
+    margin-top: 1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  nav ul.open {
+    display: flex;
+  }
+
+  nav .navButtons li {
+    width: 100%;
+    text-align: center;
+  }
+
+  nav .navButtons li a {
+    margin: 0.2rem 0.5rem;
+  }
+
+  .navbarTitleImg {
+    width: 45%;
+  }
 }
