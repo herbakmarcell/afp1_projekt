@@ -4,7 +4,7 @@ import "../../index.css";
 import axios from "axios";
 
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../../AuthContext";
+import AuthContext from "../../AuthContext.jsx";
 import { useContext } from "react";
 export const NavBar = () => {
   const [menuOpen, SetMenuOpen] = useState(false); // reszponziv nav
