@@ -35,5 +35,34 @@ const oktatoTanuloi = (async (req, res) => {
         console.error(error);
         res.status(500).json({ error: 'Hiba történt a tanulók lekérdezése során.' });
       }
+});
+  
+//@desc A tanulók lekérdezése a rendszerből
+//@route GET /api/tanulok/tanulok
+//@access private
+
+const tanulokLekerese = (async (req, res) => { 
+  const { jogkor_id } = req.user.user;
+  if (jogkor_id == 1)
+  {
+    return res.status(403).json({ error: "Nem kérdezheti le a tanulókat!"});
+  }
+
+  const tanulok = await prisma.felhasznalok.findMany({
+    where: {
+      jogkor_id: 1
+    }
   });
-export { oktatoTanuloi }
+
+  if (!tanulok)
+  {
+    return res.status(500).json({ error: "Hiba történt a tanulók lekérdezése során."});
+  }
+
+  
+  return res.json(tanulok);
+
+});
+
+
+export { oktatoTanuloi, tanulokLekerese }
