@@ -104,4 +104,4 @@ const orarendLekeres = (async (req, res) => {
   res.status(202).json(orak);
 }); 
 
-export { orarendModositas, orarendLekeres }
+export { orarendModositas, orarendLekeres, oraLetrehozas }
