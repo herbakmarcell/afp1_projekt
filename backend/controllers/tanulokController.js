@@ -51,6 +51,12 @@ const tanulokLekerese = (async (req, res) => {
   const tanulok = await prisma.felhasznalok.findMany({
     where: {
       jogkor_id: 1
+    },
+    select: {
+      felhasznalo_id: true,
+      email: true,
+      vezeteknev: true,
+      keresztnev: true
     }
   });
 
