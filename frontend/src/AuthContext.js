@@ -7,6 +7,24 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
+  //FIXME:
+  // Amikor a felhasználó bezárja az ablakot akkor 
+  // kitörlődik a localstorage tartalma
+  //Részleges megoldás 
+  useEffect(() => {
+    const unloadCallback = () => {
+      const storedUser = localStorage.getItem('user');
+      if(storedUser){
+        localStorage.removeItem('user');
+        setUser(null)
+      }
+    }
+    window.addEventListener("beforeunload", unloadCallback);
+    return () => window.removeEventListener("beforeunload", unloadCallback);
+  }, []);
+
+
+
   // Bejelentkezett felhasználó ellenőrzése a cookie-ból (JWT)
   useEffect(() => {
     // Ellenőrizzük, hogy van-e felhasználó az `localStorage`-ban
