@@ -18,10 +18,11 @@ A vizsgák teljesítéséhez egy megadott összeget kell befizetni és csak akko
 ### 2.2 Projekmunkások és felelősségek
 * Frontend:
   - Szkleván Richárd
-  - Seres Szabolcs
 * Backend:
   - Szabó Richárd
   - Vastag Demeter
+* Full Stack:
+  - Seres Szabolcs
 * Tesztelés:
   - Seres Szabolcs
   - Vastag Demeter
