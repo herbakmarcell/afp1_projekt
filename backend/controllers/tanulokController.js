@@ -74,6 +74,7 @@ const tanulokLekerese = (async (req, res) => {
 //@route POST /api/tanulok/elorehaladas/:tanulo_id
 //@access private
 const tanuloElorehaladasa = (async (req, res) => {
+  const azon = req.user.user.id
   const { jogkor_id } = req.user.user
   const { tanuloId } = req.params;
   
@@ -95,6 +96,11 @@ const tanuloElorehaladasa = (async (req, res) => {
               keresztnev: true,
             },
           },
+          FelhasznalokOktato: {
+            select: {
+              felhasznalo_id: true,
+            }
+          },
           Vizsgajelentkezes: {
             include: {
               Vizsgak: {
@@ -115,6 +121,12 @@ const tanuloElorehaladasa = (async (req, res) => {
       if (!tanuloElorehaladas) {
         return res.status(404).json({
           message: 'A tanuló nem található',
+        });
+      }
+
+      if (tanuloElorehaladas.FelhasznalokOktato?.felhasznalo_id !== azon) {
+        return res.status(403).send({
+          message: 'Hozzáférés megtagadva: Az adott tanulónak nem ön az oktatója.',
         });
       }
       
