@@ -11,17 +11,17 @@ export const AuthProvider = ({ children }) => {
   // Amikor a felhasználó bezárja az ablakot akkor
   // kitörlődik a localstorage tartalma
   //Részleges megoldás
-  useEffect(() => {
-    const unloadCallback = () => {
-      const storedUser = localStorage.getItem("user");
-      if (storedUser) {
-        localStorage.removeItem("user");
-        setUser(null);
-      }
-    };
-    window.addEventListener("beforeunload", unloadCallback);
-    return () => window.removeEventListener("beforeunload", unloadCallback);
-  }, []);
+  // useEffect(() => {
+  //   const unloadCallback = () => {
+  //     const storedUser = localStorage.getItem("user");
+  //     if (storedUser) {
+  //       localStorage.removeItem("user");
+  //       setUser(null);
+  //     }
+  //   };
+  //   window.addEventListener("beforeunload", unloadCallback);
+  //   return () => window.removeEventListener("beforeunload", unloadCallback);
+  // }, []);
 
   // Bejelentkezett felhasználó ellenőrzése a cookie-ból (JWT)
   useEffect(() => {
@@ -29,6 +29,7 @@ export const AuthProvider = ({ children }) => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser)); // Beolvassuk a mentett felhasználót
+      
     } else {
       // Ha nincs elmentve semmi, akkor próbálkozunk az API hívással
       const checkAuth = async () => {
@@ -39,6 +40,7 @@ export const AuthProvider = ({ children }) => {
           );
           if (response.data.user) {
             setUser(response.data.user.user); // A backendről kapott felhasználói adat
+            
           }
         } catch (error) {
           setUser(null); // Ha nincs bejelentkezve, akkor nincs felhasználó
