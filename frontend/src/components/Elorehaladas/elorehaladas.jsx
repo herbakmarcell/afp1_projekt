@@ -1,6 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../../Css/elorehaladas.css"
+import VizsgaTable from "./vizsgatable.jsx";
+import axios from 'axios'
 const Elorehaladas = () =>{
+
+    const [vizsgaBtn, setVizsgaBtn] = useState(false)
+    const [data, setData] = useState([])
+    
+    useEffect(() =>{
+        //TODO: 
+        //ide kerül majd akkor az, hogy beolvassuk a előrehaladást és megnézzük, hogy a gyakorlati vizsgánál 30-e az óraszám... 
+    },[])
+
+    const vizsgaBtnClick = () => {
+
+        const vizsga = async () => {
+            try {
+                const resp = await axios.get("http://localhost:5000/api/vizsga/vizsgak")
+                const data = resp.data
+                if(data){
+                    //setVizsgaBtn(true)
+                    setData(data)
+                }
+            } catch (error) {
+                console.log(error)
+            }
+
+        }
+        vizsga()
+
+        setVizsgaBtn(true)
+    }   
+
     return (
         <>
         <div className="elorehaladasDiv">
@@ -9,17 +40,17 @@ const Elorehaladas = () =>{
                 <img src="blackCar2.png" alt="Black car" />
             </div>
 
-            <div class="w3-container"  >
+            <div className="w3-container"  >
 
-        <div class="w3-light-black" >
-        <div class="w3-container  w3-center" style={{width:"25%", background: "#fbc304", color: "black", fontWeight: "bold"}} >25%</div>
+        <div className="w3-light-black" >
+        <div className="w3-container  w3-center" style={{width:"25%", background: "#fbc304", color: "black", fontWeight: "bold"}} >25%</div>
         </div>
 
-        <div class="w3-light-black"  >
-        <div class="w3-container w3-red w3-center" style={{width:"50%", fontWeight: "bold"}}> <span style={{color: "black"}}>50%</span> </div>
+        <div className="w3-light-black"  >
+        <div className="w3-container w3-red w3-center" style={{width:"50%", fontWeight: "bold"}}> <span style={{color: "black"}}>50%</span> </div>
         </div>
-        <div class="w3-light-black">
-        <div class="w3-container w3-blue w3-center" style={{width:"75%", color: "black", fontWeight: "bold"}}> <span style={{color: "black"}} >75%</span> </div>
+        <div className="w3-light-black">
+        <div className="w3-container w3-blue w3-center" style={{width:"75%", color: "black", fontWeight: "bold"}}> <span style={{color: "black"}} >75%</span> </div>
         </div>
         </div>
             <div className="vizsgaBtn">
@@ -30,9 +61,11 @@ const Elorehaladas = () =>{
                 </div>
             </div>
             <div className="vizsgaJelentkezes">
-                <button><i className='fas fa-caret-square-down'></i> Vizsgára jelentkezés</button>
+                <button onClick={vizsgaBtnClick} ><i className='fas fa-caret-square-down'></i> Vizsgára jelentkezés</button>
             </div>
-            <div className="vizsgaTable">
+            
+            {vizsgaBtn && <>
+                <div className="vizsgaTable">
                 <table>
                     <tbody>
                     <tr>
@@ -42,37 +75,13 @@ const Elorehaladas = () =>{
                         <th>Vizsga időpontja</th>
                         <th className="jelentkezes">Jelentkezés</th>
                     </tr>
-                    <tr>
-                        <td className="id">1</td>
-                        <td>Elméleti</td>
-                        <td>Nincs</td>
-                        <td>2024.12.12 12:00</td>
-                        <td className="btn"><button><i className="fas fa-sign-in-alt"></i>  Jelentkezés  </button> <button><i className="fas fa-sign-out-alt"></i> Lejelentkezés</button></td>
-                    </tr>
-                    <tr>
-                        <td className="id">1111</td>
-                        <td>Elméleti</td>
-                        <td>Nincs</td>
-                        <td>2024.12.12 12:00</td>
-                        <td className="btn"><button><i className="fas fa-sign-in-alt"></i>  Jelentkezés  </button> <button><i className="fas fa-sign-out-alt"></i> Lejelentkezés</button></td>
-                    </tr>
-                    <tr>
-                        <td className="id">2222222</td>
-                        <td>Elméleti</td>
-                        <td>Nincs</td>
-                        <td>2024.12.12 12:00</td>
-                        <td className="btn"><button><i className="fas fa-sign-in-alt"></i>  Jelentkezés  </button> <button><i className="fas fa-sign-out-alt"></i> Lejelentkezés</button></td>
-                    </tr>
-                    <tr>
-                        <td className="id">1</td>
-                        <td>Elméleti</td>
-                        <td>Nincs</td>
-                        <td>2024.12.12 12:00</td>
-                        <td className="btn"><button><i className="fas fa-sign-in-alt"></i>  Jelentkezés  </button> <button><i className="fas fa-sign-out-alt"></i> Lejelentkezés</button></td>
-                    </tr>
+                   {data.map((formData) => {(
+                        <VizsgaTable formData={formData}  />
+                   )})}
                     </tbody>
                 </table>
             </div>
+            </>}
             
         </div>
         </>
