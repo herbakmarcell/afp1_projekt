@@ -25,8 +25,7 @@ export const NavBar = () => {
     <nav>
       <div className="navbarTitleImg">
         <img
-          src="https://static.vecteezy.com/system/resources/thumbnails/000/550/395/small_2x/traffic_light_006.jpg"
-          alt="trafficLights"
+          src="icon_traffic_light.png"
         />
         <Link to="/fooldal">Autósiskola</Link>
       </div>
