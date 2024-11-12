@@ -117,6 +117,8 @@ const oraTorles = async (req, res) => {
 
   const ora_id = req.body.ora_id;
   if (!ora_id) return res.status(406).json("Adja meg az óra id-t!");
+  if (!Number.isInteger(ora_id))
+    return res.status(406).json("Az id-nek egész számnak kell lennie!");
 
   const ora = await prisma.orarend.findFirst({
     where: {
