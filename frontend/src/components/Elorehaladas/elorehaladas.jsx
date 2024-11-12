@@ -16,11 +16,12 @@ const Elorehaladas = () =>{
 
         const vizsga = async () => {
             try {
-                const resp = await axios.get("http://localhost:5000/api/vizsga/vizsgak")
+                const resp = await axios.get("http://localhost:5000/api/vizsga/vizsgak", { withCredentials: true })
                 const data = resp.data
                 if(data){
                     //setVizsgaBtn(true)
                     setData(data)
+                    setVizsgaBtn(true)
                 }
             } catch (error) {
                 console.log(error)
@@ -29,7 +30,7 @@ const Elorehaladas = () =>{
         }
         vizsga()
 
-        setVizsgaBtn(true)
+        
     }   
 
     return (
@@ -75,9 +76,11 @@ const Elorehaladas = () =>{
                         <th>Vizsga időpontja</th>
                         <th className="jelentkezes">Jelentkezés</th>
                     </tr>
-                   {data.map((formData) => {(
-                        <VizsgaTable formData={formData}  />
-                   )})}
+                   {data.map((formData, i) => {
+                        return (
+                            <VizsgaTable formData={formData} key={i}  />
+                        )
+                   })}  
                     </tbody>
                 </table>
             </div>
