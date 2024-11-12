@@ -1,5 +1,5 @@
 import express from 'express'
-import { oraLetrehozas, orarendModositas, orarendLekeres } from '../controllers/orarendController.js';
+import { oraLetrehozas, orarendModositas, orarendLekeres, oraTorles } from '../controllers/orarendController.js';
 import validateToken from '../middleware/validateTokenHandler.js';
 
 const router = express.Router();
@@ -7,5 +7,6 @@ const router = express.Router();
 
 router.get("/orarendModositas",  validateToken , orarendModositas);
 router.get("/orarendLekeres", validateToken, orarendLekeres);
-router.post("/oraLetrehozas", validateToken, oraLetrehozas)
+router.post("/oraLetrehozas", validateToken, oraLetrehozas);
+router.post("/oraTorles", validateToken, oraTorles);
 export default router

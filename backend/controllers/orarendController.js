@@ -104,4 +104,31 @@ const orarendLekeres = (async (req, res) => {
   res.status(202).json(orak);
 }); 
 
-export { orarendModositas, orarendLekeres, oraLetrehozas }
+//@desc Óra törlése id alapján
+//@route POST /api/orarend/oraTorles
+//@access private
+const oraTorles = (async (req,res) => {
+
+  const { id, jogkor_id } = req.user.user;
+  
+  if(!id)
+    return res.status(401).json("Jelentkezzen be!");
+  
+  if(jogkor_id == 1)
+    return res.status(406).json("Tanuló nem törölhet órát!");
+
+  const ora_id = req.body.ora_id;
+  if(!ora_id)
+    return res.status(406).json("Adja meg az óra id-t!");
+  
+  const ora = await prisma.orarend.findFirst({
+    where: {
+      ora_id: ora_id
+    }
+  });
+
+  res.json(ora)
+
+});
+
+export { orarendModositas, orarendLekeres, oraLetrehozas, oraTorles }
