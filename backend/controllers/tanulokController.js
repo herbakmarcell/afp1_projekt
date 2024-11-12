@@ -1,74 +1,80 @@
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient()
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 
 //@desc Oktatók tanulóinak lekérdezése
 //@route POST /api/tanulok/oktatoTanuloi
 //@access private
-const oktatoTanuloi = (async (req, res) => {
+const oktatoTanuloi = async (req, res) => {
+  const azon = req.user.user.id; //felhasznalo_id
+  const { jogkor_id } = req.user.user;
 
-    const azon = req.user.user.id //felhasznalo_id
-    const {jogkor_id} = req.user.user
-    
-    if (jogkor_id != 2)  { // oktato id
-      return res.status(403).send({
-        message: 'Hozzáférés megtagadva'
-      });
-    }
+  if (jogkor_id != 2) {
+    // oktato id
+    return res.status(403).send({
+      message: "Hozzáférés megtagadva",
+    });
+  }
 
-    try {
-        const tanulok = await prisma.felhasznalok.findMany({
-          where: {
-            TanuloElorehaladas: {
-              some: {
-                oktato_id: azon,
-              },
-            },
+  try {
+    const tanulok = await prisma.felhasznalok.findMany({
+      where: {
+        TanuloElorehaladas: {
+          some: {
+            oktato_id: azon,
           },
-          select: {
-            vezeteknev: true,
-            keresztnev: true,
-          },
-        });
-    
-        res.json(tanulok);
-      } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Hiba történt a tanulók lekérdezése során.' });
-      }
-});
-  
+        },
+      },
+      select: {
+        vezeteknev: true,
+        keresztnev: true,
+      },
+    });
+
+    res.json(tanulok);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ error: "Hiba történt a tanulók lekérdezése során." });
+  }
+};
+
 //@desc A tanulók lekérdezése a rendszerből
 //@route GET /api/tanulok/tanulok
 //@access private
-
-const tanulokLekerese = (async (req, res) => { 
+const tanulokLekerese = async (req, res) => {
   const { jogkor_id } = req.user.user;
-  if (jogkor_id == 1)
-  {
-    return res.status(403).json({ error: "Nem kérdezheti le a tanulókat!"});
+
+  if (jogkor_id == 1) {
+    return res.status(403).json({ error: "Nem kérdezheti le a tanulókat!" });
   }
 
-  const tanulok = await prisma.felhasznalok.findMany({
-    where: {
-      jogkor_id: 1
-    },
-    select: {
-      felhasznalo_id: true,
-      email: true,
-      vezeteknev: true,
-      keresztnev: true
+  try {
+    const tanulok = await prisma.felhasznalok.findMany({
+      where: {
+        jogkor_id: 1,
+      },
+      select: {
+        felhasznalo_id: true,
+        email: true,
+        vezeteknev: true,
+        keresztnev: true,
+      },
+    });
+    if (!tanulok) {
+      return res
+        .status(500)
+        .json({ error: "Hiba történt a tanulók lekérdezése során." });
     }
-  });
 
-  if (!tanulok)
-  {
-    return res.status(500).json({ error: "Hiba történt a tanulók lekérdezése során."});
+    return res.json(tanulok);
+  } catch (err) {
+    return res.status(500).json({
+      error: "A lekérdezés sikertelen!",
+      errormsg: err,
+    });
   }
-
-  
-  return res.json(tanulok);
-
-});
+};
 
 //@desc Adott tanuló előrehaladásának lekérdezése
 //@route POST /api/tanulok/elorehaladas/:tanulo_id
