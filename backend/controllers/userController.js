@@ -98,11 +98,54 @@ const loginUser = async (req, res) => {
 
 const logout = (req, res) => {
   res.cookie("jwt", "", { maxAge: 0 });
-
   res.send({
     message: "token törlése",
   });
 };
+
+//@desc Módosítja a felhasználót az adatbázisban és új token-t generál
+//@route POST api/users/profilmodosit
+//@access private
+const felhasznaloModositas = (async (req, res) => {
+
+  const {vezeteknev, keresztnev} = req.body
+  
+  console.log(vezeteknev)
+  console.log(keresztnev)
+  //A felhasználót update-jük a kapott adatok alapján
+  const updateUser = await prisma.felhasznalok.update({
+    data:{
+      vezeteknev,
+      keresztnev
+    },
+    where:{
+      email: req.user.user.email
+    }
+  })
+  if(updateUser){
+    //Ha sikerül az update-elés akkor generálunk neki egy új tokent az új adatokkal
+    const token = jwt.sign(
+      {
+        user: {
+          vezeteknev: vezeteknev,
+          keresztnev: keresztnev,
+          email: req.user.user.email,
+          id: req.user.user.id,
+          jogkor_id: req.user.user.jogkor_id
+        },
+      },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: "50m" })
+      
+      res.cookie('jwt', token, {
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000 // 1 day
+      })
+      console.log("token: ")
+      console.log(token)
+      res.json( token )
+  }
+})
 
 //@desc Bejelentkezett felhasználó adatainak lekérése
 //@route GET /api/users/getUserDetails
@@ -112,4 +155,4 @@ const felhasznaloLekeres = async (req, res) => {
   res.json({ user: req.user.user });
 };
 
-export { registerUser, loginUser, logout, felhasznaloLekeres };
+export { registerUser, loginUser, logout, felhasznaloModositas, felhasznaloLekeres };

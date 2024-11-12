@@ -12,9 +12,11 @@ const orarendModositas = (async (req, res) => {
     
     res.json({user: req.user.user})
  
-    //orarend adatainak szerkesztése
+    
   
 });
+
+
   
 //@desc Új óra létrehozása
 //@route POST /api/orarend/oraLetrehozas
