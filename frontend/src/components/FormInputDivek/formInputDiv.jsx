@@ -1,5 +1,3 @@
-import { defer } from "react-router-dom";
-
 export const FormInput = (props) => {
   return (
     <div className="FormDivElement">
@@ -10,6 +8,7 @@ export const FormInput = (props) => {
         type={props.type}
         name={props.name}
         placeholder={props.placeholder}
+        value={props.value}
         onChange={props.onChange}
       />
     </div>

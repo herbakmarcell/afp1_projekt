@@ -1,0 +1,154 @@
+h1{
+    color: black;
+    font-weight: bold;
+    border-bottom: 2px solid red; 
+    border-width: 0.2rem; 
+}
+.elorehaladasDiv{
+    background: #212529;
+}
+.imgDiv {
+    max-width: 100%;
+    height: 10%;
+    position: relative;
+    display: inline-block;
+}
+.imgDiv img{
+    width: 100%;
+    height: 600px;
+}
+.imgDiv h1, hr{
+    position: absolute;
+    top: 30%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    color: white;
+    font-size: 3rem;
+    font-weight: bold;
+}
+.vizsgaBtn{
+    background: #344551 !important;
+    padding: 14px !important;
+}
+.vizsgaBtn .btn{
+    display: flex !important;
+    justify-content: center!important;
+    gap: 5rem !important;
+    padding: 1.3rem !important;
+    font-size: large !important;
+    font-weight: bold !important;
+    color: black!important;
+}
+.euBtn{
+    background: #0ccbf3 !important;
+    padding: 0.6rem !important;
+    display: block !important;
+    width: 15% !important;
+    border-radius: 20px !important;
+}
+.euBtn p{
+    text-align: center;
+    
+}
+.elmeletiBtn{
+    background: #fbc304 !important;
+    padding: 0.6rem !important;
+    display: block !important;
+    width: 15% !important;
+    border-radius: 20px !important;
+}
+.elmeletiBtn p{
+    text-align: center !important;
+    
+}
+.gyakorlatiBtn{
+    background: #dc3545 !important;
+    padding: 0.6rem !important;
+    display: block !important;
+    width: 15% !important;
+    border-radius: 20px !important;
+
+}
+.gyakorlatiBtn p{
+    text-align: center !important;
+    
+}
+.vizsgaJelentkezes{
+    background: #262830;
+    display: flex;
+    padding: 40px;
+}
+.vizsgaJelentkezes button{
+    margin: auto;
+    text-align: center;
+    padding: 14px;
+    background: #131c21;
+    color: white;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: large;
+    font-weight: bold;
+}
+.vizsgaJelentkezes button:hover{
+    background: #344551;
+}
+.vizsgaTable{
+    background: #131c21;
+    padding: 4rem;
+    display: flex;
+    justify-content: center;
+}
+.vizsgaTable table{
+    width: 1200px;
+    background: #4b5453;
+    padding: 1rem;
+}
+.vizsgaTable tr:nth-child(odd){
+    background: #262830;
+}
+.vizsgaTable th{
+    border-left: 2px solid white;
+    border-bottom: 2px solid white;
+    border-top: 2px solid white;
+    font-size: 1.1rem;
+    border-width: 0.2rem;
+    background: #14181d;
+}
+.vizsgaTable td{
+    text-align: center;
+    padding: 1rem;
+    border-right: 2px solid white;
+    border-bottom: 2px solid white;
+    font-size: 1.2rem;
+}
+.vizsgaTable .id{
+    border-left: 2px solid white;
+}
+.vizsgaTable .jelentkezes{
+    width: 100px;
+    border-right: 2px solid white;
+}
+.vizsgaTable .btn{
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+.vizsgaTable .btn button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #131c21;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: large;
+    font-weight: bold;
+}
+.vizsgaTable .btn i{
+    
+    margin-right: 10px;
+}
+.vizsgaTable .btn button:hover{
+    background:#344551
+}

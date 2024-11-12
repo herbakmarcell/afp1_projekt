@@ -3,6 +3,7 @@ import users from './routes/userRoutes.js'
 import orarend from './routes/orarendRoutes.js'
 import tanulok from './routes/tanulokRoutes.js'
 import vizsga from './routes/vizsgaRoutes.js'
+import admin from './routes/adminRoutes.js'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 
@@ -24,6 +25,7 @@ app.use("/api/users", users);
 app.use("/api/orarend", orarend)
 app.use("/api/tanulok", tanulok)
 app.use("/api/vizsga", vizsga)
+app.use("/api/admin", admin)
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
