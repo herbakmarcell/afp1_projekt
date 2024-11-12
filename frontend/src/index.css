@@ -216,6 +216,14 @@ input:active {
   color: white;
   /* width: 50%; */
 }
+
+.infoTablaTableDiv button{
+  background-color:#004a71;
+  color: white;
+  padding: 0.3rem;
+  border-radius: 10px;   
+}
+
 @media (max-width: 1200px) {
   .navButtons {
     width: 30%;

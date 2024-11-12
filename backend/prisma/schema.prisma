@@ -63,7 +63,7 @@ model Orarend {
 
 model TanuloElorehaladas {
   elorehaladas_id Int @id @default(autoincrement())
-  tanulo_id Int
+  tanulo_id Int @unique
   oktato_id Int
   levezetett_orak Int @default(0)
   Kifizetesek Kifizetesek[]
