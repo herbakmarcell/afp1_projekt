@@ -2,6 +2,7 @@ import express from 'express'
 import users from './routes/userRoutes.js'
 import orarend from './routes/orarendRoutes.js'
 import tanulok from './routes/tanulokRoutes.js'
+import kifizetesek from "./routes/kifizetesRoutes.js"
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 
@@ -22,6 +23,7 @@ app.use(cors({
 app.use("/api/users", users);
 app.use("/api/orarend", orarend)
 app.use("/api/tanulok", tanulok)
+app.use("/api/kifizetes", kifizetesek)
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
