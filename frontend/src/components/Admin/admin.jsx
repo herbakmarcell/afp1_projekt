@@ -9,46 +9,61 @@ const Admin = () => {
   // Kiolvassuk a felhasználót a Context-ből
 
   const { user } = useContext(AuthContext);
-  const navigate = useNavigate();
-  const [data, setData] = useState("");
-  // const users = async () => {
-  //   try {
-  //     const resp = await axios.post(
-  //       "http://localhost:5000/api/admin/felhasznalok",
-  //       { withCredentials: true }
-  //     );
-  //     const data = resp.data;
-  //     console.log(data);
-  //     if (data) {
-  //       //setVizsgaBtn(true)
-  //       setData(data);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-  // users();
+
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    if (!user) {
-      navigate("/bejelentkezes");
-    }
-  }, [user, navigate]); // A `user` változásakor lefut
+    const users = async () => {
+      try {
+        const resp = await axios.get(
+          "http://localhost:5000/api/admin/felhasznalok",
+          { withCredentials: true }
+        );
+        const adat = resp.data;
+        if (adat) {
+          //setVizsgaBtn(true)
+          setData(adat);
+          console.log(adat);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    users();
+  }, []);
 
-  // console.log(user?.user);
   return (
     <>
       <div className={user ? "mainContent" : "mainContentNo"}>
         <h2>
           {user
             ? `Üdvözöllek ${user.user.vezeteknev} ${user.user.keresztnev} `
-            : ``}
+            : `Jelentkezz be ha használni akarod az oldal funkcióit.`}
         </h2>
         {user ? (
           <>
-            {/* {data.map((formData) => {
-              <UsersTable formData={formData} />;
-            })} */}
+            <div className="vizsgaTable">
+              <table>
+                <tbody>
+                  <tr>
+                    <th>ID</th>
+                    <th>Vizsga Típusa</th>
+                    <th>Vizsgabiztos</th>
+                    <th>Jogosultság</th>
+                    <th className="jelentkezes">Műveletek</th>
+                  </tr>
+                  {data.map((formData, index) => {
+                    return (
+                      <UsersTable
+                        key={user.id}
+                        formData={formData}
+                        index={index}
+                      />
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           </>
         ) : (
           ``
