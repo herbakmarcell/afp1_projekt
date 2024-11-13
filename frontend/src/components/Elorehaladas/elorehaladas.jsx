@@ -143,7 +143,7 @@ const Elorehaladas = () => {
                     <th className="jelentkezes">Jelentkezés</th>
                   </tr>
                   {data.map((formData) => {
-                    <VizsgaTable formData={formData} />;
+                    return <VizsgaTable formData={formData} />;
                   })}
                 </tbody>
               </table>
