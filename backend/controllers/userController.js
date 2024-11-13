@@ -106,23 +106,22 @@ const logout = (req, res) => {
 //@desc Módosítja a felhasználót az adatbázisban és új token-t generál
 //@route POST api/users/profilmodosit
 //@access private
-const felhasznaloModositas = (async (req, res) => {
+const felhasznaloModositas = async (req, res) => {
+  const { vezeteknev, keresztnev } = req.body;
 
-  const {vezeteknev, keresztnev} = req.body
-  
-  console.log(vezeteknev)
-  console.log(keresztnev)
+  console.log(vezeteknev);
+  console.log(keresztnev);
   //A felhasználót update-jük a kapott adatok alapján
   const updateUser = await prisma.felhasznalok.update({
-    data:{
+    data: {
       vezeteknev,
-      keresztnev
+      keresztnev,
     },
-    where:{
-      email: req.user.user.email
-    }
-  })
-  if(updateUser){
+    where: {
+      email: req.user.user.email,
+    },
+  });
+  if (updateUser) {
     //Ha sikerül az update-elés akkor generálunk neki egy új tokent az új adatokkal
     const token = jwt.sign(
       {
@@ -131,21 +130,22 @@ const felhasznaloModositas = (async (req, res) => {
           keresztnev: keresztnev,
           email: req.user.user.email,
           id: req.user.user.id,
-          jogkor_id: req.user.user.jogkor_id
+          jogkor_id: req.user.user.jogkor_id,
         },
       },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "50m" })
-      
-      res.cookie('jwt', token, {
-        httpOnly: true,
-        maxAge: 24 * 60 * 60 * 1000 // 1 day
-      })
-      console.log("token: ")
-      console.log(token)
-      res.json( token )
+      { expiresIn: "50m" }
+    );
+
+    res.cookie("jwt", token, {
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000, // 1 day
+    });
+    console.log("token: ");
+    console.log(token);
+    res.json(token);
   }
-})
+};
 
 //@desc Bejelentkezett felhasználó adatainak lekérése
 //@route GET /api/users/getUserDetails
@@ -155,4 +155,59 @@ const felhasznaloLekeres = async (req, res) => {
   res.json({ user: req.user.user });
 };
 
-export { registerUser, loginUser, logout, felhasznaloModositas, felhasznaloLekeres };
+//@desc Felhasználó jogosultságának módosítása
+//@route POST /api/users/changeUserPrivilege
+//@access private
+
+const jogkor_modositas = async (req, res) => {
+  const { jogkor_id } = req.user.user;
+  if (jogkor_id != 4)
+    return res.status(400).json("Nincs joga megváltoztatni a jogosultságokat!");
+
+  const felhasznalo_id = req.body.id;
+  const uj_jogkor = req.body.jogkor;
+
+  if (!felhasznalo_id) res.status(400).json("Az ID megadása kötelező!");
+  if (!Number.isInteger(felhasznalo_id))
+    return res.status(400).json({ error: "Az ID egy egész szám!" });
+
+  if (!uj_jogkor) res.status(400).json("A jogkör megadása kötelező!");
+  if (!Number.isInteger(uj_jogkor) || uj_jogkor < 0 || uj_jogkor > 4)
+    return res
+      .status(400)
+      .json({ error: "A jogkör egy egész szám 1 és 4 között!" });
+
+  const felhasznalo_letezik = await prisma.felhasznalok.findFirst({
+    where: {
+      felhasznalo_id: felhasznalo_id,
+    },
+  });
+
+  if (!felhasznalo_letezik)
+    return res
+      .status(401)
+      .json({ err: "Nincs felhasználó a megadott ID-vel!" });
+  else if (felhasznalo_letezik.jogkor_id == 4)
+    return res.status(401).json("Admin jogát nem lehet megváltoztatni!");
+
+  const update_user = await prisma.felhasznalok.update({
+    where: {
+      felhasznalo_id: felhasznalo_id,
+    },
+    data: {
+      jogkor_id: uj_jogkor,
+    },
+  });
+
+  if (update_user) res.status(201).json("A módosítás sikeres!");
+  else res.status(500).json("A módosítás sikerestelen!");
+};
+
+export {
+  registerUser,
+  loginUser,
+  logout,
+  felhasznaloModositas,
+  felhasznaloLekeres,
+  jogkor_modositas,
+};
