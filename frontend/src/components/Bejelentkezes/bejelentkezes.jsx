@@ -4,7 +4,7 @@ import { useState, useContext } from "react";
 import AuthContext from "../../AuthContext.jsx";
 import { FormInput } from "../FormInputDivek/formInputDiv.jsx";
 import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
-import { jwtDecode } from "jwt-decode";
+import "../../Css/bejreg.css";
 
 const BejelentkezesForm = () => {
   const { login } = useContext(AuthContext); // A login funkció a context-ből
