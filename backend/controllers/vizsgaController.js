@@ -66,4 +66,74 @@ const elerhetoVizsgak = async (req, res) => {
     }
 };
 
-export { elerhetoVizsgak };
+//@desc Adott vizsgára jelentkezés
+//@route POST /api/vizsga/jelentkezes
+//@access private
+const vizsgaJelentkezes = async (req, res) => {
+    const azon = req.user.user.id;
+    const { jogkor_id } = req.user.user;
+    const { vizsga_id } = req.body;
+
+    if (jogkor_id != 1) { // tanulo id
+        return res.status(403).send({
+            message: 'Hozzáférés megtagadva'
+        });
+    }
+
+    const jelenlegiDatum = new Date();
+
+    try {
+        // A vizsga típusának lekérdezése
+        const vizsga = await prisma.vizsgak.findUnique({
+            where: { vizsga_id: vizsga_id },
+            select: { tipus_id: true }
+        });
+
+        if (!vizsga) {
+            return res.status(404).json({ message: 'A vizsga nem található.' });
+        }
+
+        // A tanuló elorehaladas_id-jének lekérdezése
+        const elorehaladas = await prisma.tanuloElorehaladas.findFirst({
+            where: { tanulo_id: parseInt(azon) },
+            select: { elorehaladas_id: true }
+        });
+
+        if (!elorehaladas) {
+            return res.status(404).json({ message: 'A tanuló előrehaladásának adatai nem találhatóak.' });
+        }
+
+        // Ellenőrizzük, hogy van-e jövőbeli jelentkezés ugyanarra a vizsgatípusra
+        const letezoJelentkezes = await prisma.vizsgajelentkezes.findFirst({
+            where: {
+                tanulo_elorehaladas_id: elorehaladas.elorehaladas_id,
+                Vizsgak: {
+                    tipus_id: vizsga.tipus_id,
+                    vizsga_datuma: {
+                        gt: jelenlegiDatum
+                    }
+                }
+            }
+        });
+
+        if (letezoJelentkezes) {
+            return res.status(400).json({
+                message: 'Már van egy jövőbeli jelentkezésed erre a vizsgatípusra, nem jelentkezhetsz újra.'
+            });
+        }
+
+        const ujJelentkezes = await prisma.vizsgajelentkezes.create({
+            data: {
+                tanulo_elorehaladas_id: elorehaladas.elorehaladas_id,
+                vizsga_id: vizsga_id,
+            }
+        });
+
+        return res.status(201).json({ sikeres: "Success" });
+    } catch (error) {
+        console.error("Hiba történt a vizsgára jelentkezéskor:", error);
+        res.status(500).json({ error: "Hiba történt a vizsgára jelentkezéskor" });
+    }
+};
+
+export { elerhetoVizsgak, vizsgaJelentkezes };
