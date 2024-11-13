@@ -14,8 +14,13 @@ const elerhetoVizsgak = async (req, res) => {
     }
 
     try {
+        const jelenlegiDatum = new Date();
+
         const vizsgak = await prisma.vizsgak.findMany({
             where: {
+                vizsga_datuma: {
+                    gt: jelenlegiDatum,
+                },
                 Vizsgajelentkezes: {
                     none: {},
                 },
@@ -128,8 +133,9 @@ const vizsgaJelentkezes = async (req, res) => {
                 vizsga_id: vizsga_id,
             }
         });
-
-        return res.status(201).json({ sikeres: "Success" });
+        if (ujJelentkezes) {
+            return res.status(201).json({ sikeres: "Success" })
+        }
     } catch (error) {
         console.error("Hiba történt a vizsgára jelentkezéskor:", error);
         res.status(500).json({ error: "Hiba történt a vizsgára jelentkezéskor" });
