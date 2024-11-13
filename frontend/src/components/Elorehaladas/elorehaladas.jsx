@@ -6,32 +6,33 @@ import AuthContext from "../../AuthContext.jsx";
 import { Link } from "react-router-dom";
 
 const Elorehaladas = () => {
-  const [vizsgaBtn, setVizsgaBtn] = useState(false);
-  const [data, setData] = useState([]);
-  const { user } = useContext(AuthContext);
-  useEffect(() => {
-    //TODO:
-    //ide kerül majd akkor az, hogy beolvassuk a előrehaladást és megnézzük, hogy a gyakorlati vizsgánál 30-e az óraszám...
-  }, []);
 
-  const vizsgaBtnClick = () => {
+    const [vizsgaBtn, setVizsgaBtn] = useState(false)
+    const [data, setData] = useState([])
+    const { user } = useContext(AuthContext);
+    useEffect(() =>{
+        //TODO: 
+        //ide kerül majd akkor az, hogy beolvassuk a előrehaladást és megnézzük, hogy a gyakorlati vizsgánál 30-e az óraszám... 
+    },[])
+
+     const vizsgaBtnClick = () => {
     const vizsga = async () => {
       try {
         const resp = await axios.get(
-          "http://localhost:5000/api/vizsga/vizsgak"
+          "http://localhost:5000/api/vizsga/vizsgak",
+          { withCredentials: true }
         );
         const data = resp.data;
         if (data) {
           //setVizsgaBtn(true)
           setData(data);
+          setVizsgaBtn(true);
         }
       } catch (error) {
         console.log(error);
       }
     };
     vizsga();
-
-    setVizsgaBtn(true);
   };
 
   return (
@@ -42,6 +43,8 @@ const Elorehaladas = () => {
             ? `Előrehaladásod`
             : `Jelentekezz be, hogy láthassad az előrehaladásod!`}
         </h2>
+        {user ?
+        (<>
         <div className="progressMainDiv">
           <div className="vizsgaBtn">
             <div className="btn">
@@ -127,6 +130,8 @@ const Elorehaladas = () => {
             <i className="fas fa-caret-square-down"></i> Vizsgára jelentkezés
           </button>
         </div>
+        </>) : ''
+        }
 
         {vizsgaBtn && (
           <>
@@ -141,7 +146,7 @@ const Elorehaladas = () => {
                     <th className="jelentkezes">Jelentkezés</th>
                   </tr>
                   {data.map((formData) => {
-                    <VizsgaTable formData={formData} />;
+                    return <VizsgaTable formData={formData} />;
                   })}
                 </tbody>
               </table>
