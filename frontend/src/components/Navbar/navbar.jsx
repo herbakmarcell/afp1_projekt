@@ -6,6 +6,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../AuthContext.jsx";
 import { useContext } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faRightToBracket,
+  faRightFromBracket,
+  faUserPlus,
+} from "@fortawesome/free-solid-svg-icons";
 export const NavBar = () => {
   const [menuOpen, SetMenuOpen] = useState(false); // reszponziv nav
   const { user, logout } = useContext(AuthContext); // Használjuk a Context-et
@@ -25,7 +31,8 @@ export const NavBar = () => {
     <nav>
       <div className="navbarTitleImg">
         <img
-          src="icon_traffic_light.png"
+          src="https://static.vecteezy.com/system/resources/thumbnails/000/550/395/small_2x/traffic_light_006.jpg"
+          alt="trafficLights"
         />
         <Link to="/fooldal">Autósiskola</Link>
       </div>
@@ -43,20 +50,43 @@ export const NavBar = () => {
         {!user ? (
           <>
             <li>
-              <Link to="/bejelentkezes">Bejelentkezés</Link>
+              <Link to="/bejelentkezes">
+                <span>
+                  <FontAwesomeIcon icon={faRightToBracket} size="xs" />
+                </span>
+                Bejelentkezés
+              </Link>
             </li>
             <li>
-              <Link to="/regisztracio">Regisztráció</Link>
+              <Link to="/regisztracio">
+                <span>
+                  <FontAwesomeIcon icon={faUserPlus} size="xs" />
+                </span>
+                Regisztráció
+              </Link>
             </li>
           </>
         ) : (
           <>
-            <h3 className="bejelentkezettUser">
-              {user.user.vezeteknev} {user.user.keresztnev}
-            </h3>
-            <Link to="/bejelentkezes" onClick={logoutBtn}>
-              Kijelentkezés
-            </Link>
+            <li className="noStyle">
+              <Link to="/profilAdatok">
+                <div className="navBarImg">
+                  <img
+                    src="https://loremflickr.com/200/200?random=1"
+                    alt={user.user.vezeteknev + " " + user.user.keresztnev}
+                    title={user.user.vezeteknev + " " + user.user.keresztnev}
+                  />
+                </div>
+              </Link>
+            </li>
+            <li>
+              <Link to="/bejelentkezes" onClick={logoutBtn}>
+                <span>
+                  <FontAwesomeIcon icon={faRightFromBracket} size="xs" />
+                </span>
+                Kijelentkezés
+              </Link>
+            </li>
           </>
         )}
       </ul>
