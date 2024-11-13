@@ -1,4 +1,3 @@
-
 import React, { useContext, useEffect, useState } from "react";
 import "../../Css/elorehaladas.css";
 import VizsgaTable from "./vizsgatable.jsx";
@@ -24,6 +23,7 @@ const Elorehaladas = () => {
           { withCredentials: true }
         );
         const data = resp.data;
+        console.log(data);
         if (data) {
           //setVizsgaBtn(true)
           setData(data);
