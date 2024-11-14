@@ -11,43 +11,50 @@ const BejelentkezesForm = () => {
 
   const [email, setEmail] = useState("");
   const [jelszo, setJelszo] = useState("");
+  const [error, setError] = useState("")
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
+    
       console.log(email);
 
-      const response = await axios.post(
-        "http://localhost:5000/api/users/login",
-        { email, jelszo },
-        { withCredentials: true }
-      );
-      if (!response.data.token) {
-        throw new Error("No token received");
+      try {
+        const response = await axios.post(
+          "http://localhost:5000/api/users/login",
+          { email, jelszo },
+          { withCredentials: true }
+        );
+        if (!response.data.token) {
+          throw new Error("No token received");
+        }
+  
+        const { token } = response.data;
+        console.log("Bejelentkezve, token:" + token);
+        login(token); // A JWT token beállítása a context-ben
+  
+        const decodedToken = jwtDecode(token);
+        const jogkor_id = decodedToken.user.jogkor_id;
+  
+        if (jogkor_id == 1) {
+          navigate("/fooldal"); // Visszairányítás a főoldalra
+        } else if (jogkor_id == 4) {
+          navigate("/admin");
+        } else {
+        }
+      } catch (err){
+        console.log()
+        setError(err.response.data.error)
       }
 
-      const { token } = response.data;
-      console.log("Bejelentkezve, token:" + token);
-      login(token); // A JWT token beállítása a context-ben
-
-      const decodedToken = jwtDecode(token);
-      const jogkor_id = decodedToken.user.jogkor_id;
-
-      if (jogkor_id == 1) {
-        navigate("/fooldal"); // Visszairányítás a főoldalra
-      } else if (jogkor_id == 4) {
-        navigate("/admin");
-      } else {
-      }
-    } catch (error) {
-      console.error("Login failed", error.message);
-    }
+      
+    
   };
 
   return (
     <div className="formDiv">
       <h1>Bejelentkezés</h1>
+      {error}
       <form>
         <FormInput
           spanIcon={faEnvelope}

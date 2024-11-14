@@ -142,8 +142,8 @@ const Elorehaladas = () => {
                     <th>Vizsga időpontja</th>
                     <th className="jelentkezes">Jelentkezés</th>
                   </tr>
-                  {data.map((formData) => {
-                    return <VizsgaTable formData={formData} />;
+                  {data ? <tr ><td colSpan={5}>Nincsenek meghirdetve vizsgák.</td></tr> : data.map((formData, i) => {
+                    return <VizsgaTable formData={formData} key={i} />;
                   })}
                 </tbody>
               </table>
