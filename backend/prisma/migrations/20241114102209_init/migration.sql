@@ -1,11 +1,11 @@
 /*
   Warnings:
 
-  - You are about to drop the `user` table. If the table is not empty, all the data it contains will be lost.
+  - You are about to drop the `User` table. If the table is not empty, all the data it contains will be lost.
 
 */
 -- DropTable
-DROP TABLE `user`;
+DROP TABLE `User`;
 
 -- CreateTable
 CREATE TABLE `Felhasznalok` (
@@ -55,7 +55,8 @@ CREATE TABLE `Orak` (
 CREATE TABLE `Orarend` (
     `orarend_id` INTEGER NOT NULL AUTO_INCREMENT,
     `ora_id` INTEGER NOT NULL,
-    `felhasznalo_id` INTEGER NOT NULL,
+    `tanulo_id` INTEGER NOT NULL,
+    `tanar_id` INTEGER NOT NULL,
 
     PRIMARY KEY (`orarend_id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -67,6 +68,7 @@ CREATE TABLE `TanuloElorehaladas` (
     `oktato_id` INTEGER NOT NULL,
     `levezetett_orak` INTEGER NOT NULL DEFAULT 0,
 
+    UNIQUE INDEX `TanuloElorehaladas_tanulo_id_key`(`tanulo_id`),
     PRIMARY KEY (`elorehaladas_id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -75,7 +77,6 @@ CREATE TABLE `Vizsgajelentkezes` (
     `vizsgajelentkezes_id` INTEGER NOT NULL AUTO_INCREMENT,
     `tanulo_elorehaladas_id` INTEGER NOT NULL,
     `vizsga_id` INTEGER NOT NULL,
-    `oktato_jovahagyas` BOOLEAN NOT NULL DEFAULT false,
 
     PRIMARY KEY (`vizsgajelentkezes_id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -106,7 +107,10 @@ ALTER TABLE `Felhasznalok` ADD CONSTRAINT `Felhasznalok_jogkor_id_fkey` FOREIGN 
 ALTER TABLE `Kifizetesek` ADD CONSTRAINT `Kifizetesek_elorehaladas_id_fkey` FOREIGN KEY (`elorehaladas_id`) REFERENCES `TanuloElorehaladas`(`elorehaladas_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Orarend` ADD CONSTRAINT `Orarend_felhasznalo_id_fkey` FOREIGN KEY (`felhasznalo_id`) REFERENCES `Felhasznalok`(`felhasznalo_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Orarend` ADD CONSTRAINT `Orarend_tanulo_id_fkey` FOREIGN KEY (`tanulo_id`) REFERENCES `Felhasznalok`(`felhasznalo_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Orarend` ADD CONSTRAINT `Orarend_tanar_id_fkey` FOREIGN KEY (`tanar_id`) REFERENCES `Felhasznalok`(`felhasznalo_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Orarend` ADD CONSTRAINT `Orarend_ora_id_fkey` FOREIGN KEY (`ora_id`) REFERENCES `Orak`(`ora_id`) ON DELETE CASCADE ON UPDATE CASCADE;
