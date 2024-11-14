@@ -2,61 +2,112 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+//A megadott idő valamiért 1 órával kevesebb,
+//ezért hozzáadok 1 órát a fügvénnyel
+Date.prototype.addHours = function (h) {
+  this.setHours(this.getHours() + h);
+  return this;
+};
+
 //@desc Órarend szerkesztése
 //@route PUT /api/orarend/oraModositas
 //@access private
 const orarendModositas = async (req, res) => {
-  const { jogkor_id} = req.user.user; // A claims-ból kiolvassuk az ID-t
-  if(jogkor_id == 1)
+  const { jogkor_id } = req.user.user; // A claims-ból kiolvassuk az ID-t
+  if (jogkor_id == 1)
     return res.status(403).json("Tanuló nem módosíthat órát!");
 
   const { id } = req.user.user;
 
   const ora_id = req.body.ora_id;
-  if (!ora_id)
-    return res.status(406).json("Nincs megadva id!");
+  if (!ora_id) return res.status(406).json("Nincs megadva id!");
 
   const ora_kezdete = new Date(req.body.idopont_eleje);
-  const ora_vege = req.body.idopont_vege;
+  const ora_vege = new Date(req.body.idopont_vege);
   const ora_cim = req.body.cim;
   const ora_helyszin = req.body.helyszin;
   const tanulo_id = req.body.felhasznalo_id;
+  const mai_datum = new Date();
+  console.log("Mai dátum: " + mai_datum);
 
   const ora = await prisma.orak.findFirst({
     where: {
-      ora_id: ora_id
-    }
+      ora_id: ora_id,
+    },
   });
 
   const orarend = await prisma.orarend.findFirst({
     where: {
-      ora_id: ora.ora_id
-    }
+      ora_id: ora.ora_id,
+    },
   });
 
-  if (orarend.tanar_id != id) return res.status(403).json("Csak a saját óráját módosíthatja!");
+  if (orarend.tanar_id != id)
+    return res.status(403).json({ err: "Csak a saját óráját módosíthatja!" });
 
-  res.json("OK");
-  //orarend adatainak szerkesztése
+  //Ebbe gyűjtöm össze az adatokat, amit updatelni kell
+  const ora_update = {};
+  const hibak = {};
+  if (ora_kezdete) {
+    if (!isNaN(ora_kezdete.getTime()) && ora_kezdete >= mai_datum) {
+      ora_update["idopont_eleje"] = ora_kezdete.addHours(1);
+    } else
+      hibak.ora_kezdete = "Az óra kezdete nem megfelelő, nem lesz updatelve!";
+  }
+  // if (ora_kezdete && !isNaN(ora_kezdete.getTime()) && ora_kezdete >= mai_datum)
+  //   ora_update["idopont_eleje"] = ora_kezdete.addHours(1);
+  // else hibak.ora_kezdete = "Az óra kezdete nem megfelelő, nem lesz updatelve!";
+
+  if (ora_vege && !isNaN(ora_vege.getTime()) && ora_vege > ora_kezdete)
+    ora_update["idopont_vege"] = ora_vege.addHours(1);
+  else hibak.ora_vege = "Az óra vége nem megfelelő, nem lesz updatelve!";
+
+  if (ora_cim && ora_cim.length < 0) ora_update["cim"] = ora_cim;
+  else hibak.ora_cim = "A cím nem lehet üres, nem lesz updatelve!";
+
+  if (ora_helyszin && ora_helyszin.length < 0)
+    ora_update["helyszin"] = ora_helyszin;
+  else hibak.ora_helyszin = "A helyszín nem lehet üres, nem lesz updatelve!";
+
+  if (tanulo_id && isInteger(tanulo_id)) ora_update["tanulo_id"] = tanulo_id;
+  else hibak.tanulo_id = "A tanuló ID nem megfelelő, nem lesz updatelve!";
+
+  if (Object.keys(ora_update) != 0) {
+    try {
+      const orarend_update = await prisma.orak.update({
+        where: {
+          ora_id: ora_id,
+        },
+        data: ora_update,
+      });
+      if (orarend_update)
+        return res.status(201).json({ res: "A módosítás sikeres!" });
+      else
+        return res.status(500).json({
+          err: "Nem sikerült módosítani az órát, próbálja meg újra!",
+        });
+    } catch (err) {
+      console.log(err);
+      return res
+        .status(500)
+        .json({ err: "Nem sikerült módosítani az órát, szerverhiba miatt!" });
+    }
+  }
+
+  if (Object.keys(hibak) != 0) return res.status(401).json(hibak);
+  return res
+    .status(200)
+    .json({ msg: "Nem volt megadva adat, amit módosítani kéne!" });
 };
-
 
 //@desc Új óra létrehozása
 //@route POST /api/orarend/oraLetrehozas
 //@access private
-const oraLetrehozas = (async (req, res) => {
+const oraLetrehozas = async (req, res) => {
   const { jogkor_id } = req.user.user;
   if (jogkor_id == 1) {
     return res.status(403).json("Tanuló nem hozhat létre új órát!");
   }
-
-  //A megadott idő valamiért 1 órával kevesebb,
-  //ezért hozzáadok 1 órát a fügvénnyel
-
-  Date.prototype.addHours = function (h) {
-    this.setHours(this.getHours() + h);
-    return this;
-  };
 
   const body_idopont_eleje = new Date(req.body.idopont_eleje);
   const body_idopont_vege = new Date(req.body.idopont_vege);
@@ -64,23 +115,29 @@ const oraLetrehozas = (async (req, res) => {
   const body_helyszin = req.body.helyszin;
   const body_felhasznalo_id = req.body.felhasznalo_id;
 
-  if(!body_idopont_eleje || !body_idopont_vege || !body_cim || !body_helyszin || !body_felhasznalo_id)
-  {
+  if (
+    !body_idopont_eleje ||
+    !body_idopont_vege ||
+    !body_cim ||
+    !body_helyszin ||
+    !body_felhasznalo_id
+  ) {
     return res.status(406).json("Nincs minden adat megadva!");
   }
-  
-  if (isNaN(body_idopont_eleje.getTime()) || isNaN(body_idopont_vege.getTime()))
-  {
-    return res.status(406).json({error: "A dátum nem helyes!"});
+
+  if (
+    isNaN(body_idopont_eleje.getTime()) ||
+    isNaN(body_idopont_vege.getTime())
+  ) {
+    return res.status(406).json({ error: "A dátum nem helyes!" });
   }
   body_idopont_eleje.addHours(1);
   body_idopont_vege.addHours(1);
 
-  if (!Number.isInteger(body_felhasznalo_id))
-  {
+  if (!Number.isInteger(body_felhasznalo_id)) {
     return res.status(406).json({ error: "Az id-nek számnak kell lennie!" });
   }
-  
+
   //Felviszem az orak táblába a rekordot
 
   try {
@@ -89,75 +146,70 @@ const oraLetrehozas = (async (req, res) => {
         idopont_eleje: body_idopont_eleje,
         idopont_vege: body_idopont_vege,
         cim: body_cim,
-        helyszin: body_helyszin
-      }
-    }); 
-    console.log("Óra felvéve...")
+        helyszin: body_helyszin,
+      },
+    });
+    console.log("Óra felvéve...");
 
     //A felvitt rekord id-je
     const felvitt_ora_max_id = await prisma.orak.aggregate({
       _max: {
-        ora_id: true
-      }
+        ora_id: true,
+      },
     });
     const felvitt_ora_id = felvitt_ora_max_id._max.ora_id;
-    
+
     //Felviszem a kapcsolótáblába az adatokat
     await prisma.orarend.create({
-      data:{
+      data: {
         ora_id: felvitt_ora_id,
-        felhasznalo_id: body_felhasznalo_id
-      }
+        felhasznalo_id: body_felhasznalo_id,
+      },
     });
-    console.log("Kapcsolótáblába felvéve...")
+    console.log("Kapcsolótáblába felvéve...");
     res.status(201).json("Az óra sikeresen felkerült a rendszerbe!");
-  
-  } catch (err)
-  {
+  } catch (err) {
     return res.status(500).json({
       error: "Az adatot nem sikerült felvinni!",
-      errormsg: err
+      errormsg: err,
     });
   }
-  
-});
+};
 
 //@desc orarend lekérdezése
 //@route GET /api/orarend/orarendLekeres
 //@access public
 
-const orarendLekeres = (async (req, res) => { 
+const orarendLekeres = async (req, res) => {
   const { id } = req.user.user;
   const user_id = id;
 
-  if (!Number.isInteger(user_id))
-  {
-    return res.status(406).json({error: "A ID típusa nem megfelelő!"});
+  if (!Number.isInteger(user_id)) {
+    return res.status(406).json({ error: "A ID típusa nem megfelelő!" });
   }
 
   try {
     const orak = await prisma.orarend.findMany({
       where: {
-        felhasznalo_id: user_id
+        felhasznalo_id: user_id,
       },
       include: {
-        Orak: true
-      }
+        Orak: true,
+      },
     });
     res.status(202).json(orak);
-  }
-  catch (err){
+  } catch (err) {
     return res.status(500).json({
       error: "Az órákat nem sikerült lekérdezni",
-      errormsg: err
+      errormsg: err,
     });
   }
-}); 
+};
 
 //@desc Óra törlése id alapján
 //@route POST /api/orarend/oraTorles
 //@access private
-const oraTorles = (async (req, res) => {
+const oraTorles = async (req, res) => {
   const { id, jogkor_id } = req.user.user;
 
   if (!id) return res.status(401).json("Jelentkezzen be!");
@@ -195,6 +247,6 @@ const oraTorles = (async (req, res) => {
     console.log(err);
     return res.status(500).json({ err: "A törlés sikertelen!" });
   }
-});
+};
 
 export { orarendModositas, orarendLekeres, oraLetrehozas, oraTorles };
