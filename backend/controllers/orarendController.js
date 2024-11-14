@@ -3,13 +3,40 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 //@desc Órarend szerkesztése
-//@route GET /api/orarend/orarendModositas
+//@route PUT /api/orarend/oraModositas
 //@access private
 const orarendModositas = async (req, res) => {
-  const { jogkor_id, email } = req.user.user; // A claims-ból kiolvassuk az ID-t
+  const { jogkor_id} = req.user.user; // A claims-ból kiolvassuk az ID-t
+  if(jogkor_id == 1)
+    return res.status(403).json("Tanuló nem módosíthat órát!");
 
-  res.json({ user: req.user.user });
+  const { id } = req.user.user;
 
+  const ora_id = req.body.ora_id;
+  if (!ora_id)
+    return res.status(406).json("Nincs megadva id!");
+
+  const ora_kezdete = new Date(req.body.idopont_eleje);
+  const ora_vege = req.body.idopont_vege;
+  const ora_cim = req.body.cim;
+  const ora_helyszin = req.body.helyszin;
+  const tanulo_id = req.body.felhasznalo_id;
+
+  const ora = await prisma.orak.findFirst({
+    where: {
+      ora_id: ora_id
+    }
+  });
+
+  const orarend = await prisma.orarend.findFirst({
+    where: {
+      ora_id: ora.ora_id
+    }
+  });
+
+  if (orarend.tanar_id != id) return res.status(403).json("Csak a saját óráját módosíthatja!");
+
+  res.json("OK");
   //orarend adatainak szerkesztése
 };
 
