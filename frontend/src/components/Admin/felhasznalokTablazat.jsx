@@ -36,11 +36,6 @@ const UsersTable = (props) => {
           >
             <i className="fas fa-sign-in-alt"></i> Jogosultság változtatása
           </button>
-          {/* {lejelentkezesBtn && (
-            <button>
-              <i className="fas fa-sign-out-alt"></i> Lejelentkezés
-            </button>
-          )}{" "} */}
         </td>
       </tr>
     </>
