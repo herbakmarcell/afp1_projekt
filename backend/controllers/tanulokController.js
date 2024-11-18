@@ -77,7 +77,7 @@ const tanulokLekerese = async (req, res) => {
 };
 
 //@desc Adott tanuló előrehaladásának lekérdezése
-//@route POST /api/tanulok/elorehaladas/:tanulo_id
+//@route GET /api/tanulok/elorehaladas/:tanulo_id
 //@access private
 const tanuloElorehaladasa = (async (req, res) => {
   const azon = req.user.user.id
@@ -129,7 +129,7 @@ const tanuloElorehaladasa = (async (req, res) => {
           message: 'A tanuló nem található',
         });
       }
-
+      
       if (tanuloElorehaladas.FelhasznalokOktato?.felhasznalo_id !== azon) {
         return res.status(403).send({
           message: 'Hozzáférés megtagadva: Az adott tanulónak nem ön az oktatója.',
