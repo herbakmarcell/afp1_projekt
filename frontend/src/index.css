@@ -11,11 +11,50 @@
   --navButtonActive: #004a71;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--navButtonInactive);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--navBlue);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--navButtonActive);
+}
+
+::selection {
+  background-color: var(--navButtonInactive);
+  color: #ffffff;
+}
+
 body {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-style: normal;
   color: white;
+  /* position: relative; */
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.bgcImg {
+  position: fixed;
+  width: 100%;
+  /* height: 100%; */
+  top: -116rem;
+  left: -20rem;
+  opacity: 0.5;
+  z-index: -1;
 }
 
 nav {
@@ -53,6 +92,18 @@ nav a {
   font-weight: 700;
 }
 
+.navBarImg {
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.navBarImg img {
+  width: 100%;
+  height: 100%;
+}
+
 .navbarTitleImg {
   display: flex;
   justify-content: space-around;
@@ -66,10 +117,16 @@ nav a {
 }
 
 .navButtons {
-  width: 20%;
+  width: 23%;
   display: flex;
   justify-content: space-around;
   list-style: none;
+}
+
+.navButtons li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .navButtons a {
@@ -82,8 +139,21 @@ nav a {
   font-weight: normal;
 }
 
+.navButtons span {
+  margin: 5px;
+}
+
+.navButtons .noStyle a {
+  all: unset;
+}
+
 .navButtons a:hover {
   background-color: var(--navButtonActive);
+}
+
+.navButtons .noStyle a:hover {
+  all: unset;
+  cursor: pointer;
 }
 
 .navButtons .active {
@@ -99,10 +169,14 @@ nav a {
 
 .formDiv {
   display: flex;
-  width: 40%;
-  margin: 10em auto auto auto;
+  flex-direction: column;
+  align-items: center;
+  width: 30%;
+  margin: 5em auto auto auto;
   padding: 10px;
   justify-content: center;
+  background-color: #131c21b6;
+  border-radius: 10px;
 }
 
 .formDiv form {
@@ -111,16 +185,48 @@ nav a {
   justify-content: center;
   align-items: center;
   gap: 20px;
-  width: 50%;
+  width: 70%;
 }
 
-.FormDivElement {
+.FormDivMain {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.FormDivMain label {
+  text-transform: capitalize;
+}
+
+.FormDivElement,
+.FormDivElementButton {
   width: 100%;
   display: flex;
   height: 40px;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--navBlue);
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.FormDivElementButton {
+  padding: 0;
 }
 
 .FormDivElement input {
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(177, 177, 177);
+  padding: 10px;
+  max-height: 100%;
+}
+
+.FormDivElementButton input {
   width: 100%;
   border: none;
   border-radius: 5px;
@@ -133,7 +239,8 @@ input:active {
   background-color: rgb(120, 120, 120);
 }
 
-.FormDivElement input[type="submit"]:hover {
+.FormDivElement input[type="submit"]:hover,
+.FormDivElementButton input[type="submit"]:hover {
   cursor: pointer;
   color: white;
   background-color: var(--navBlue);
@@ -142,6 +249,160 @@ input:active {
 .FormDivElement img {
   width: 40px;
   height: 40px;
+}
+
+.mainContent {
+  display: grid;
+  gap: 30px;
+  grid-template-columns: 30% 30% 33.5%;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "title title title"
+    "process timetable timetable"
+    "teacher car test";
+  margin: 3rem auto;
+  width: 90%;
+}
+
+.mainContentNo {
+  display: block;
+  height: auto;
+  width: 80%;
+  text-align: center;
+  margin: auto;
+}
+
+.mainContent h2,
+.mainContentNo h2,
+.mainContent p {
+  grid-area: title;
+  background-color: var(--navBlue);
+  text-align: center;
+  text-transform: capitalize;
+  padding: 5px;
+}
+
+.mainContent .processDiv {
+  grid-area: process;
+  width: 100%;
+  border: 2px solid black;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  background: #2d44505a;
+}
+
+.mainContent h2 {
+  margin: 0;
+  width: 100%;
+}
+
+.processDiv ul li {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 97%;
+  text-align: center;
+  gap: 10px;
+  border: 1px solid var(--navBlue);
+  padding-bottom: 5px;
+  margin: 5px;
+  list-style: none;
+}
+
+.processDiv p {
+  background-color: #131c2180;
+  width: 100%;
+}
+
+.progressCircle {
+  width: 30%;
+  margin: auto;
+}
+
+.mainContent .mainOrarendDiv {
+  grid-area: timetable;
+  width: 100%;
+  border: 2px solid black;
+  background: #2d44505a;
+}
+
+.mainContent .mainOktatoDiaknak {
+  grid-area: teacher;
+  width: 100%;
+  border: 2px solid black;
+  text-align: center;
+  background: #2d44505a;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.mainContent .mainAutoDiaknak {
+  grid-area: car;
+  background: #2d44505a;
+  width: 100%;
+  border: 2px solid black;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.mainOktatoDiaknakDI,
+.mainAutoDiaknakDI {
+  width: 90%;
+  margin: 10px auto;
+  border: 10px solid var(--navBlue);
+}
+
+.mainOktatoDiaknak img,
+.mainAutoDiaknak img {
+  width: 100%;
+}
+
+.mainContent .mainVizsgaDiaknak {
+  grid-area: test;
+  width: 100%;
+  background: #2d44505a;
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.mainVizsgaDiaknak ul {
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.mainVizsgaDiaknak ul li {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 50%;
+  text-align: center;
+  gap: 10px;
+  border: 1px solid var(--navBlue);
+  margin: 5px;
+  list-style: none;
+}
+
+.mainVizsgaDiaknak p {
+  background-color: #131c2180;
+  width: 100%;
+}
+
+.noResultVizsga {
+  background: #131c2130 !important;
+  color: red;
+  font-weight: 500;
 }
 
 .infoDiv {
@@ -170,6 +431,7 @@ input:active {
   background-color: rgb(236, 236, 236);
   border-radius: 20px;
   padding: 10px;
+  height: auto;
 }
 
 .infoDivNo h2 {
@@ -179,8 +441,14 @@ input:active {
 
 .infoTablaDiv {
   display: flex;
-  width: 99.5%;
+  flex-direction: column;
+  width: 99.7%;
   border: 2px solid black;
+  height: 44vh;
+}
+
+.infoTablaDiv .infoTablaDivInner {
+  display: flex;
 }
 
 .infoTablaDiv h2 {
@@ -191,6 +459,7 @@ input:active {
 
 .infoTablaDiv .infoTablaTableDiv {
   width: 100%;
+  position: relative;
 }
 
 .infoTablaTableDiv table {
@@ -217,16 +486,112 @@ input:active {
   /* width: 50%; */
 }
 
-.infoTablaTableDiv button{
-  background-color:#004a71;
+.infoTablaTableDiv button,
+.infoTablaTableDiv a {
+  background-color: #004a71;
   color: white;
   padding: 0.3rem;
-  border-radius: 10px;   
+  /* border-radius: 10px; */
+  border: none;
+}
+
+.infoTablaTableDiv a {
+  text-decoration: none;
+  position: absolute;
+  right: 10px;
+  /* bottom: 1px; */
+}
+
+.calendar {
+  border: 1px solid var(--navBlue);
+  padding: 20px;
+  /* border-radius: 8px; */
+  max-width: 80%;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.calendar h4 {
+  width: 100%;
+  background-color: #131c2180;
+}
+
+.calendar-days {
+  background-color: var(--navBlue);
+  color: white;
+}
+
+.chooseMotnhBtn {
+  background-color: var(--navBlue);
+  /* border-radius: 5px; */
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.calendar-days-container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.calendar-days-container div {
+  padding: 10px;
+  border: 1px solid var(--navBlue);
+  background-color: #2d44505a;
+  cursor: pointer;
+  color: black;
+}
+
+.empty {
+  color: #ccc;
+}
+
+.footer {
+  background-color: var(--navBlue);
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+  /* position: fixed;
+  bottom: 0; */
+  width: 100%;
+  margin: 5rem auto 0 auto;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-link {
+  color: #fff;
+  text-decoration: none;
+  padding: 0 5px;
 }
 
 @media (max-width: 1200px) {
   .navButtons {
     width: 30%;
+  }
+  .formDiv {
+    width: 50%;
+  }
+  .formDiv form {
+    width: 80%;
   }
 }
 
@@ -239,6 +604,13 @@ input:active {
 @media (max-width: 770px) {
   .infoTablaImgDiv {
     display: none;
+  }
+  .formDiv {
+    width: 80%;
+  }
+
+  .formDiv form {
+    width: 80%;
   }
 }
 
@@ -276,5 +648,15 @@ input:active {
 
   .navbarTitleImg {
     width: 45%;
+  }
+
+  .infoDiv {
+    margin-top: 5rem;
+    width: 90%;
+  }
+
+  .infoDiv table {
+    width: 90%;
+    border-spacing: 4px;
   }
 }
