@@ -22,8 +22,8 @@ const orarendModositas = async (req, res) => {
   const ora_id = req.body.ora_id;
   if (!ora_id) return res.status(406).json("Nincs megadva id!");
 
-  const ora_kezdete = new Date(req.body.idopont_eleje);
-  const ora_vege = new Date(req.body.idopont_vege);
+  let ora_kezdete = req.body.idopont_eleje;
+  let ora_vege = req.body.idopont_vege;
   const ora_cim = req.body.cim;
   const ora_helyszin = req.body.helyszin;
   const tanulo_id = req.body.felhasznalo_id;
@@ -49,30 +49,43 @@ const orarendModositas = async (req, res) => {
   const ora_update = {};
   const hibak = {};
   if (ora_kezdete) {
-    if (!isNaN(ora_kezdete.getTime()) && ora_kezdete >= mai_datum) {
+    ora_kezdete = new Date(ora_kezdete);
+    if (
+      !isNaN(ora_kezdete.getTime()) &&
+      ora_kezdete >= mai_datum &&
+      (!ora_vege || ora_kezdete < ora_vege)
+    )
       ora_update["idopont_eleje"] = ora_kezdete.addHours(1);
-    } else
+    else
       hibak.ora_kezdete = "Az óra kezdete nem megfelelő, nem lesz updatelve!";
   }
-  // if (ora_kezdete && !isNaN(ora_kezdete.getTime()) && ora_kezdete >= mai_datum)
-  //   ora_update["idopont_eleje"] = ora_kezdete.addHours(1);
-  // else hibak.ora_kezdete = "Az óra kezdete nem megfelelő, nem lesz updatelve!";
 
-  if (ora_vege && !isNaN(ora_vege.getTime()) && ora_vege > ora_kezdete)
-    ora_update["idopont_vege"] = ora_vege.addHours(1);
-  else hibak.ora_vege = "Az óra vége nem megfelelő, nem lesz updatelve!";
+  if (ora_vege) {
+    ora_vege = new Date(ora_vege);
+    if (
+      !isNaN(ora_vege) &&
+      ((!ora_eleje && ora_vege > mai_datum) || ora_vege > ora_eleje)
+    )
+      ora_update["idopont_vege"] = ora_vege.addHours(1);
+    else hibak.ora_vege = "Az óra vége nem megfelelő, nem lesz updatelve!";
+  }
 
-  if (ora_cim && ora_cim.length < 0) ora_update["cim"] = ora_cim;
-  else hibak.ora_cim = "A cím nem lehet üres, nem lesz updatelve!";
+  if (ora_cim) {
+    if (ora_cim.trim().length > 0) ora_update["cim"] = ora_cim;
+    else hibak.cim = "Az óra címe nem lehet üres, nem lesz updatelve!";
+  }
 
-  if (ora_helyszin && ora_helyszin.length < 0)
-    ora_update["helyszin"] = ora_helyszin;
-  else hibak.ora_helyszin = "A helyszín nem lehet üres, nem lesz updatelve!";
+  if (ora_helyszin) {
+    if (ora_helyszin.trim().length > 0) ora_update["helyszin"] = ora_helyszin;
+    else hibak.helszin = "A helyszín nem lehet üres, nem lesz updatelve!";
+  }
 
-  if (tanulo_id && isInteger(tanulo_id)) ora_update["tanulo_id"] = tanulo_id;
-  else hibak.tanulo_id = "A tanuló ID nem megfelelő, nem lesz updatelve!";
+  if (tanulo_id) {
+    if (isInteger(tanulo_id)) ora_update["tanulo_id"] = tanulo_id;
+    else hibak.tanulo_id = "A tanuló ID nem megfelelő, nem lesz updatelve!";
+  }
 
-  if (Object.keys(ora_update) != 0) {
+  if (Object.keys(ora_update) != 0 && Object.keys(hibak) == 0) {
     try {
       const orarend_update = await prisma.orak.update({
         where: {
