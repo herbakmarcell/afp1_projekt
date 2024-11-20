@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import AuthContext from "../../AuthContext.jsx";
 import "../../Css/bejreg.css";
+import { Dropdown } from "primereact/dropdown";
 
 export const FelhasznaloJogosultsagModositas = () => {
   const { user, login } = useContext(AuthContext);
@@ -12,14 +13,20 @@ export const FelhasznaloJogosultsagModositas = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = location.state || {};
-
+  const jogok = [
+    { name: "Tanuló", code: "1" },
+    { name: "Oktató", code: "2" },
+    { name: "Vizsgabiztos", code: "3" },
+  ];
   const handleChange = (e) => {
     setSelected(e.target.value);
   };
 
+  console.log(selected);
   const felh = async (id, jogkor) => {
     setLoading(true);
-
+    console.log(id);
+    console.log(jogkor);
     try {
       const resp = await axios.post(
         "http://localhost:5000/api/users/changeUserPrivileges",
@@ -46,12 +53,16 @@ export const FelhasznaloJogosultsagModositas = () => {
     <div className="formDiv">
       <form>
         <label>
-          <p>Válassz jogosultságot:</p>
-          <select value={selected} onChange={handleChange}>
-            <option value="1">Tanuló</option>
-            <option value="2">Oktató</option>
-            <option value="3">Vizsgabiztos</option>
-          </select>
+          <Dropdown
+            value={selected}
+            onChange={handleChange}
+            options={jogok}
+            optionLabel="name"
+            placeholder="Válassz jogosultságot:"
+            className="w-full md:w-140rem custom-dropdown"
+            checkmark={true}
+            highlightOnSelect={false}
+          />
         </label>
         <div className="FormDivElementButton">
           <input
@@ -59,7 +70,7 @@ export const FelhasznaloJogosultsagModositas = () => {
             value="Adatok módosítása"
             onClick={(e) => {
               e.preventDefault();
-              felh(id, Number(selected));
+              felh(id, Number(selected.code));
             }}
             disabled={loading}
           />

@@ -11,9 +11,8 @@ import { NavBar } from "../components/Navbar/navbar.jsx";
 import { WebsiteBGC } from "../components/WebsiteBackground/websiteBgc.jsx";
 import Footer from "../components/Footer/footer.jsx";
 import Elorehaladas from "../components/Elorehaladas/elorehaladas.jsx";
-import Kifizetesek from "../components/Kifizetesek/kifizetesek.jsx";
 import Admin from "../components/Admin/admin.jsx";
-
+import { FelhasznaloJogosultsagModositas } from "../components/Admin/felhasznaloJogosultsagValtas.jsx";
 
 const ReactRouterSetup = () => {
   return (
@@ -26,14 +25,20 @@ const ReactRouterSetup = () => {
           <Route path="/bejelentkezes" element={<BejelentkezesForm />} />
           <Route path="/regisztracio" element={<RegisztracióFormDiv />} />
           <Route path="/fooldal" element={<Fooldal />} />
-          <Route path="/felhasznaloModositas" element={<FelhasznaloModositas />} />
+          <Route
+            path="/felhasznaloModositas"
+            element={<FelhasznaloModositas />}
+          />
           <Route path="/profilAdatok" element={<ProfilAdatok />} />
           <Route path="/elorehaladas" element={<Elorehaladas />} />
           <Route path="/admin" element={<Admin />} />
-          <Route path="/kifizetesek" element={<Kifizetesek />} />
+          <Route
+            path="/felhasznalojogosultsagmodositas"
+            element={<FelhasznaloJogosultsagModositas />}
+          />
         </Routes>
+        <Footer />
       </Router>
-      <Footer />
       <WebsiteBGC />
     </AuthProvider>
   );

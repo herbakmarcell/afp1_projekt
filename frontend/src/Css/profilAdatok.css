@@ -1,43 +1,42 @@
 .infoDiv {
-  width: 65%;
-  margin: 10rem auto auto auto;
+  width: 90%;
+  margin: 4rem auto auto auto;
   color: black;
   display: flex;
   flex-direction: column;
   gap: 50px;
-  background-color: rgb(236, 236, 236);
-  border-radius: 20px 20px 0 0;
-  padding: 10px 0 0 0;
 }
 
-.infoDiv h2 {
+.infoDiv h2,
+.infoDivNo h2 {
   text-align: center;
   text-transform: capitalize;
+  background-color: var(--navBlue);
+  color: white;
+  padding: 10px;
+  width: 100%;
+  margin: 0;
 }
 
 /* ha nincs bejelentkezve */
 
 .infoDivNo {
-  width: 65%;
-  margin: 10rem auto auto auto;
+  width: 90%;
+  margin: 4rem auto auto auto;
   color: black;
-  background-color: rgb(236, 236, 236);
-  border-radius: 20px;
   padding: 10px;
   height: auto;
-}
-
-.infoDivNo h2 {
-  text-align: center;
-  text-transform: capitalize;
 }
 
 .infoTablaDiv {
   display: flex;
   flex-direction: column;
-  width: 99.7%;
+  width: 80%;
+  margin: auto;
   border: 2px solid black;
-  height: 44vh;
+  /* height: 50vh; */
+  height: auto;
+  background: #2d44505a;
 }
 
 .infoTablaDiv .infoTablaDivInner {
@@ -48,6 +47,12 @@
   background-color: var(--navBlue);
   color: white;
   padding: 10px;
+}
+
+.infoTablaImgDiv {
+  margin: 20px;
+  /* width: 90%; */
+  border: 10px solid var(--navBlue);
 }
 
 .infoTablaDiv .infoTablaTableDiv {
@@ -67,23 +72,23 @@
 }
 
 .infoTablaTableDiv table tr td {
-  background-color: lightgray;
+  background: #2d4450b0;
   width: 50%;
   padding: 10px;
   text-align: center;
 }
 
 .infoTablaTableDiv table tr td:first-child {
-  background-color: var(--navButtonActive);
+  background-color: var(--navBlue);
   color: white;
   /* width: 50%; */
 }
 
 .infoTablaTableDiv button,
 .infoTablaTableDiv a {
-  background-color: #004a71;
+  background-color: var(--navButtonInactive);
   color: white;
-  padding: 0.3rem;
+  padding: 0.7rem;
   /* border-radius: 10px; */
   border: none;
 }
@@ -91,6 +96,16 @@
 .infoTablaTableDiv a {
   text-decoration: none;
   position: absolute;
-  right: 10px;
-  /* bottom: 1px; */
+  right: 2px;
+  bottom: 2px;
+}
+
+.infoTablaTableDiv button:hover,
+.infoTablaTableDiv a:hover {
+  background-color: var(--navButtonActive);
+  color: white;
+  padding: 0.7rem;
+  /* border-radius: 10px; */
+  border: none;
+  cursor: pointer;
 }

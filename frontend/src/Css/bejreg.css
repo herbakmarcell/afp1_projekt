@@ -81,3 +81,31 @@ input:active {
   width: 40px;
   height: 40px;
 }
+
+.custom-dropdown {
+  background-color: rgb(177, 177, 177);
+  /* background-color: var(--navBlue); Fekete háttér */
+  color: var(--navBlue); /* Fehér szöveg a jobb olvashatóság érdekében */
+  padding: 10px; /* 10px padding */
+  border-radius: 10px;
+  width: 100%;
+}
+
+.p-dropdown-panel {
+  border-radius: 10px;
+  background-color: #004a71;
+  overflow: hidden;
+}
+
+.p-dropdown-item {
+  padding: 10px;
+  background-color: #2d4450;
+  /* border-radius: 10px; */
+}
+
+.p-dropdown-item:focus {
+  background-color: var(--navBlue);
+  color: white;
+  border: none;
+  outline: none;
+}

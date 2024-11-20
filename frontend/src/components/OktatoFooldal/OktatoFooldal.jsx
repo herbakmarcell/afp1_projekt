@@ -26,6 +26,38 @@ const OktatoFooldal = () => {
     { name: "Győr", code: "5" },
   ];
 
+  const orafelvitel = async (e) => {
+    e.preventDefault();
+
+    const helyszin = helyszinObj.name;
+    let felhasznalo_id = selectedTanulo.code;
+    felhasznalo_id = Number(felhasznalo_id);
+    try {
+      const resp = await axios.post(
+        "http://localhost:5000/api/orarend/oraLetrehozas",
+        {
+          idopont_eleje,
+          idopont_vege,
+          cim,
+          helyszin,
+          felhasznalo_id,
+        },
+        { withCredentials: true }
+      );
+
+      const data = await resp.data;
+      if (data) {
+        setSelectedTanulo([]);
+        setSelectedCity([]);
+        setidopont_eleje("");
+        setidopont_vege("");
+        setcim([]);
+      }
+    } catch (error) {
+      console.error("Hiba történt:", error);
+    }
+  };
+
   useEffect(() => {
     const adottTanulok = async () => {
       try {
@@ -57,35 +89,6 @@ const OktatoFooldal = () => {
   const helyszinObjChanges = (e) => {
     setSelectedCity(e.target.value);
   };
-  const orafelvitel = async (e) => {
-    e.preventDefault();
-
-    const helyszin = helyszinObj.name;
-    let felhasznalo_id = selectedTanulo.code;
-    felhasznalo_id = Number(felhasznalo_id);
-    try {
-      const resp = await axios.post(
-        "http://localhost:5000/api/orarend/oraLetrehozas",
-        {
-          idopont_eleje,
-          idopont_vege,
-          cim,
-          helyszin,
-          felhasznalo_id,
-        },
-        { withCredentials: true }
-      );
-
-      const data = await resp.data;
-      if (data) {
-        setTimeout(() => {
-          navigate("/fooldal", { replace: true });
-        }, 2000);
-      }
-    } catch (error) {
-      console.error("Hiba történt:", error);
-    }
-  };
 
   return (
     <>
@@ -107,6 +110,7 @@ const OktatoFooldal = () => {
                       type="text"
                       name="cimTime"
                       id="cimTime"
+                      value={cim}
                       onChange={(e) => setcim(e.target.value)}
                     />
                   </label>
@@ -142,6 +146,7 @@ const OktatoFooldal = () => {
                       type="datetime-local"
                       name="idopont_eleje"
                       id="idopont_eleje"
+                      value={idopont_eleje}
                       onChange={(e) => setidopont_eleje(e.target.value)}
                     />
                   </label>
@@ -151,6 +156,7 @@ const OktatoFooldal = () => {
                       type="datetime-local"
                       name="idopont_vege"
                       id="idopont_vege"
+                      value={idopont_vege}
                       onChange={(e) => setidopont_vege(e.target.value)}
                     />
                   </label>
