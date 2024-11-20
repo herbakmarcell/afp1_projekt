@@ -2,6 +2,7 @@ import express from 'express'
 import users from './routes/userRoutes.js'
 import orarend from './routes/orarendRoutes.js'
 import tanulok from './routes/tanulokRoutes.js'
+import oktatok from './routes/oktatokRoutes.js'
 import kifizetesek from "./routes/kifizetesRoutes.js"
 import vizsga from './routes/vizsgaRoutes.js'
 import admin from './routes/adminRoutes.js'
@@ -22,6 +23,7 @@ app.use(cors({
 app.use("/api/users", users);
 app.use("/api/orarend", orarend)
 app.use("/api/tanulok", tanulok)
+app.use("/api/oktatok", oktatok)
 app.use("/api/kifizetes", kifizetesek)
 app.use("/api/vizsga", vizsga)
 app.use("/api/admin", admin)

@@ -5,6 +5,7 @@ const prisma = new PrismaClient();
 //@route GET /api/vizsga/vizsgak
 //@access private
 const elerhetoVizsgak = async (req, res) => {
+    const azon = req.user.user.id; // felhasznalo_id
     const { jogkor_id } = req.user.user;
 
     if (jogkor_id != 1) { // tanulo_id
@@ -42,7 +43,46 @@ const elerhetoVizsgak = async (req, res) => {
             },
         });
 
-        const result = vizsgak.map((vizsga) => {
+        const elorehaladas = await prisma.tanuloElorehaladas.findUnique({
+            where: { tanulo_id: parseInt(azon) },
+            select: { elorehaladas_id: true },
+        });
+        if (!elorehaladas) {
+            return res.status(404).json({
+                message: 'A tanuló előrehaladásának adatai nem találhatóak.',
+            });
+        }
+        const elorehaladasId = elorehaladas.elorehaladas_id;
+
+        const felhasznaloVizsgai = await prisma.vizsgak.findMany({
+            where: {
+                vizsga_datuma: {
+                    gt: jelenlegiDatum,
+                },
+                Vizsgajelentkezes: {
+                    some: {
+                        tanulo_elorehaladas_id: elorehaladasId,
+                    },
+                },
+            },
+            select: {
+                vizsga_id: true,
+                vizsga_datuma: true,
+                VizsgaTipus: {
+                    select: {
+                        tipus: true,
+                    },
+                },
+                Felhasznalok: {
+                    select: {
+                        vezeteknev: true,
+                        keresztnev: true,
+                    },
+                },
+            },
+        });
+
+        const formattedVizsgak = [...vizsgak, ...felhasznaloVizsgai].map((vizsga) => {
             const vizsga_datuma = new Date(vizsga.vizsga_datuma);
             vizsga_datuma.setHours(vizsga_datuma.getHours() - 1);
             const formattedDate = vizsga_datuma.toLocaleString('hu-HU', {
@@ -64,10 +104,12 @@ const elerhetoVizsgak = async (req, res) => {
             };
         });
 
-        return res.json(result);
+        return res.json(formattedVizsgak);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Hiba történt az elérhető vizsgák lekérdezése során.' });
+        return res.status(500).json({
+            error: 'Hiba történt az elérhető vizsgák lekérdezése során.',
+        });
     }
 };
 
@@ -142,4 +184,40 @@ const vizsgaJelentkezes = async (req, res) => {
     }
 };
 
-export { elerhetoVizsgak, vizsgaJelentkezes };
+//@desc Lejelentkezés egy adott vizsgáról
+//@route DELETE /api/vizsga/lejelentkezes
+//@access private
+const vizsgaLejelentkezes = async (req, res) => {
+    const { jogkor_id } = req.user.user
+    const { vizsga_id } = req.body
+
+    if (jogkor_id != 1) { // tanulo id
+        return res.status(403).send({
+            message: 'Hozzáférés megtagadva'
+        })
+    }
+
+    try {
+        const jelentkezes = await prisma.vizsgajelentkezes.findFirst({
+          where: { vizsga_id: parseInt(vizsga_id) },
+        });
+    
+        if (!jelentkezes) {
+          return res.status(404).json({ message: 'A vizsgajelentkezés nem található!' });
+        }
+
+        const deletedJelentkezes = await prisma.vizsgajelentkezes.delete({
+          where: { vizsgajelentkezes_id: jelentkezes.vizsgajelentkezes_id },
+        });
+    
+        res.status(200).json({
+          message: 'Sikeresen lejelentkeztél a vizsgáról.',
+          deletedJelentkezes,
+        });
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Hiba történt a vizsgáról való lejelentkezés során!' });
+      }
+}
+
+export { elerhetoVizsgak, vizsgaJelentkezes, vizsgaLejelentkezes };

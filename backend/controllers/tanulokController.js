@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 //@desc Oktatók tanulóinak lekérdezése
-//@route POST /api/tanulok/oktatoTanuloi
+//@route GET /api/tanulok/oktatoTanuloi
 //@access private
 const oktatoTanuloi = async (req, res) => {
   const azon = req.user.user.id; //felhasznalo_id
