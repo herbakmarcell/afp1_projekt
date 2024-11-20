@@ -9,7 +9,7 @@ import validateToken from "../middleware/validateTokenHandler.js";
 
 const router = express.Router();
 
-router.get("/orarendModositas", validateToken, orarendModositas);
+router.put("/oraModositas", validateToken, orarendModositas);
 router.get("/orarendLekeres", validateToken, orarendLekeres);
 router.post("/oraLetrehozas", validateToken, oraLetrehozas);
 router.delete("/oraTorles", validateToken, oraTorles);
