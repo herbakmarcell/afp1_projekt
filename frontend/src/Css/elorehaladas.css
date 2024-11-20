@@ -130,19 +130,16 @@ hr {
 }
 .vizsgaTable table {
   width: 80%;
-  background: var(--navButtonInactive);
   padding: 1rem;
   border-collapse: collapse;
 }
-.vizsgaTable tr:nth-child(odd) {
-  background: #262830;
-}
+
 .vizsgaTable th {
   border: 2px solid white;
   /* border-top: 2px solid white; */
   font-size: 1.1rem;
   border-width: 0.2rem;
-  background: #14181d;
+  /* background: #14181d; */
 }
 
 .vizsgaTable th:first-child {
@@ -152,13 +149,90 @@ hr {
 .vizsgaTable td {
   text-align: center;
   padding: 1rem;
-  border-right: 2px solid white;
-  border-bottom: 2px solid white;
+  /* border: 2px solid transparent; */
   font-size: 1.2rem;
 }
-.vizsgaTable .id {
+/* .vizsgaTable .id {
   border-left: 2px solid white;
+} */
+
+.vizsgaTable {
+  grid-area: 2 / 1 / 2 / 4;
 }
+
+.vizsgaTable tr {
+  animation: slideInRow 0.12s ease forwards;
+  /* Átlátszó border a kezdésnél */
+}
+
+@keyframes slideInRow {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    background: #2d445000;
+    /* border-bottom: 1px solid transparent; */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    background: var(--navButtonInactive);
+  }
+}
+
+.vizsgaTable tr:nth-child(odd) {
+  animation: slideInOddRow 0.12s ease forwards;
+  /* Átlátszó border a kezdésnél */
+}
+
+@keyframes slideInOddRow {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    background: #26283000;
+    /* border-bottom: 1px solid transparent; */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    background: #262830;
+  }
+}
+
+.fade-in-row td {
+  /* border: none; Átlátszó border a kezdésnél */
+  opacity: 0;
+  animation: slideIn 0.5s ease forwards;
+  /* Átlátszó border a kezdésnél */
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    border: 1px solid transparent; /* Átlátszó border a kezdésnél */
+    /* border-bottom: 1px solid transparent; */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    border: 1px solid white; /* Átlátszó border a kezdésnél */
+    /* border-bottom: 1px solid white; Átlátszó border a kezdésnél */
+  }
+}
+
+.table-row {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .vizsgaTable .jelentkezes {
   width: 100px;
   border-right: 2px solid white;
@@ -179,6 +253,7 @@ hr {
   cursor: pointer;
   font-size: large;
   font-weight: bold;
+  border: none;
 }
 .vizsgaTable .btn i {
   margin-right: 10px;

@@ -20,7 +20,7 @@ const ReactRouterSetup = () => {
         <NavBar />
 
         <Routes>
-          <Route path="/" element={<BejelentkezesForm />} />
+          <Route path="/" element={<Fooldal />} />
           <Route path="/bejelentkezes" element={<BejelentkezesForm />} />
           <Route path="/regisztracio" element={<RegisztracióFormDiv />} />
           <Route path="/fooldal" element={<Fooldal />} />

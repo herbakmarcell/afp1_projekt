@@ -142,4 +142,40 @@ const vizsgaJelentkezes = async (req, res) => {
     }
 };
 
-export { elerhetoVizsgak, vizsgaJelentkezes };
+//@desc Lejelentkezés egy adott vizsgáról
+//@route DELETE /api/vizsga/lejelentkezes
+//@access private
+const vizsgaLejelentkezes = async (req, res) => {
+    const { jogkor_id } = req.user.user
+    const { vizsga_id } = req.body
+
+    if (jogkor_id != 1) { // tanulo id
+        return res.status(403).send({
+            message: 'Hozzáférés megtagadva'
+        })
+    }
+
+    try {
+        const jelentkezes = await prisma.vizsgajelentkezes.findFirst({
+          where: { vizsga_id: parseInt(vizsga_id) },
+        });
+    
+        if (!jelentkezes) {
+          return res.status(404).json({ message: 'A vizsgajelentkezés nem található!' });
+        }
+
+        const deletedJelentkezes = await prisma.vizsgajelentkezes.delete({
+          where: { vizsgajelentkezes_id: jelentkezes.vizsgajelentkezes_id },
+        });
+    
+        res.status(200).json({
+          message: 'Sikeresen lejelentkeztél a vizsgáról.',
+          deletedJelentkezes,
+        });
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Hiba történt a vizsgáról való lejelentkezés során!' });
+      }
+}
+
+export { elerhetoVizsgak, vizsgaJelentkezes, vizsgaLejelentkezes };

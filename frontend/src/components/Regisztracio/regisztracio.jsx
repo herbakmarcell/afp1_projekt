@@ -7,6 +7,7 @@ import {
   faEnvelope,
   faLock,
 } from "@fortawesome/free-solid-svg-icons";
+import "../../Css/bejreg.css";
 
 const RegisztracióFormDiv = () => {
   const navigate = useNavigate();

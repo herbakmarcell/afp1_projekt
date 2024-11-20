@@ -1,5 +1,5 @@
 import React from "react";
-import "../../index.css"; // Ha a CSS fájlt külön akarod használni
+import "../../Css/footer.css";  // Ha a CSS fájlt külön akarod használni
 
 const Footer = () => {
   return (
