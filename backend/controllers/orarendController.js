@@ -36,8 +36,9 @@ const oraLetrehozas = (async (req, res) => {
   const body_cim = req.body.cim;
   const body_helyszin = req.body.helyszin;
   const body_felhasznalo_id = req.body.felhasznalo_id;
-
-  if(!body_idopont_eleje || !body_idopont_vege || !body_cim || !body_helyszin || !body_felhasznalo_id)
+  const {id} = req.user.user;
+  console.log("Felhasználó id-je: " + id)
+  if(!body_idopont_eleje || !body_idopont_vege || !body_cim || !body_helyszin || !body_felhasznalo_id|| !id)
   {
     return res.status(406).json("Nincs minden adat megadva!");
   }
@@ -53,6 +54,12 @@ const oraLetrehozas = (async (req, res) => {
   {
     return res.status(406).json({ error: "Az id-nek számnak kell lennie!" });
   }
+
+  if (!Number.isInteger(id))
+    {
+      return res.status(406).json({ error: "Az id-nek számnak kell lennie!" });
+    }
+  
   
   //Felviszem az orak táblába a rekordot
 
@@ -79,7 +86,8 @@ const oraLetrehozas = (async (req, res) => {
     await prisma.orarend.create({
       data:{
         ora_id: felvitt_ora_id,
-        felhasznalo_id: body_felhasznalo_id
+        tanulo_id: body_felhasznalo_id,
+        tanar_id: id
       }
     });
     console.log("Kapcsolótáblába felvéve...")
