@@ -24,12 +24,20 @@ const ProfilAdatok = () => {
         </h2>
         {user ? (
           <div className="infoTablaDiv">
-            <h2>Tanuló</h2>
+            <h2>
+              {user.user.jogkor_id == 1
+                ? "Tanuló"
+                : user.user.jogkor_id == 2
+                ? "Oktató"
+                : user.user.jogkor_id == 3
+                ? "Vizsgabiztos"
+                : "Admin"}
+            </h2>
             <div className="infoTablaDivInner">
               <div className="infoTablaImgDiv">
                 <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgpPwM5mR5lNHGg9vxaoUgcnAIBOJumsoJrg&s"
-                  alt="profilPicture"
+                  src="https://loremflickr.com/320/240/girl/all?random=1"
+                  alt=""
                 />
               </div>
               <div className="infoTablaTableDiv">
