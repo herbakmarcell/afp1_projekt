@@ -2,6 +2,8 @@ import { useContext } from "react";
 import AuthContext from "../../AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import "../../Css/profilAdatok.css";
+
 const ProfilAdatok = () => {
   // Kiolvassuk a felhasználót a Context-ből
 

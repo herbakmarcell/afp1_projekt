@@ -1,10 +1,9 @@
-.footer {
+/* .footer {
   background-color: var(--navBlue);
   color: #fff;
   text-align: center;
   padding: 20px 0;
-  /* position: fixed;
-  bottom: 0; */
+ 
   width: 100%;
   margin: 5rem auto 0 auto;
 }
@@ -18,4 +17,122 @@
   color: #fff;
   text-decoration: none;
   padding: 0 5px;
+}
+ */
+
+.footer {
+  background-color: var(--navBlue);
+  color: white;
+  /* margin: 5rem auto 0 auto; */
+  width: 100%;
+  min-height: 70px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer-title {
+  font-size: 36px;
+  margin: 0;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
+/* .footer .links {
+  margin-right: 40px;
+} */
+
+.footer .links a {
+  color: white;
+  margin: 0 15px;
+  text-decoration: none;
+  font-size: 18px;
+}
+/* 
+.footer .social-icons {
+  margin-right: 40px;
+} */
+
+.footer .social-icons a {
+  color: white;
+  font-size: 24px;
+  margin: 0 10px;
+  text-decoration: none;
+}
+
+.footer .social-icons a:hover {
+  color: #00aaff;
+}
+
+.footer .copyright {
+  font-size: 14px;
+  /* margin-top: 20px; */
+}
+
+.background-circles-left,
+.background-circles-right {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background-color: #476f852b;
+  width: 100px;
+  height: 100px;
+  animation: moveCircles 5s ease-in-out infinite;
+}
+
+.background-circles-left {
+  left: 0;
+  animation: moveLeftCircle 5s ease-in-out infinite;
+}
+
+.background-circles-right {
+  right: 0;
+  animation: moveRightCircle 5s ease-in-out infinite;
+}
+
+@keyframes moveCircles {
+  0% {
+    transform: translateY(-50%) translateX(0);
+  }
+  50% {
+    transform: translateY(-50%) translateX(100px);
+  }
+  100% {
+    transform: translateY(-50%) translateX(0);
+  }
+}
+
+@keyframes moveLeftCircle {
+  0% {
+    transform: translateY(-50%) translateX(0);
+  }
+  50% {
+    transform: translateY(-50%) translateX(-100px);
+  }
+  100% {
+    transform: translateY(-50%) translateX(0);
+  }
+}
+
+@keyframes moveRightCircle {
+  0% {
+    transform: translateY(-50%) translateX(0);
+  }
+  50% {
+    transform: translateY(-50%) translateX(100px);
+  }
+  100% {
+    transform: translateY(-50%) translateX(0);
+  }
 }

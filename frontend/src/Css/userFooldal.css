@@ -151,3 +151,53 @@
   color: red;
   font-weight: 500;
 }
+
+.oraFelvitelFormDiv {
+  padding: 10px;
+}
+
+.oreFelvitelForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /* justify-content: center; */
+  /* align-items: center; */
+  width: 100%;
+}
+
+.oreFelvitelForm label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+}
+
+.oreFelvitelForm label input {
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(177, 177, 177);
+  padding: 10px;
+  max-height: 100%;
+}
+
+.FormElementButton {
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(177, 177, 177);
+  padding: 10px;
+}
+
+.oreFelvitelForm label input:hover,
+input:active {
+  background-color: rgb(120, 120, 120);
+}
+
+.oreFelvitelForm label input[type="submit"]:hover,
+.FormElementButton:hover {
+  cursor: pointer;
+  color: white;
+  background-color: var(--navBlue);
+}
