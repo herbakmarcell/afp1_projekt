@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient()
 
 //@desc Összes felhasználó lekérdezése
-//@route POST /api/admin/felhasznalok
+//@route GET /api/admin/felhasznalok
 //@access private
 const osszesFelhasznalo = (async (req, res) => {
     const {jogkor_id} = req.user.user

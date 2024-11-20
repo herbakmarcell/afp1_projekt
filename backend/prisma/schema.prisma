@@ -22,7 +22,8 @@ model Felhasznalok {
   bankszamla String @db.VarChar(24)
   jogkor_id Int
   Jogkorok Jogkorok @relation(fields: [jogkor_id], references: [jogkor_id], onDelete: Cascade, onUpdate: Cascade)
-  Orarend Orarend[]
+  TanuloOrarend Orarend[] @relation("TanuloRelation")
+  TanarOrarend Orarend[] @relation("TanarRelation")
   Vizsgak Vizsgak[]
 
   TanuloElorehaladas TanuloElorehaladas[] @relation("FelhasznalokTanulo")
@@ -56,8 +57,10 @@ model Orak {
 model Orarend {
   orarend_id Int @id @default(autoincrement())
   ora_id Int
-  felhasznalo_id Int
-  Felhasznalok Felhasznalok @relation(fields: [felhasznalo_id], references: [felhasznalo_id], onDelete: Cascade, onUpdate: Cascade)
+  tanulo_id Int
+  tanar_id Int
+  Tanulo Felhasznalok @relation("TanuloRelation",fields: [tanulo_id], references: [felhasznalo_id], onDelete: Cascade, onUpdate: Cascade)
+  Tanar Felhasznalok @relation("TanarRelation",fields: [tanar_id], references: [felhasznalo_id], onDelete: Cascade, onUpdate: Cascade)
   Orak Orak @relation(fields: [ora_id], references: [ora_id], onDelete: Cascade, onUpdate: Cascade)
 }
 
@@ -76,7 +79,6 @@ model Vizsgajelentkezes {
   vizsgajelentkezes_id Int @id @default(autoincrement())
   tanulo_elorehaladas_id Int
   vizsga_id Int
-  oktato_jovahagyas Boolean @default(false)
   TanuloElorehaladasV TanuloElorehaladas @relation(fields: [tanulo_elorehaladas_id], references: [elorehaladas_id], onDelete: Cascade, onUpdate: Cascade)
   Vizsgak Vizsgak @relation(fields: [vizsga_id], references: [vizsga_id], onDelete: Cascade, onUpdate: Cascade)
 }

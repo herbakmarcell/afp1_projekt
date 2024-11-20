@@ -1,0 +1,96 @@
+.infoDiv {
+  width: 65%;
+  margin: 10rem auto auto auto;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  background-color: rgb(236, 236, 236);
+  border-radius: 20px 20px 0 0;
+  padding: 10px 0 0 0;
+}
+
+.infoDiv h2 {
+  text-align: center;
+  text-transform: capitalize;
+}
+
+/* ha nincs bejelentkezve */
+
+.infoDivNo {
+  width: 65%;
+  margin: 10rem auto auto auto;
+  color: black;
+  background-color: rgb(236, 236, 236);
+  border-radius: 20px;
+  padding: 10px;
+  height: auto;
+}
+
+.infoDivNo h2 {
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.infoTablaDiv {
+  display: flex;
+  flex-direction: column;
+  width: 99.7%;
+  border: 2px solid black;
+  height: 44vh;
+}
+
+.infoTablaDiv .infoTablaDivInner {
+  display: flex;
+}
+
+.infoTablaDiv h2 {
+  background-color: var(--navBlue);
+  color: white;
+  padding: 10px;
+}
+
+.infoTablaDiv .infoTablaTableDiv {
+  width: 100%;
+  position: relative;
+}
+
+.infoTablaTableDiv table {
+  width: 80%;
+  margin: 20px auto;
+  border-collapse: separate;
+  border-spacing: 10px;
+}
+
+.infoTablaTableDiv table tr {
+  height: 30px;
+}
+
+.infoTablaTableDiv table tr td {
+  background-color: lightgray;
+  width: 50%;
+  padding: 10px;
+  text-align: center;
+}
+
+.infoTablaTableDiv table tr td:first-child {
+  background-color: var(--navButtonActive);
+  color: white;
+  /* width: 50%; */
+}
+
+.infoTablaTableDiv button,
+.infoTablaTableDiv a {
+  background-color: #004a71;
+  color: white;
+  padding: 0.3rem;
+  /* border-radius: 10px; */
+  border: none;
+}
+
+.infoTablaTableDiv a {
+  text-decoration: none;
+  position: absolute;
+  right: 10px;
+  /* bottom: 1px; */
+}

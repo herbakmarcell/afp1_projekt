@@ -1,154 +1,277 @@
-h1{
-    color: black;
-    font-weight: bold;
-    border-bottom: 2px solid red; 
-    border-width: 0.2rem; 
+.eloreHaladasDiv {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-.elorehaladasDiv{
-    background: #212529;
-}
-.imgDiv {
-    max-width: 100%;
-    height: 10%;
-    position: relative;
-    display: inline-block;
-}
-.imgDiv img{
-    width: 100%;
-    height: 600px;
-}
-.imgDiv h1, hr{
-    position: absolute;
-    top: 30%; 
-    left: 50%; 
-    transform: translate(-50%, -50%); 
-    color: white;
-    font-size: 3rem;
-    font-weight: bold;
-}
-.vizsgaBtn{
-    background: #344551 !important;
-    padding: 14px !important;
-}
-.vizsgaBtn .btn{
-    display: flex !important;
-    justify-content: center!important;
-    gap: 5rem !important;
-    padding: 1.3rem !important;
-    font-size: large !important;
-    font-weight: bold !important;
-    color: black!important;
-}
-.euBtn{
-    background: #0ccbf3 !important;
-    padding: 0.6rem !important;
-    display: block !important;
-    width: 15% !important;
-    border-radius: 20px !important;
-}
-.euBtn p{
-    text-align: center;
-    
-}
-.elmeletiBtn{
-    background: #fbc304 !important;
-    padding: 0.6rem !important;
-    display: block !important;
-    width: 15% !important;
-    border-radius: 20px !important;
-}
-.elmeletiBtn p{
-    text-align: center !important;
-    
-}
-.gyakorlatiBtn{
-    background: #dc3545 !important;
-    padding: 0.6rem !important;
-    display: block !important;
-    width: 15% !important;
-    border-radius: 20px !important;
 
+.eloreHaladasDiv h2 {
+  background-color: var(--navBlue);
+  text-align: center;
+  text-transform: capitalize;
+  padding: 5px;
+  width: 100%;
 }
-.gyakorlatiBtn p{
-    text-align: center !important;
-    
+
+/* .imgDiv {
+  max-width: 100%;
+  height: 10%;
+  position: relative;
+  display: inline-block;
 }
-.vizsgaJelentkezes{
+.imgDiv img {
+  width: 100%;
+  height: 600px;
+}
+.imgDiv h1,
+hr {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 3rem;
+  font-weight: bold;
+} */
+
+.eloreHaladasDiv .progressMainDiv {
+  width: 100%;
+}
+
+.vizsgaBtn {
+  background: #2d445092 !important;
+  padding: 14px !important;
+  width: 100%;
+}
+.vizsgaBtn .btn {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  gap: 5rem !important;
+  padding: 1.3rem !important;
+  font-size: large !important;
+  font-weight: bold !important;
+  color: black !important;
+}
+
+.ProgressInfo {
+  display: flex;
+  gap: 1rem;
+  /* justify-content: center; */
+  align-items: center;
+}
+.euBtn {
+  background: rgb(251, 195, 4) !important;
+  padding: 0.6rem !important;
+  display: block !important;
+  width: 15% !important;
+}
+.euBtn p {
+  text-align: center;
+}
+.elmeletiBtn {
+  background: #f44336 !important;
+  padding: 0.6rem !important;
+  display: block !important;
+  width: 15% !important;
+}
+.elmeletiBtn p {
+  text-align: center !important;
+}
+
+.gyakProgress,
+.elmProgress,
+.euProgress {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.gyakorlatiBtn {
+  background: #2196f3 !important;
+  padding: 0.6rem !important;
+  display: block !important;
+  width: 15% !important;
+}
+.gyakorlatiBtn p {
+  text-align: center !important;
+}
+.vizsgaJelentkezes {
+  background: var(--navBlue);
+  display: flex;
+  padding: 40px;
+  width: 100%;
+  margin-top: 10px;
+}
+.vizsgaJelentkezes button {
+  margin: auto;
+  text-align: center;
+  padding: 14px;
+  background: var(--navButtonInactive);
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: large;
+  font-weight: bold;
+  border: none;
+}
+.vizsgaJelentkezes button:hover {
+  background: var(--navButtonActive);
+}
+.vizsgaTable {
+  background: #131c21;
+  padding: 1rem;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.vizsgaTable table {
+  width: 80%;
+  padding: 1rem;
+  border-collapse: collapse;
+}
+
+.vizsgaTable th {
+  border: 2px solid white;
+  /* border-top: 2px solid white; */
+  font-size: 1.1rem;
+  border-width: 0.2rem;
+  /* background: #14181d; */
+}
+
+.vizsgaTable th:first-child {
+  border-left: 2px solid white;
+}
+
+.vizsgaTable td {
+  text-align: center;
+  padding: 1rem;
+  /* border: 2px solid transparent; */
+  font-size: 1.2rem;
+}
+/* .vizsgaTable .id {
+  border-left: 2px solid white;
+} */
+
+.vizsgaTable {
+  grid-area: 2 / 1 / 2 / 4;
+}
+
+.vizsgaTable tr {
+  animation: slideInRow 0.12s ease forwards;
+  /* Átlátszó border a kezdésnél */
+}
+
+@keyframes slideInRow {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    background: #2d445000;
+    /* border-bottom: 1px solid transparent; */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    background: var(--navButtonInactive);
+  }
+}
+
+.vizsgaTable tr:nth-child(odd) {
+  animation: slideInOddRow 0.12s ease forwards;
+  /* Átlátszó border a kezdésnél */
+}
+
+@keyframes slideInOddRow {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    background: #26283000;
+    /* border-bottom: 1px solid transparent; */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
     background: #262830;
-    display: flex;
-    padding: 40px;
+  }
 }
-.vizsgaJelentkezes button{
-    margin: auto;
-    text-align: center;
-    padding: 14px;
-    background: #131c21;
-    color: white;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: large;
-    font-weight: bold;
+
+.fade-in-row td {
+  /* border: none; Átlátszó border a kezdésnél */
+  opacity: 0;
+  animation: slideIn 0.5s ease forwards;
+  /* Átlátszó border a kezdésnél */
 }
-.vizsgaJelentkezes button:hover{
-    background: #344551;
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    border: 1px solid transparent; /* Átlátszó border a kezdésnél */
+    /* border-bottom: 1px solid transparent; */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    border: 1px solid white; /* Átlátszó border a kezdésnél */
+    /* border-bottom: 1px solid white; Átlátszó border a kezdésnél */
+  }
 }
-.vizsgaTable{
-    background: #131c21;
-    padding: 4rem;
-    display: flex;
-    justify-content: center;
+
+.table-row {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s ease forwards;
 }
-.vizsgaTable table{
-    width: 1200px;
-    background: #4b5453;
-    padding: 1rem;
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-.vizsgaTable tr:nth-child(odd){
-    background: #262830;
+
+.vizsgaTable .jelentkezes {
+  width: 100px;
+  border-right: 2px solid white;
 }
-.vizsgaTable th{
-    border-left: 2px solid white;
-    border-bottom: 2px solid white;
-    border-top: 2px solid white;
-    font-size: 1.1rem;
-    border-width: 0.2rem;
-    background: #14181d;
+.vizsgaTable .btn {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
 }
-.vizsgaTable td{
-    text-align: center;
-    padding: 1rem;
-    border-right: 2px solid white;
-    border-bottom: 2px solid white;
-    font-size: 1.2rem;
+.vizsgaTable .btn button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #131c21;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: large;
+  font-weight: bold;
+  border: none;
 }
-.vizsgaTable .id{
-    border-left: 2px solid white;
+.vizsgaTable .btn i {
+  margin-right: 10px;
 }
-.vizsgaTable .jelentkezes{
-    width: 100px;
-    border-right: 2px solid white;
+.vizsgaTable .btn button:hover {
+  background: #344551;
 }
-.vizsgaTable .btn{
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
+
+.backToMainPage {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 0;
+  align-items: center;
 }
-.vizsgaTable .btn button{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #131c21;
-    color: white;
-    padding: 0.5rem;
-    border-radius: 15px;
-    cursor: pointer;
-    font-size: large;
-    font-weight: bold;
-}
-.vizsgaTable .btn i{
-    
-    margin-right: 10px;
-}
-.vizsgaTable .btn button:hover{
-    background:#344551
+
+.backToMainPage a {
+  background-color: var(--navBlue);
+  padding: 1rem;
+  text-decoration: none;
+  border-radius: 5px;
 }

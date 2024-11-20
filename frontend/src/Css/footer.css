@@ -1,0 +1,21 @@
+.footer {
+  background-color: var(--navBlue);
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+  /* position: fixed;
+  bottom: 0; */
+  width: 100%;
+  margin: 5rem auto 0 auto;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-link {
+  color: #fff;
+  text-decoration: none;
+  padding: 0 5px;
+}

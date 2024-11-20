@@ -1,0 +1,153 @@
+.mainContent {
+  display: grid;
+  gap: 30px;
+  grid-template-columns: 30% 30% 33.5%;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "title title title"
+    "process timetable timetable"
+    "teacher car test";
+  margin: 3rem auto;
+  width: 90%;
+}
+
+.mainContentNo {
+  display: block;
+  height: auto;
+  width: 80%;
+  text-align: center;
+  margin: auto;
+}
+
+.mainContent h2,
+.mainContentNo h2,
+.mainContent p {
+  grid-area: title;
+  background-color: var(--navBlue);
+  text-align: center;
+  text-transform: capitalize;
+  padding: 5px;
+}
+
+.mainContent .processDiv {
+  grid-area: process;
+  width: 100%;
+  border: 2px solid black;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  background: #2d44505a;
+}
+
+.mainContent h2 {
+  margin: 0;
+  width: 100%;
+}
+
+.processDiv ul li {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 97%;
+  text-align: center;
+  gap: 10px;
+  border: 1px solid var(--navBlue);
+  padding-bottom: 5px;
+  margin: 5px;
+  list-style: none;
+}
+
+.processDiv p {
+  background-color: #131c2180;
+  width: 100%;
+}
+
+.progressCircle {
+  width: 30%;
+  margin: auto;
+}
+
+.mainContent .mainOrarendDiv {
+  grid-area: timetable;
+  width: 100%;
+  border: 2px solid black;
+  background: #2d44505a;
+}
+
+.mainContent .mainOktatoDiaknak {
+  grid-area: teacher;
+  width: 100%;
+  border: 2px solid black;
+  text-align: center;
+  background: #2d44505a;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.mainContent .mainAutoDiaknak {
+  grid-area: car;
+  background: #2d44505a;
+  width: 100%;
+  border: 2px solid black;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.mainOktatoDiaknakDI,
+.mainAutoDiaknakDI {
+  width: 90%;
+  margin: 10px auto;
+  border: 10px solid var(--navBlue);
+}
+
+.mainOktatoDiaknak img,
+.mainAutoDiaknak img {
+  width: 100%;
+}
+
+.mainContent .mainVizsgaDiaknak {
+  grid-area: test;
+  width: 100%;
+  background: #2d44505a;
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.mainVizsgaDiaknak ul {
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.mainVizsgaDiaknak ul li {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 50%;
+  text-align: center;
+  gap: 10px;
+  border: 1px solid var(--navBlue);
+  margin: 5px;
+  list-style: none;
+}
+
+.mainVizsgaDiaknak p {
+  background-color: #131c2180;
+  width: 100%;
+}
+
+.noResultVizsga {
+  background: #131c2130 !important;
+  color: red;
+  font-weight: 500;
+}

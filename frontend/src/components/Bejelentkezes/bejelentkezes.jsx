@@ -3,6 +3,8 @@ import axios from "axios";
 import { useState, useContext } from "react";
 import AuthContext from "../../AuthContext.jsx";
 import { FormInput } from "../FormInputDivek/formInputDiv.jsx";
+import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
+import "../../Css/bejreg.css";
 
 const BejelentkezesForm = () => {
   const { login } = useContext(AuthContext); // A login funkció a context-ből
@@ -27,9 +29,17 @@ const BejelentkezesForm = () => {
 
       const { token } = response.data;
       console.log("Bejelentkezve, token:" + token);
-
       login(token); // A JWT token beállítása a context-ben
-      navigate("/fooldal"); // Visszairányítás a főoldalra
+
+      const decodedToken = jwtDecode(token);
+      const jogkor_id = decodedToken.user.jogkor_id;
+
+      if (jogkor_id == 1) {
+        navigate("/fooldal"); // Visszairányítás a főoldalra
+      } else if (jogkor_id == 4) {
+        navigate("/admin");
+      } else {
+      }
     } catch (error) {
       console.error("Login failed", error.message);
     }
@@ -37,25 +47,24 @@ const BejelentkezesForm = () => {
 
   return (
     <div className="formDiv">
+      <h1>Bejelentkezés</h1>
       <form>
         <FormInput
-          iconSrc="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS10sXUPcODWCwePZ-wEWZx1BoczFgid58tug&s"
-          iconAlt="emailIcon"
+          spanIcon={faEnvelope}
           type="email"
-          name="email"
+          name="e-mail"
           placeholder="E-mail"
           onChange={(e) => setEmail(e.target.value)}
         />
 
         <FormInput
-          iconSrc="https://img.freepik.com/premium-vector/free-vector-padlock-icon-lock-locked_901408-572.jpg"
-          iconAlt="lockIcon"
+          spanIcon={faLock}
           type="password"
-          name="jelszo"
+          name="jelszó"
           placeholder="********"
           onChange={(e) => setJelszo(e.target.value)}
         />
-        <div className="FormDivElement">
+        <div className="FormDivElementButton">
           <input type="submit" value="Bejelentkezés" onClick={handleSubmit} />
         </div>
       </form>

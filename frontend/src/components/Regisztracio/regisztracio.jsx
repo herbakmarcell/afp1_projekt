@@ -2,24 +2,36 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FormInput } from "../FormInputDivek/formInputDiv";
+import {
+  faSignature,
+  faEnvelope,
+  faLock,
+} from "@fortawesome/free-solid-svg-icons";
+import "../../Css/bejreg.css";
 
 const RegisztracióFormDiv = () => {
   const navigate = useNavigate();
   const [vezeteknev, setVezeteknev] = useState("");
   const [keresztnev, setKeresztnev] = useState("");
-  const [jogosultsag, setJogosultsag] = useState(0);
+  // const [jogosultsag, setJogosultsag] = useState(0);
   const [bankszamla, setBankszamla] = useState("");
   const [email, setEmail] = useState("");
   const [jelszo, setJelszo] = useState(0);
+
+  // const handleChange = (e) => {
+  //   let value = e.target.value.replace(/\D/g, ""); // Csak számokat engedünk
+  //   value = value.replace(/(\d{4})(?=\d)/g, "$1-"); // Minden 4 számjegy után kötőjelet ad hozzá
+  //   setBankszamla(value);
+  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     // Itt jönne a regisztrációs logika
     // Mivel most nem releváns, közvetlenül navigálunk a bejelentkezéshez
     const resp = await axios.post("http://localhost:5000/api/users/register", {
       vezeteknev,
       keresztnev,
-      jogosultsag,
-      bankszamla,
+      // bankszamla,
       email,
       jelszo,
     });
@@ -32,55 +44,60 @@ const RegisztracióFormDiv = () => {
 
   return (
     <div className="formDiv">
+      <h1>Regisztráció</h1>
       <form>
         <FormInput
-          iconSrc="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgpPwM5mR5lNHGg9vxaoUgcnAIBOJumsoJrg&s"
-          iconAlt="firstnameIcon"
+          spanIcon={faSignature}
           type="text"
+          name="Vezetéknév"
           placeholder="Vezetéknév"
           onChange={(e) => setVezeteknev(e.target.value)}
         />
 
         <FormInput
-          iconSrc="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgpPwM5mR5lNHGg9vxaoUgcnAIBOJumsoJrg&s"
-          iconAlt="lastnameIcon"
+          spanIcon={faSignature}
           type="text"
+          name="Keresztnév"
           placeholder="Keresztnév"
           onChange={(e) => setKeresztnev(e.target.value)}
         />
 
-        <FormInput
+        {/* <FormInput
           iconSrc="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQPNzqYRq287b9xJql_r-MmWqs6thrG9NKig&s"
           iconAlt="permissionIcon"
           type="text"
+          name="Jogosultság"
           placeholder="Jogosultság"
           onChange={(e) => setJogosultsag(e.target.value)}
-        />
-
+        /> */}
+        {/* 
         <FormInput
           iconSrc="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ6Ba0qVTby-k31mhqoRyisNvb2ChdkcV9pA&s"
           iconAlt="calculatorIcon"
-          type="number"
-          placeholder="00000000"
-          onChange={(e) => setBankszamla(e.target.value)}
-        />
+          type="text"
+          name="Bankszámla"
+          value={bankszamla}
+          onChange={handleChange}
+          placeholder="XXXX-XXXX-XXXX-XXXX"
+          maxLength="19"
+        /> */}
 
         <FormInput
-          iconSrc="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS10sXUPcODWCwePZ-wEWZx1BoczFgid58tug&s"
-          iconAlt="emailIcon"
+          spanIcon={faEnvelope}
           type="email"
-          placeholder="E-mail"
+          name="E-mail"
+          placeholder="autosiskola@gmail.com"
           onChange={(e) => setEmail(e.target.value)}
         />
 
         <FormInput
-          iconSrc="https://img.freepik.com/premium-vector/free-vector-padlock-icon-lock-locked_901408-572.jpg"
-          iconAlt="lockIcon"
+          spanIcon={faLock}
           type="password"
+          name="Jelszó"
           placeholder="********"
           onChange={(e) => setJelszo(e.target.value)}
         />
-        <div className="FormDivElement">
+        <div className="FormDivElementButton">
           <input type="submit" value="Bejelentkezés" onClick={handleSubmit} />
         </div>
       </form>
