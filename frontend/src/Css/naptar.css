@@ -1,0 +1,58 @@
+.calendar {
+  border: 1px solid var(--navBlue);
+  padding: 20px;
+  /* border-radius: 8px; */
+  max-width: 80%;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.calendar h4 {
+  width: 100%;
+  background-color: #131c2180;
+}
+
+.calendar-days {
+  background-color: var(--navBlue);
+  color: white;
+}
+
+.chooseMotnhBtn {
+  background-color: var(--navBlue);
+  /* border-radius: 5px; */
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.calendar-days-container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.calendar-days-container div {
+  padding: 10px;
+  border: 1px solid var(--navBlue);
+  background-color: #2d44505a;
+  cursor: pointer;
+  color: black;
+}
+
+.empty {
+  color: #ccc;
+}
