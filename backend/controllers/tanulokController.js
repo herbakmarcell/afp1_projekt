@@ -129,7 +129,7 @@ const tanuloElorehaladasa = (async (req, res) => {
           message: 'A tanuló nem található',
         });
       }
-
+      
       if (tanuloElorehaladas.FelhasznalokOktato?.felhasznalo_id !== azon) {
         return res.status(403).send({
           message: 'Hozzáférés megtagadva: Az adott tanulónak nem ön az oktatója.',

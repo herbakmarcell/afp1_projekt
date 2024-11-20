@@ -1,3 +1,74 @@
+
+h1{
+    color: black;
+    font-weight: bold;
+    border-bottom: 2px solid red; 
+    border-width: 0.2rem; 
+}
+.elorehaladasDiv{
+    background: #212529;
+}
+.imgDiv {
+    width: 100%;
+    height: 10%;
+    position: relative;
+    display: inline-block;
+}
+.imgDiv img{
+    width: 100%;
+    height: 600px;
+}
+.imgDiv h1, hr{
+    position: absolute;
+    top: 30%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    color: white;
+    font-size: 3rem;
+    font-weight: bold;
+}
+.vizsgaBtn{
+    background: #344551 !important;
+    padding: 14px !important;
+}
+.vizsgaBtn .btn{
+    display: flex !important;
+    justify-content: center!important;
+    gap: 5rem !important;
+    padding: 1.3rem !important;
+    font-size: large !important;
+    font-weight: bold !important;
+    color: black!important;
+}
+.euBtn{
+    background: #0ccbf3 !important;
+    padding: 0.6rem !important;
+    display: block !important;
+    width: 15% !important;
+    border-radius: 20px !important;
+}
+.euBtn p{
+    text-align: center;
+    
+}
+.elmeletiBtn{
+    background: #fbc304 !important;
+    padding: 0.6rem !important;
+    display: block !important;
+    width: 15% !important;
+    border-radius: 20px !important;
+}
+.elmeletiBtn p{
+    text-align: center !important;
+    
+}
+.gyakorlatiBtn{
+    background: #dc3545 !important;
+    padding: 0.6rem !important;
+    display: block !important;
+    width: 15% !important;
+    border-radius: 20px !important;
+}
 .eloreHaladasDiv {
   width: 90%;
   margin: auto;

@@ -29,6 +29,9 @@ const tanuloKifizetesei = (async (req, res) => {
                         oktato_id: true
                     }
                 }
+            },
+            orderBy:{
+              kifizetve: "desc"
             }
         });
 
