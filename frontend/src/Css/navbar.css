@@ -1,0 +1,109 @@
+nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 5rem;
+  background-color: var(--navBlue);
+}
+
+nav .menu {
+  display: none;
+  position: absolute;
+  top: 1.5rem;
+  right: 1rem;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 2.25rem;
+  height: 2rem;
+}
+
+nav .menu span {
+  height: 0.4rem;
+  width: 100%;
+  background-color: white;
+  border-radius: 0.2rem;
+}
+
+nav a {
+  font-size: larger;
+  color: white;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.navBarImg {
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.navBarImg img {
+  width: 100%;
+  height: 100%;
+}
+
+.navbarTitleImg {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 20%;
+}
+
+.navbarTitleImg img {
+  width: 80px;
+  height: 80px;
+}
+
+.navButtons {
+  width: 23%;
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+}
+
+.navButtons li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navButtons a {
+  border-radius: 30px;
+  background-color: var(--navButtonInactive);
+  color: white;
+  padding: 10px;
+  border: none;
+  text-transform: none;
+  font-weight: normal;
+}
+
+.navButtons span {
+  margin: 5px;
+}
+
+.navButtons .noStyle a {
+  all: unset;
+}
+
+.navButtons a:hover {
+  background-color: var(--navButtonActive);
+}
+
+.navButtons .noStyle a:hover {
+  all: unset;
+  cursor: pointer;
+}
+
+.navButtons .active {
+  background-color: var(--navButtonActive);
+}
+
+.navButtons .bejelentkezettUser {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  text-transform: capitalize;
+}

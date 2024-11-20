@@ -1,0 +1,103 @@
+
+body.hatter{
+    background-color: #212529;
+}
+.kifizetes h2{
+    color: white;
+    margin: 1rem;
+
+}
+.kifizetesek{
+    box-shadow: #000000 3px 4px 10px 5px;
+    margin: 20px auto;
+    background: #323232;
+    width: 800px;
+    border-radius: 20px;
+}
+
+.item{
+    display: grid;
+    grid-template-rows: repeat(1, 1);
+    grid-template-areas: 
+    "vizsga price"
+    ;
+    border: 2px solid black;
+    padding: 30px;
+    margin: 10px auto;
+    width: 100%;
+    background: #212529;
+   
+}
+.item .price{
+    grid-area: "price";
+    position: absolute;
+    right: 30%;
+}
+.total{
+    display: flex;
+    align-items: center;
+    padding: 30px;
+}
+.total p{
+    font-size: large;
+}
+.total button{
+    background:#212529;
+    color: white;
+    padding: 10px;
+    width: 120px;
+    border-radius: 20px;
+    cursor: pointer;
+    position: absolute;
+    right: 25%;
+}
+.total button:hover{
+    background: #131c21;
+}
+.fizetesForm{
+    margin: auto;
+    background: #000000;
+    text-align: center;
+    display: block;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+.fizetesForm h2{
+    color: white;
+}
+.fizetesForm form input{
+    border-radius: 15px;
+    margin: 14px;
+    padding: 7px;
+    background: #344551;
+    width: 80%;
+    color: white;
+}
+
+.fizetesForm .kuldes{
+    cursor: pointer;
+    background:#212529;
+    color: white;
+    margin: auto;
+}
+.fizetesForm input[type="submit"]:hover{
+    background: #131c21;
+}
+.fizetesForm form input::placeholder{
+    padding: 10px;
+    color: white;
+    
+}
+
+.kozepre {
+    display: grid;
+    justify-content: baseline;
+
+}
+.kifizetes button{
+    background: green;
+    padding: 10px;
+    width: 120px;
+    border-radius: 25px;
+    font-size: large;
+}

@@ -11,7 +11,9 @@ import { NavBar } from "../components/Navbar/navbar.jsx";
 import { WebsiteBGC } from "../components/WebsiteBackground/websiteBgc.jsx";
 import Footer from "../components/Footer/footer.jsx";
 import Elorehaladas from "../components/Elorehaladas/elorehaladas.jsx";
+import Kifizetesek from "../components/Kifizetesek/kifizetesek.jsx";
 import Admin from "../components/Admin/admin.jsx";
+
 
 const ReactRouterSetup = () => {
   return (
@@ -20,17 +22,15 @@ const ReactRouterSetup = () => {
         <NavBar />
 
         <Routes>
-          <Route path="/" element={<BejelentkezesForm />} />
+          <Route path="/" element={<Fooldal />} />
           <Route path="/bejelentkezes" element={<BejelentkezesForm />} />
           <Route path="/regisztracio" element={<RegisztracióFormDiv />} />
           <Route path="/fooldal" element={<Fooldal />} />
-          <Route
-            path="/felhasznaloModositas"
-            element={<FelhasznaloModositas />}
-          />
+          <Route path="/felhasznaloModositas" element={<FelhasznaloModositas />} />
           <Route path="/profilAdatok" element={<ProfilAdatok />} />
           <Route path="/elorehaladas" element={<Elorehaladas />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/kifizetesek" element={<Kifizetesek />} />
         </Routes>
       </Router>
       <Footer />
