@@ -46,9 +46,9 @@ const Admin = () => {
               <table>
                 <tbody>
                   <tr>
-                    <th>ID</th>
-                    <th>Vizsga Típusa</th>
-                    <th>Vizsgabiztos</th>
+                    <th>Vezetéknév</th>
+                    <th>Keresztnév</th>
+                    <th>E-mail</th>
                     <th>Jogosultság</th>
                     <th className="jelentkezes">Műveletek</th>
                   </tr>

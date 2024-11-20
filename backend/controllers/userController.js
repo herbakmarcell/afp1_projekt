@@ -8,16 +8,8 @@ const prisma = new PrismaClient();
 //@route POST /api/users/register
 //@access public
 const registerUser = async (req, res) => {
-  const { vezeteknev, keresztnev, email, jelszo, bankszamla, jogosultsag } =
-    req.body;
-  if (
-    !vezeteknev ||
-    !keresztnev ||
-    !email ||
-    !jelszo ||
-    !bankszamla ||
-    !jogosultsag
-  ) {
+  const { vezeteknev, keresztnev, email, jelszo } = req.body;
+  if (!vezeteknev || !keresztnev || !email || !jelszo) {
     return res.status(400).json("Nincsen minden mező kitöltve.");
   }
 
@@ -40,8 +32,8 @@ const registerUser = async (req, res) => {
       keresztnev,
       email,
       jelszo: hashedPassword,
-      bankszamla,
-      jogkor_id: parseInt(jogosultsag),
+      bankszamla: "",
+      jogkor_id: 1,
     },
   });
 
