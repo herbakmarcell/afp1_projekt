@@ -1,12 +1,3 @@
-/*
-  Warnings:
-
-  - You are about to drop the `User` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropTable
-DROP TABLE `User`;
-
 -- CreateTable
 CREATE TABLE `Felhasznalok` (
     `felhasznalo_id` INTEGER NOT NULL AUTO_INCREMENT,
@@ -16,6 +7,7 @@ CREATE TABLE `Felhasznalok` (
     `jelszo` VARCHAR(255) NOT NULL,
     `bankszamla` VARCHAR(24) NOT NULL,
     `jogkor_id` INTEGER NOT NULL,
+    `aktiv` BOOLEAN NOT NULL DEFAULT true,
 
     UNIQUE INDEX `Felhasznalok_email_key`(`email`),
     PRIMARY KEY (`felhasznalo_id`)
@@ -24,7 +16,7 @@ CREATE TABLE `Felhasznalok` (
 -- CreateTable
 CREATE TABLE `Jogkorok` (
     `jogkor_id` INTEGER NOT NULL AUTO_INCREMENT,
-    `jogkor` INTEGER NOT NULL,
+    `jogkor` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`jogkor_id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
