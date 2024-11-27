@@ -113,7 +113,7 @@ const orarendModositas = async (req, res) => {
 //@desc Új óra létrehozása
 //@route POST /api/orarend/oraLetrehozas
 //@access private
-const oraLetrehozas = (async (req, res) => {
+const oraLetrehozas = async (req, res) => {
   const { jogkor_id } = req.user.user;
   if (jogkor_id == 1) {
     return res.status(403).json("Tanuló nem hozhat létre új órát!");
@@ -132,31 +132,36 @@ const oraLetrehozas = (async (req, res) => {
   const body_cim = req.body.cim;
   const body_helyszin = req.body.helyszin;
   const body_felhasznalo_id = req.body.felhasznalo_id;
-  const {id} = req.user.user;
-  console.log("Felhasználó id-je: " + id)
-  if(!body_idopont_eleje || !body_idopont_vege || !body_cim || !body_helyszin || !body_felhasznalo_id|| !id)
-  {
+  const { id } = req.user.user;
+  console.log("Felhasználó id-je: " + id);
+  if (
+    !body_idopont_eleje ||
+    !body_idopont_vege ||
+    !body_cim ||
+    !body_helyszin ||
+    !body_felhasznalo_id ||
+    !id
+  ) {
     return res.status(406).json("Nincs minden adat megadva!");
   }
-  
-  if (isNaN(body_idopont_eleje.getTime()) || isNaN(body_idopont_vege.getTime()))
-  {
-    return res.status(406).json({error: "A dátum nem helyes!"});
+
+  if (
+    isNaN(body_idopont_eleje.getTime()) ||
+    isNaN(body_idopont_vege.getTime())
+  ) {
+    return res.status(406).json({ error: "A dátum nem helyes!" });
   }
   body_idopont_eleje.addHours(1);
   body_idopont_vege.addHours(1);
 
-  if (!Number.isInteger(body_felhasznalo_id))
-  {
+  if (!Number.isInteger(body_felhasznalo_id)) {
     return res.status(406).json({ error: "Az id-nek számnak kell lennie!" });
   }
 
-  if (!Number.isInteger(id))
-    {
-      return res.status(406).json({ error: "Az id-nek számnak kell lennie!" });
-    }
-  
-  
+  if (!Number.isInteger(id)) {
+    return res.status(406).json({ error: "Az id-nek számnak kell lennie!" });
+  }
+
   //Felviszem az orak táblába a rekordot
 
   try {
@@ -165,68 +170,85 @@ const oraLetrehozas = (async (req, res) => {
         idopont_eleje: body_idopont_eleje,
         idopont_vege: body_idopont_vege,
         cim: body_cim,
-        helyszin: body_helyszin
-      }
-    }); 
-    console.log("Óra felvéve...")
+        helyszin: body_helyszin,
+      },
+    });
+    console.log("Óra felvéve...");
 
     //A felvitt rekord id-je
     const felvitt_ora_max_id = await prisma.orak.aggregate({
       _max: {
-        ora_id: true
-      }
+        ora_id: true,
+      },
     });
     const felvitt_ora_id = felvitt_ora_max_id._max.ora_id;
-    
+
     //Felviszem a kapcsolótáblába az adatokat
     await prisma.orarend.create({
-      data:{
+      data: {
         ora_id: felvitt_ora_id,
         tanulo_id: body_felhasznalo_id,
-        tanar_id: id
-      }
+        tanar_id: id,
+      },
     });
-    console.log("Kapcsolótáblába felvéve...")
+    console.log("Kapcsolótáblába felvéve...");
     res.status(201).json("Az óra sikeresen felkerült a rendszerbe!");
-  
-  } catch (err)
-  {
+  } catch (err) {
     return res.status(500).json({
       error: "Az adatot nem sikerült felvinni!",
-      errormsg: err
+      errormsg: err,
     });
   }
-  
-});
+};
 
 //@desc orarend lekérdezése
 //@route GET /api/orarend/orarendLekeres
 //@access public
 
 const orarendLekeres = async (req, res) => {
-  const { id } = req.user.user;
-  const user_id = id;
+  const { id, jogkor_id } = req.user.user;
 
-  if (!Number.isInteger(user_id)) {
+  if (!Number.isInteger(id)) {
     return res.status(406).json({ error: "A ID típusa nem megfelelő!" });
   }
-
-  try {
-    const orak = await prisma.orarend.findMany({
-      where: {
-        felhasznalo_id: user_id,
-      },
-      include: {
-        Orak: true,
-      },
-    });
-    res.status(202).json(orak);
-  } catch (err) {
-    return res.status(500).json({
-      error: "Az órákat nem sikerült lekérdezni",
-      errormsg: err,
-    });
+  let user;
+  switch (jogkor_id) {
+    case 1:
+      user = tanulo_id;
+      break;
+    case 2:
+      user = tanar_id;
+      break;
   }
+  //try {
+  const orak = await prisma.orarend.findMany({
+    where: {
+      tanar_id: id,
+    },
+    include: {
+      Orak: true,
+      Tanar: {
+        select: {
+          vezeteknev: true,
+          keresztnev: true,
+        },
+      },
+      Tanulo: {
+        select: {
+          vezeteknev: true,
+          keresztnev: true,
+        },
+      },
+    },
+  });
+
+  res.status(202).json(orak);
+  // } catch (err) {
+  //   return res.status(500).json({
+  //     error: "Az órákat nem sikerült lekérdezni",
+  //     errormsg: err,
+  //   });
+  //}
 };
 
 //@desc Óra törlése id alapján
