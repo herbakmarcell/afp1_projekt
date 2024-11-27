@@ -333,9 +333,9 @@ const oraTorles = async (req, res) => {
     return res.status(202).json("Nincs ilyen óra a rendszerben!");
   }
   //A tanár nem tudja, csak azokat az órákat törölni, amelynél, az ő ID-je szerepel
-  // if (ora.felhasznalo_id != id) {
-  //   return res.status(401).json({ err: "Csak a saját óráját törölheti!" });
-  // }
+  if (ora.felhasznalo_id != id) {
+    return res.status(401).json({ err: "Csak a saját óráját törölheti!" });
+  }
 
   try {
     const oraTorles = await prisma.orak.delete({
