@@ -157,7 +157,15 @@ const oraLetrehozas = async (req, res) => {
   if (!Number.isInteger(body_felhasznalo_id)) {
     return res.status(406).json({ error: "Az id-nek számnak kell lennie!" });
   }
-
+  const tanulo = await prisma.felhasznalok.findFirst({
+    where: {
+      felhasznalo_id: body_felhasznalo_id,
+    },
+  });
+  if (!tanulo)
+    return res.status(406).json("Nincs felhasználó a megadott id-vel!");
+  if (tanulo.jogkor_id != 1)
+    return res.status(406).json("Csak tanulónak lehet órát felvinni!");
   if (!Number.isInteger(id)) {
     return res.status(406).json({ error: "Az id-nek számnak kell lennie!" });
   }
