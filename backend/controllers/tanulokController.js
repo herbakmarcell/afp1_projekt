@@ -78,12 +78,12 @@ const tanulokLekerese = async (req, res) => {
 };
 
 //@desc Adott tanuló előrehaladásának lekérdezése
-//@route POST /api/tanulok/elorehaladas/:tanulo_id
+//@route POST /api/tanulok/elorehaladas
 //@access private
 const tanuloElorehaladasa = async (req, res) => {
   const azon = req.user.user.id;
   const { jogkor_id } = req.user.user;
-  const { tanuloId } = req.params;
+  const { tanuloId } = req.body;
 
   if (jogkor_id != 2) {
     // oktato id
@@ -110,7 +110,8 @@ const tanuloElorehaladasa = async (req, res) => {
           },
         },
         Vizsgajelentkezes: {
-          include: {
+          select: {
+            jelentkezes_datuma: true,
             Vizsgak: {
               select: {
                 sikeres: true,
@@ -140,23 +141,45 @@ const tanuloElorehaladasa = async (req, res) => {
     }
 
     const vizsgak = {
-      eu: false,
-      elmeleti: false,
-      gyakorlati: false,
+      eu: { sikeres: false, jelentkezesDatuma: null },
+      elmeleti: { sikeres: false, jelentkezesDatuma: null },
+      gyakorlati: { sikeres: false, jelentkezesDatuma: null },
     };
 
     tanuloElorehaladas.Vizsgajelentkezes.forEach((jelentkezes) => {
       const vizsga = jelentkezes.Vizsgak;
-      if (vizsga.sikeres) {
-        switch (vizsga.VizsgaTipus.tipus) {
+
+      if (vizsga && vizsga.VizsgaTipus) {
+        const tipus = vizsga.VizsgaTipus.tipus;
+        const rawDatum = jelentkezes.jelentkezes_datuma;
+
+        // Dátum formázása
+        const formattedDate = rawDatum
+          ? rawDatum.toLocaleString("hu-HU", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+            })
+          : null;
+
+        switch (tipus) {
           case "eü":
-            vizsgak.eu = true;
+            vizsgak.eu = { sikeres: vizsga.sikeres, jelentkezesDatuma: formattedDate };
             break;
           case "elméleti":
-            vizsgak.elmeleti = true;
+            vizsgak.elmeleti = {
+              sikeres: vizsga.sikeres,
+              jelentkezesDatuma: formattedDate,
+            };
             break;
           case "gyakorlati":
-            vizsgak.gyakorlati = true;
+            vizsgak.gyakorlati = {
+              sikeres: vizsga.sikeres,
+              jelentkezesDatuma: formattedDate,
+            };
             break;
         }
       }

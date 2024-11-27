@@ -7,6 +7,6 @@ const router = express.Router();
 
 router.get("/oktatoTanuloi", validateToken, oktatoTanuloi);
 router.get("/tanulokLekerese", validateToken, tanulokLekerese);
-router.get("/elorehaladas/:tanuloId", validateToken, tanuloElorehaladasa);
+router.post("/elorehaladas", validateToken, tanuloElorehaladasa);
 
 export default router

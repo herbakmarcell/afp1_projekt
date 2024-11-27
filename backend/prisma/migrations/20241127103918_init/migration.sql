@@ -1,12 +1,3 @@
-/*
-  Warnings:
-
-  - You are about to drop the `User` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropTable
-DROP TABLE `User`;
-
 -- CreateTable
 CREATE TABLE `Felhasznalok` (
     `felhasznalo_id` INTEGER NOT NULL AUTO_INCREMENT,
@@ -77,6 +68,7 @@ CREATE TABLE `Vizsgajelentkezes` (
     `vizsgajelentkezes_id` INTEGER NOT NULL AUTO_INCREMENT,
     `tanulo_elorehaladas_id` INTEGER NOT NULL,
     `vizsga_id` INTEGER NOT NULL,
+    `jelentkezes_datuma` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`vizsgajelentkezes_id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

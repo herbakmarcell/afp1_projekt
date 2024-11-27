@@ -173,6 +173,7 @@ const vizsgaJelentkezes = async (req, res) => {
             data: {
                 tanulo_elorehaladas_id: elorehaladas.elorehaladas_id,
                 vizsga_id: vizsga_id,
+                jelentkezes_datuma: new Date()
             }
         });
         if (ujJelentkezes) {
