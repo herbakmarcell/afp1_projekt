@@ -54,7 +54,7 @@ const loginUser = async (req, res) => {
   const { email, jelszo } = req.body;
   console.log(email, jelszo);
   if (!email || !jelszo) {
-    return res.status(400).json("All fields are mandatory!");
+    return res.status(400).json({error: "All fields are mandatory!"});
   }
   const user = await prisma.felhasznalok.findFirst({
     where: {
@@ -84,7 +84,7 @@ const loginUser = async (req, res) => {
 
     res.json({ token });
   } else {
-    res.status(401).json("email or password is not valid");
+    res.status(401).json({error : "email or password is not valid"});
   }
 };
 
