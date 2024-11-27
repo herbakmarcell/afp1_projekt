@@ -17,6 +17,7 @@ const elerhetoVizsgak = async (req, res) => {
     try {
         const jelenlegiDatum = new Date();
 
+        // Összes elérhető vizsga
         const vizsgak = await prisma.vizsgak.findMany({
             where: {
                 vizsga_datuma: {
@@ -43,6 +44,7 @@ const elerhetoVizsgak = async (req, res) => {
             },
         });
 
+        // Felhasználóhoz tartozó vizsgák
         const elorehaladas = await prisma.tanuloElorehaladas.findUnique({
             where: { tanulo_id: parseInt(azon) },
             select: { elorehaladas_id: true },
@@ -82,27 +84,52 @@ const elerhetoVizsgak = async (req, res) => {
             },
         });
 
-        const formattedVizsgak = [...vizsgak, ...felhasznaloVizsgai].map((vizsga) => {
-            const vizsga_datuma = new Date(vizsga.vizsga_datuma);
-            vizsga_datuma.setHours(vizsga_datuma.getHours() - 1);
-            const formattedDate = vizsga_datuma.toLocaleString('hu-HU', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: false,
-            })
+        // Vizsgák formázása
+        const formattedVizsgak = [
+            ...vizsgak.map((vizsga) => {
+                const vizsga_datuma = new Date(vizsga.vizsga_datuma);
+                vizsga_datuma.setHours(vizsga_datuma.getHours() - 1);
+                const formattedDate = vizsga_datuma.toLocaleString('hu-HU', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false,
+                });
 
-            return {
-                vizsga_id: vizsga.vizsga_id,
-                vizsga_tipus: vizsga.VizsgaTipus.tipus,
-                vizsgabiztos_neve: vizsga.Felhasznalok
-                    ? `${vizsga.Felhasznalok.vezeteknev} ${vizsga.Felhasznalok.keresztnev}`
-                    : null,
-                vizsga_datuma: formattedDate
-            };
-        });
+                return {
+                    vizsga_id: vizsga.vizsga_id,
+                    vizsga_tipus: vizsga.VizsgaTipus.tipus,
+                    vizsgabiztos_neve: vizsga.Felhasznalok
+                        ? `${vizsga.Felhasznalok.vezeteknev} ${vizsga.Felhasznalok.keresztnev}`
+                        : null,
+                    vizsga_datuma: formattedDate,
+                };
+            }),
+            ...felhasznaloVizsgai.map((vizsga) => {
+                const vizsga_datuma = new Date(vizsga.vizsga_datuma);
+                vizsga_datuma.setHours(vizsga_datuma.getHours() - 1);
+                const formattedDate = vizsga_datuma.toLocaleString('hu-HU', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false,
+                });
+
+                return {
+                    vizsga_id: vizsga.vizsga_id,
+                    vizsga_tipus: vizsga.VizsgaTipus.tipus,
+                    vizsgabiztos_neve: vizsga.Felhasznalok
+                        ? `${vizsga.Felhasznalok.vezeteknev} ${vizsga.Felhasznalok.keresztnev}`
+                        : null,
+                    vizsga_datuma: formattedDate,
+                    statusz: 'foglalva',
+                };
+            }),
+        ];
 
         return res.json(formattedVizsgak);
     } catch (error) {
