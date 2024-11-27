@@ -36,7 +36,7 @@
   border: 2px solid black;
   /* height: 50vh; */
   height: auto;
-  background: #2d44505a;
+  background: #131c21b6;
 }
 
 .infoTablaDiv .infoTablaDivInner {
@@ -76,17 +76,17 @@
   width: 50%;
   padding: 10px;
   text-align: center;
+  color: white;
 }
 
 .infoTablaTableDiv table tr td:first-child {
   background-color: var(--navBlue);
-  color: white;
   /* width: 50%; */
 }
 
 .infoTablaTableDiv button,
 .infoTablaTableDiv a {
-  background-color: var(--navButtonInactive);
+  background-color: var(--navButtonActive);
   color: white;
   padding: 0.7rem;
   /* border-radius: 10px; */
@@ -102,7 +102,7 @@
 
 .infoTablaTableDiv button:hover,
 .infoTablaTableDiv a:hover {
-  background-color: var(--navButtonActive);
+  background-color: #131c21b6;
   color: white;
   padding: 0.7rem;
   /* border-radius: 10px; */

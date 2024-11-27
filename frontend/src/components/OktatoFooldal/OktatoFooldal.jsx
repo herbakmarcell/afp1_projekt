@@ -100,7 +100,10 @@ const OktatoFooldal = () => {
         </h2>
         {user ? (
           <>
-            <div className="processDiv">
+            <div
+              className="processDiv"
+              style={{ gap: "40px", justifyContent: "normal" }}
+            >
               <h2>Órafelvitel</h2>
               <div className="oraFelvitelFormDiv">
                 <form action="" className="oreFelvitelForm">

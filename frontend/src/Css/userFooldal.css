@@ -2,7 +2,7 @@
   display: grid;
   gap: 30px;
   grid-template-columns: 30% 30% 33.5%;
-  grid-template-rows: auto;
+  grid-template-rows: auto 45rem auto;
   grid-template-areas:
     "title title title"
     "process timetable timetable"
@@ -37,12 +37,19 @@
   justify-content: space-between;
   flex-direction: column;
   align-items: center;
-  background: #2d44505a;
+  background: #131c21b6;
 }
 
 .mainContent h2 {
   margin: 0;
   width: 100%;
+}
+
+.processDiv ul {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .processDiv ul li {
@@ -55,6 +62,7 @@
   border: 1px solid var(--navBlue);
   padding-bottom: 5px;
   margin: 5px;
+  background-color: var(--navButtonInactive);
   list-style: none;
 }
 
@@ -72,7 +80,7 @@
   grid-area: timetable;
   width: 100%;
   border: 2px solid black;
-  background: #2d44505a;
+  background: #131c21b6;
 }
 
 .mainContent .mainOktatoDiaknak {
@@ -80,7 +88,7 @@
   width: 100%;
   border: 2px solid black;
   text-align: center;
-  background: #2d44505a;
+  background: #131c21b6;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -88,7 +96,7 @@
 }
 .mainContent .mainAutoDiaknak {
   grid-area: car;
-  background: #2d44505a;
+  background: #131c21b6;
   width: 100%;
   border: 2px solid black;
   text-align: center;
@@ -112,7 +120,7 @@
 .mainContent .mainVizsgaDiaknak {
   grid-area: test;
   width: 100%;
-  background: #2d44505a;
+  background: #131c21b6;
   border: 2px solid black;
   display: flex;
   flex-direction: column;
@@ -138,6 +146,7 @@
   gap: 10px;
   border: 1px solid var(--navBlue);
   margin: 5px;
+  background-color: var(--navButtonInactive);
   list-style: none;
 }
 

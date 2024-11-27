@@ -34,7 +34,10 @@ const Admin = () => {
 
   return (
     <>
-      <div className={user ? "mainContent" : "mainContentNo"}>
+      <div
+        className={user ? "mainContent" : "mainContentNo"}
+        style={{ gridTemplateRows: "auto" }}
+      >
         <h2>
           {user
             ? `Üdvözöllek ${user.user.vezeteknev} ${user.user.keresztnev} `
