@@ -223,7 +223,7 @@ const deleteUser = async (req, res) => {
     return res
       .status(200)
       .json("A lekérdezés lefutott, azonban nincs ilyen felhasználó!");
-  if (talalt_felhasznalo.aktiv == 0)
+  if (!talalt_felhasznalo.aktiv)
     return res.status(200).json("A felhasználó már törölve van!");
 
   try {
@@ -232,16 +232,69 @@ const deleteUser = async (req, res) => {
         felhasznalo_id: felhasznalo_id,
       },
       data: {
-        aktiv: 0,
+        aktiv: false,
       },
     });
+    if (torolt_felhasznalo) res.status(201).json("A törlés sikeres!");
   } catch (errormsg) {
     console.log(errormsg);
     return res
       .status(500)
       .json({ err: "A törlés sikertelen, próbálja meg újra!" });
   }
-  if (torolt_felhasznalo) res.status(201).json("A törlés sikeres!");
+};
+
+const activateUser = async (req, res) => {
+  const { jogkor_id } = req.user.user;
+  if (jogkor_id != 4)
+    return res.status(401).json({ err: "Nincs joga felhasználót aktiválni!" });
+
+  const felhasznalo_id = req.body.felhasznalo_id;
+  if (!felhasznalo_id)
+    return res.status(406).json({ err: "A felhasznalo_id megadása kötelező!" });
+  if (!Number.isInteger(felhasznalo_id))
+    return res
+      .stat(406)
+      .json({ err: "A felhasznalo_id-nek egész számnak kell lennie!" });
+
+  try {
+    const userExist = await prisma.felhasznalok.findFirst({
+      where: {
+        felhasznalo_id: felhasznalo_id,
+      },
+    });
+    if (!userExist)
+      return res
+        .status(406)
+        .json({ err: "Nincs ilyen felhasználó a rendszerben!" });
+    if (userExist.aktiv)
+      return res.status(406).json({ err: "A megadott felhasználó már aktív!" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ err: "A lekérdezés sikertelen, próbálja újra!" });
+  }
+
+  try {
+    const activate = await prisma.felhasznalok.update({
+      where: {
+        felhasznalo_id: felhasznalo_id,
+      },
+      data: {
+        aktiv: true,
+      },
+    });
+    if (!activate)
+      return res
+        .status(500)
+        .json({ err: "Nem tudtuk aktiválni a felhasználót!" });
+
+    return res.status(201).json({ err: "Az aktiválás sikeres!" });
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ err: "Az aktiválás sikertelen, próbálja újra!" });
+  }
 };
 
 export {
@@ -252,4 +305,5 @@ export {
   felhasznaloLekeres,
   jogkor_modositas,
   deleteUser,
+  activateUser,
 };
