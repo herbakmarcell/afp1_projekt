@@ -6,6 +6,7 @@ import {
   felhasznaloLekeres,
   felhasznaloModositas,
   jogkor_modositas,
+  deleteUser,
 } from "../controllers/userController.js";
 import validateToken from "../middleware/validateTokenHandler.js";
 
@@ -22,4 +23,6 @@ router.post("/logout", logout);
 router.get("/getUserDetails", felhasznaloLekeres);
 
 router.post("/changeUserPrivileges", validateToken, jogkor_modositas);
+
+router.delete("/deleteUser", validateToken, deleteUser);
 export default router;

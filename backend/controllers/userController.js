@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { PrismaClient } from "@prisma/client";
+import { stat } from "fs";
 
 const prisma = new PrismaClient();
 
@@ -54,13 +55,15 @@ const loginUser = async (req, res) => {
   const { email, jelszo } = req.body;
   console.log(email, jelszo);
   if (!email || !jelszo) {
-    return res.status(400).json("All fields are mandatory!");
+    return res.status(400).json({ err: "A mezők kitöltése kötelező!" });
   }
   const user = await prisma.felhasznalok.findFirst({
     where: {
       email: email,
     },
   });
+  if (user.aktiv == 0)
+    return res.status(400).json({ err: "A felhasználó inaktív!" });
   //compare password with hashedpassword
   if (user && (await bcrypt.compare(jelszo, user.jelszo))) {
     const token = jwt.sign(
@@ -195,6 +198,52 @@ const jogkor_modositas = async (req, res) => {
   else res.status(500).json("A módosítás sikerestelen!");
 };
 
+//@desc Felhasználó logikai törlése
+//@route DELETE /api/users/deleteUser
+//@access private
+const deleteUser = async (req, res) => {
+  const { jogkor_id } = req.user.user;
+  if (jogkor_id != 4)
+    return res.status(401).json({ err: "Nincs joga felhasználót törölni!" });
+
+  const felhasznalo_id = req.body.felhasznalo_id;
+  if (!felhasznalo_id)
+    return res.status(401).json({ err: "A felhasznalo_id megadása kötelező!" });
+  else if (!Number.isInteger(felhasznalo_id))
+    return res
+      .status(401)
+      .json({ err: "A felhasznalo_id-nek egész számnak kell lennie!" });
+
+  const talalt_felhasznalo = await prisma.felhasznalok.findFirst({
+    where: {
+      felhasznalo_id: felhasznalo_id,
+    },
+  });
+  if (!talalt_felhasznalo)
+    return res
+      .status(200)
+      .json("A lekérdezés lefutott, azonban nincs ilyen felhasználó!");
+  if (talalt_felhasznalo.aktiv == 0)
+    return res.status(200).json("A felhasználó már törölve van!");
+
+  try {
+    const torolt_felhasznalo = await prisma.felhasznalok.update({
+      where: {
+        felhasznalo_id: felhasznalo_id,
+      },
+      data: {
+        aktiv: 0,
+      },
+    });
+  } catch (errormsg) {
+    console.log(errormsg);
+    return res
+      .status(500)
+      .json({ err: "A törlés sikertelen, próbálja meg újra!" });
+  }
+  if (torolt_felhasznalo) res.status(201).json("A törlés sikeres!");
+};
+
 export {
   registerUser,
   loginUser,
@@ -202,4 +251,5 @@ export {
   felhasznaloModositas,
   felhasznaloLekeres,
   jogkor_modositas,
+  deleteUser,
 };
