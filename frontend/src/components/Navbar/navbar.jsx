@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "../../Css/navbar.css";
 import "../../index.css";
+import "../../Css/navbar.css";
 import axios from "axios";
-
+import TrafficLight from "../TrafficLight/trafficlight.jsx";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../AuthContext.jsx";
 import { useContext } from "react";
@@ -25,16 +25,17 @@ export const NavBar = () => {
       { withCredentials: true }
     );
     logout(); // A context-ből töröljük a felhasználót
-    navigate("/"); // Visszairányítás a főoldalra
+    navigate("/bejelentkezes"); // Visszairányítás a bejelentkezés felületre
   };
 
   return (
     <nav>
       <div className="navbarTitleImg">
-        <img
+        {/* <img
           src="https://static.vecteezy.com/system/resources/thumbnails/000/550/395/small_2x/traffic_light_006.jpg"
           alt="trafficLights"
-        />
+        /> */}
+        <TrafficLight />
         <Link to="/fooldal">Autósiskola</Link>
       </div>
       <div

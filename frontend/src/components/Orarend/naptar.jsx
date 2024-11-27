@@ -1,84 +1,70 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../Css/naptar.css";
+import axios from "axios";
+import Orak from "./orakartyak";
 
 const Calendar = () => {
-  const [currentDate, setCurrentDate] = useState(new Date());
+  const [data, setData] = useState([]);
 
-  const renderCalendar = (date) => {
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const firstDayOfMonth = new Date(year, month, 1);
-    const lastDayOfMonth = new Date(year, month + 1, 0);
-    const lastDayOfPrevMonth = new Date(year, month, 0);
-    const lastDatePrevMonth = lastDayOfPrevMonth.getDate();
-    const daysInMonth = lastDayOfMonth.getDate();
-    const startDay = firstDayOfMonth.getDay();
-
-    const days = [];
-    // Empty previous month's days
-    for (let i = startDay - 1; i >= 0; i--) {
-      days.push(lastDatePrevMonth - i);
-    }
-
-    // Current month's days
-    for (let i = 1; i <= daysInMonth; i++) {
-      days.push(i);
-    }
-
-    // Empty next month's days
-    const remainingDays = 7 - (days.length % 7);
-    if (remainingDays !== 7) {
-      for (let i = 1; i < remainingDays; i++) {
-        days.push(i);
+  useEffect(() => {
+    const users = async () => {
+      try {
+        const resp = await axios.get(
+          "http://localhost:5000/api/orarend/orarendLekeres",
+          { withCredentials: true }
+        );
+        const adat = resp.data;
+        if (adat) {
+          //setVizsgaBtn(true)
+          setData(adat);
+          console.log(adat);
+        }
+      } catch (error) {
+        console.log(error);
       }
+    };
+    users();
+  }, []);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
     }
-
-    return days;
   };
 
-  const handlePrevMonth = () => {
-    const newDate = new Date(currentDate);
-    newDate.setMonth(currentDate.getMonth() - 1);
-    setCurrentDate(newDate);
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
   };
-
-  const handleNextMonth = () => {
-    const newDate = new Date(currentDate);
-    newDate.setMonth(currentDate.getMonth() + 1);
-    setCurrentDate(newDate);
-  };
-
-  const days = renderCalendar(currentDate);
 
   return (
-    <div className="calendar">
-      <div className="calendar-header">
-        <button className="chooseMotnhBtn" onClick={handlePrevMonth}>
-          &lt;
-        </button>
-        <h4>
-          {currentDate.getFullYear()}{" "}
-          {currentDate.toLocaleString("hu-HU", { month: "long" })}
-        </h4>
-        <button className="chooseMotnhBtn" onClick={handleNextMonth}>
-          &gt;
-        </button>
-      </div>
-      <div className="calendar-days">
-        <div>V</div>
-        <div>H</div>
-        <div>K</div>
-        <div>Sze</div>
-        <div>Csu</div>
-        <div>P</div>
-        <div>Szo</div>
-      </div>
-      <div className="calendar-days-container">
-        {days.map((day, index) => (
-          <div key={index} className={day > 0 && day <= 31 ? "" : "empty"}>
-            {day > 0 && day <= 31 ? day : ""}
-          </div>
+    <div className="orarendMainDiv">
+      <div className="orarendCardsDiv">
+        {currentItems.map((formData, index) => (
+          <Orak key={index} formData={formData} index={index} />
         ))}
+      </div>
+
+      <div className="naptarButtonDiv">
+        <button onClick={handlePrevPage} disabled={currentPage === 1}>
+          Előző
+        </button>
+        <span style={{ margin: "0 8px" }}>
+          {currentPage}. oldal a(z) {totalPages}-ból
+        </span>
+        <button onClick={handleNextPage} disabled={currentPage === totalPages}>
+          Következő
+        </button>
       </div>
     </div>
   );

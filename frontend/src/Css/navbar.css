@@ -47,9 +47,11 @@ nav a {
 
 .navbarTitleImg {
   display: flex;
-  justify-content: space-around;
+  /* justify-content: space-around; */
   align-items: center;
   width: 20%;
+  padding: 2px;
+  gap: 20px;
 }
 
 .navbarTitleImg img {
