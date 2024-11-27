@@ -7,15 +7,16 @@ import { Link } from "react-router-dom";
 
 const Elorehaladas = () => {
   const [vizsgaBtn, setVizsgaBtn] = useState(false)
-  const [data, setData] = useState([]);
-  
+  const [elorehaladas, setElorehaladas] = useState([{}]);
+  const [lejelentkezesBtn, setLejelentkezesBtn] = useState(false)
   const [error, setError] = useState("")
+  const [statusz, setStatusz] = useState([])
+  const [elorehaladasError ,setElorehaladasError] = useState("")
 
   const { user } = useContext(AuthContext);
-
   useEffect(() => {
     //TODO:
-    //ide kerül majd akkor az, hogy beolvassuk a előrehaladást és megnézzük, hogy a gyakorlati vizsgánál 30-e az óraszám...
+      
   }, []);
 
 
@@ -29,7 +30,10 @@ const Elorehaladas = () => {
         const data = resp.data;
         if (data) {
           //setVizsgaBtn(true)
-          setData(data);
+          {data.map(d => {
+            setStatusz(prevState => [...prevState, d])
+          })}
+         
           setVizsgaBtn(true);
         }
       } catch (err) {
@@ -141,9 +145,10 @@ const Elorehaladas = () => {
                     <th>Vizsga időpontja</th>
                     <th className="jelentkezes">Jelentkezés</th>
                   </tr>
-                  {error}
-                  {data.length === 0 ? <tr ><td colSpan={5}>Nincsenek meghirdetve vizsgák, kérjük látogasson vissza később.</td></tr> : data.map((formData, i) => {
-                    return <VizsgaTable formData={formData} key={i} />;
+                  {error && <td colSpan={5} >{error}</td>}
+                  {statusz.length === 0 ? <tr ><td colSpan={5}>Nincsenek meghirdetve vizsgák, kérjük látogasson vissza később.</td></tr> : statusz.map((formData, i) => {
+                    
+                    return <VizsgaTable formData={formData} key={i} index={i}  />;
                   })}
                 </tbody>
               </table>
