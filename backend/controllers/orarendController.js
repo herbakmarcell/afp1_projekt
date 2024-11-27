@@ -204,51 +204,108 @@ const oraLetrehozas = async (req, res) => {
 //@desc orarend lekérdezése
 //@route GET /api/orarend/orarendLekeres
 //@access public
-
 const orarendLekeres = async (req, res) => {
   const { id, jogkor_id } = req.user.user;
 
   if (!Number.isInteger(id)) {
     return res.status(406).json({ error: "A ID típusa nem megfelelő!" });
   }
-  let user;
-  switch (jogkor_id) {
-    case 1:
-      user = tanulo_id;
-      break;
-    case 2:
-      user = tanar_id;
-      break;
-  }
-  //try {
-  const orak = await prisma.orarend.findMany({
-    where: {
-      tanar_id: id,
-    },
-    include: {
-      Orak: true,
-      Tanar: {
-        select: {
-          vezeteknev: true,
-          keresztnev: true,
-        },
-      },
-      Tanulo: {
-        select: {
-          vezeteknev: true,
-          keresztnev: true,
-        },
-      },
-    },
-  });
 
-  res.status(202).json(orak);
-  // } catch (err) {
-  //   return res.status(500).json({
-  //     error: "Az órákat nem sikerült lekérdezni",
-  //     errormsg: err,
-  //   });
-  //}
+  try {
+    let ora;
+    switch (jogkor_id) {
+      //tanuló
+      case 1:
+        ora = await prisma.orarend.findMany({
+          where: {
+            tanulo_id: id,
+          },
+          select: {
+            Orak: true,
+            tanar_id: true,
+            Tanar: {
+              select: {
+                vezeteknev: true,
+                keresztnev: true,
+              },
+            },
+          },
+        });
+        if (!ora)
+          return res
+            .status(500)
+            .json("Hiba a lekérdezés során, próbálja újra!");
+        return res.status(202).json(ora);
+
+        break;
+      //oktató
+      case 2:
+        ora = await prisma.orarend.findMany({
+          where: {
+            tanar_id: id,
+          },
+          select: {
+            Orak: true,
+            tanulo_id: true,
+            Tanulo: {
+              select: {
+                vezeteknev: true,
+                keresztnev: true,
+              },
+            },
+          },
+        });
+        return res.status(202).json(ora);
+        break;
+      case 4:
+        const tanar_id = req.body.tanar_id;
+        const tanulo_id = req.body.tanulo_id;
+        let felh_obj = {};
+        if (tanar_id) {
+          if (!Number.isInteger(tanar_id))
+            return res
+              .status(406)
+              .json("A tanar_id-nek egész számnak kell lennie.");
+          felh_obj["tanar_id"] = tanar_id;
+        }
+
+        if (tanulo_id) {
+          if (!Number.isInteger(tanulo_id))
+            return res
+              .status(406)
+              .json("A tanulo_id-nek egész számnak kell lennie.");
+          felh_obj["tanulo_id"] = tanulo_id;
+        }
+
+        ora = await prisma.orarend.findMany({
+          where: felh_obj,
+          select: {
+            Orak: true,
+            tanulo_id: true,
+            Tanulo: {
+              select: {
+                vezeteknev: true,
+                keresztnev: true,
+              },
+            },
+            tanar_id: true,
+            Tanar: {
+              select: {
+                vezeteknev: true,
+                keresztnev: true,
+              },
+            },
+          },
+        });
+        res.status(202).json(ora);
+        break;
+    }
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ err: "Hiba a lekérdezés során, próbálja meg újra!" });
+  }
 };
 
 //@desc Óra törlése id alapján
