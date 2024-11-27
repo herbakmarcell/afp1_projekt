@@ -219,6 +219,9 @@ const orarendLekeres = async (req, res) => {
         ora = await prisma.orarend.findMany({
           where: {
             tanulo_id: id,
+            Tanar: {
+              aktiv: true,
+            },
           },
           select: {
             Orak: true,
@@ -235,6 +238,7 @@ const orarendLekeres = async (req, res) => {
           return res
             .status(500)
             .json("Hiba a lekérdezés során, próbálja újra!");
+
         return res.status(202).json(ora);
 
         break;
@@ -243,6 +247,7 @@ const orarendLekeres = async (req, res) => {
         ora = await prisma.orarend.findMany({
           where: {
             tanar_id: id,
+            Tanulo: { aktiv: true },
           },
           select: {
             Orak: true,
@@ -255,12 +260,23 @@ const orarendLekeres = async (req, res) => {
             },
           },
         });
+        if (!ora)
+          return res
+            .status(500)
+            .json("Hiba a lekérdezés során, próbálja újra!");
         return res.status(202).json(ora);
         break;
       case 4:
         const tanar_id = req.body.tanar_id;
         const tanulo_id = req.body.tanulo_id;
-        let felh_obj = {};
+        let felh_obj = {
+          Tanar: {
+            aktiv: true,
+          },
+          Tanulo: {
+            aktiv: true,
+          },
+        };
         if (tanar_id) {
           if (!Number.isInteger(tanar_id))
             return res
