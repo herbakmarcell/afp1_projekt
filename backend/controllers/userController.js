@@ -182,8 +182,14 @@ const jogkor_modositas = async (req, res) => {
     return res
       .status(401)
       .json({ err: "Nincs felhasználó a megadott ID-vel!" });
+  else if (!felhasznalo_letezik.aktiv)
+    return res
+      .satus(401)
+      .json({ err: "Nem lehet inaktív felhasználó jogait megváltoztatni!" });
   else if (felhasznalo_letezik.jogkor_id == 4)
-    return res.status(401).json("Admin jogát nem lehet megváltoztatni!");
+    return res
+      .status(401)
+      .json({ err: "Admin jogát nem lehet megváltoztatni!" });
 
   const update_user = await prisma.felhasznalok.update({
     where: {
