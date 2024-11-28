@@ -77,13 +77,13 @@ const tanulokLekerese = async (req, res) => {
   }
 };
 
-//@desc Adott tanuló előrehaladásának lekérdezése
-//@route POST /api/tanulok/elorehaladas/:tanulo_id
+//@desc Adott tanuló előrehaladásának lekérdezése (ezt az oktató kéri le)
+//@route POST /api/tanulok/elorehaladas
 //@access private
 const tanuloElorehaladasa = async (req, res) => {
   const azon = req.user.user.id;
   const { jogkor_id } = req.user.user;
-  const { tanuloId } = req.params;
+  const { tanuloId } = req.body;
 
   if (jogkor_id != 2) {
     // oktato id
@@ -110,7 +110,8 @@ const tanuloElorehaladasa = async (req, res) => {
           },
         },
         Vizsgajelentkezes: {
-          include: {
+          select: {
+            jelentkezes_datuma: true,
             Vizsgak: {
               select: {
                 sikeres: true,
@@ -140,23 +141,45 @@ const tanuloElorehaladasa = async (req, res) => {
     }
 
     const vizsgak = {
-      eu: false,
-      elmeleti: false,
-      gyakorlati: false,
+      eu: { sikeres: false, jelentkezesDatuma: null },
+      elmeleti: { sikeres: false, jelentkezesDatuma: null },
+      gyakorlati: { sikeres: false, jelentkezesDatuma: null },
     };
 
     tanuloElorehaladas.Vizsgajelentkezes.forEach((jelentkezes) => {
       const vizsga = jelentkezes.Vizsgak;
-      if (vizsga.sikeres) {
-        switch (vizsga.VizsgaTipus.tipus) {
+
+      if (vizsga && vizsga.VizsgaTipus) {
+        const tipus = vizsga.VizsgaTipus.tipus;
+        const rawDatum = jelentkezes.jelentkezes_datuma;
+
+        // Dátum formázása
+        const formattedDate = rawDatum
+          ? rawDatum.toLocaleString("hu-HU", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+            })
+          : null;
+
+        switch (tipus) {
           case "eü":
-            vizsgak.eu = true;
+            vizsgak.eu = { sikeres: vizsga.sikeres, jelentkezesDatuma: formattedDate };
             break;
           case "elméleti":
-            vizsgak.elmeleti = true;
+            vizsgak.elmeleti = {
+              sikeres: vizsga.sikeres,
+              jelentkezesDatuma: formattedDate,
+            };
             break;
           case "gyakorlati":
-            vizsgak.gyakorlati = true;
+            vizsgak.gyakorlati = {
+              sikeres: vizsga.sikeres,
+              jelentkezesDatuma: formattedDate,
+            };
             break;
         }
       }
@@ -175,4 +198,111 @@ const tanuloElorehaladasa = async (req, res) => {
   }
 };
 
-export { oktatoTanuloi, tanulokLekerese, tanuloElorehaladasa };
+//@desc Adott tanuló saját előrehaladása
+//@route GET /api/tanulok/sajatElorehaladas
+//@access private
+const tanuloSajatHaladasa = async (req, res) => {
+  const tanuloId = req.user.user.id; // A bejelentkezett tanuló azonosítója
+  const { jogkor_id } = req.user.user;
+
+  if (jogkor_id != 1) { // tanulo id
+    return res.status(403).send({
+      message: "Hozzáférés megtagadva",
+    });
+  }
+
+  try {
+    const tanuloElorehaladas = await prisma.tanuloElorehaladas.findUnique({
+      where: {
+        tanulo_id: parseInt(tanuloId),
+      },
+      include: {
+        FelhasznalokTanulo: {
+          select: {
+            vezeteknev: true,
+            keresztnev: true,
+          },
+        },
+        Vizsgajelentkezes: {
+          select: {
+            jelentkezes_datuma: true,
+            Vizsgak: {
+              select: {
+                sikeres: true,
+                VizsgaTipus: {
+                  select: {
+                    tipus: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!tanuloElorehaladas) {
+      return res.status(404).json({
+        message: "A tanuló nem található",
+      });
+    }
+
+    const vizsgak = {
+      eu: { sikeres: false, jelentkezesDatuma: null },
+      elmeleti: { sikeres: false, jelentkezesDatuma: null },
+      gyakorlati: { sikeres: false, jelentkezesDatuma: null },
+    };
+
+    tanuloElorehaladas.Vizsgajelentkezes.forEach((jelentkezes) => {
+      const vizsga = jelentkezes.Vizsgak;
+
+      if (vizsga && vizsga.VizsgaTipus) {
+        const tipus = vizsga.VizsgaTipus.tipus;
+        const rawDatum = jelentkezes.jelentkezes_datuma;
+
+        // Dátum formázása
+        const formattedDate = rawDatum
+          ? rawDatum.toLocaleString("hu-HU", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+            })
+          : null;
+
+        switch (tipus) {
+          case "eü":
+            vizsgak.eu = { sikeres: vizsga.sikeres, jelentkezesDatuma: formattedDate };
+            break;
+          case "elméleti":
+            vizsgak.elmeleti = {
+              sikeres: vizsga.sikeres,
+              jelentkezesDatuma: formattedDate,
+            };
+            break;
+          case "gyakorlati":
+            vizsgak.gyakorlati = {
+              sikeres: vizsga.sikeres,
+              jelentkezesDatuma: formattedDate,
+            };
+            break;
+        }
+      }
+    });
+
+    res.json({
+      tanuloNeve: `${tanuloElorehaladas.FelhasznalokTanulo.vezeteknev} ${tanuloElorehaladas.FelhasznalokTanulo.keresztnev}`,
+      levezetettOrak: tanuloElorehaladas.levezetett_orak,
+      vizsgak: vizsgak,
+    });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ error: "Hiba történt a tanuló előrehaladásának lekérdezése során." });
+  }
+};
+
+export { oktatoTanuloi, tanulokLekerese, tanuloElorehaladasa, tanuloSajatHaladasa }

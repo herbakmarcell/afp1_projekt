@@ -6,16 +6,21 @@ import AuthContext from "../../AuthContext.jsx";
 import { Link } from "react-router-dom";
 
 const Elorehaladas = () => {
-  const [vizsgaBtn, setVizsgaBtn] = useState(false);
-  const [data, setData] = useState([]);
-  const { user } = useContext(AuthContext);
+  const [vizsgaBtn, setVizsgaBtn] = useState(false)
+  const [elorehaladas, setElorehaladas] = useState([{}]);
+  const [lejelentkezesBtn, setLejelentkezesBtn] = useState(false)
+  const [error, setError] = useState("")
+  const [statusz, setStatusz] = useState([])
+  const [elorehaladasError ,setElorehaladasError] = useState("")
 
+  const { user } = useContext(AuthContext);
   useEffect(() => {
     //TODO:
-    //ide kerül majd akkor az, hogy beolvassuk a előrehaladást és megnézzük, hogy a gyakorlati vizsgánál 30-e az óraszám...
+      
   }, []);
 
-  const vizsgaBtnClick = () => {
+
+  useEffect(() => {
     const vizsga = async () => {
       try {
         const resp = await axios.get(
@@ -23,18 +28,20 @@ const Elorehaladas = () => {
           { withCredentials: true }
         );
         const data = resp.data;
-        console.log(data);
         if (data) {
           //setVizsgaBtn(true)
-          setData(data);
+          {data.map(d => {
+            setStatusz(prevState => [...prevState, d])
+          })}
+         
           setVizsgaBtn(true);
         }
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        setError(err.response.data.message || err.response.data.error)
       }
     };
     vizsga();
-  };
+  }, [])
 
   return (
     <>
@@ -124,12 +131,8 @@ const Elorehaladas = () => {
             <Link to="/fooldal">Vissza</Link>
           </div>
         </div>
-        <div className="vizsgaJelentkezes">
-          <button onClick={vizsgaBtnClick}>
-            <i className="fas fa-caret-square-down"></i> Vizsgára jelentkezés
-          </button>
-        </div>
-
+        
+        <h2 style={{margin: "0"}} >Viszgaalkalmak</h2>
         {vizsgaBtn && (
           <>
             <div className="vizsgaTable">
@@ -142,8 +145,10 @@ const Elorehaladas = () => {
                     <th>Vizsga időpontja</th>
                     <th className="jelentkezes">Jelentkezés</th>
                   </tr>
-                  {data.map((formData) => {
-                    return <VizsgaTable formData={formData} />;
+                  {error && <td colSpan={5} >{error}</td>}
+                  {statusz.length === 0 ? <tr ><td colSpan={5}>Nincsenek meghirdetve vizsgák, kérjük látogasson vissza később.</td></tr> : statusz.map((formData, i) => {
+                    
+                    return <VizsgaTable formData={formData} key={i} index={i}  />;
                   })}
                 </tbody>
               </table>

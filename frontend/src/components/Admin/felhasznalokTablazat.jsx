@@ -34,7 +34,7 @@ const UsersTable = (props) => {
             type="submit"
             onClick={() => btnModosit(props.formData.felhasznalo_id)}
           >
-            <i className="fas fa-sign-in-alt"></i> Jogosultság változtatása
+            <i className="fas fa-pen"></i> Jogosultság változtatása
           </button>
         </td>
       </tr>

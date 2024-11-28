@@ -80,6 +80,7 @@ model Vizsgajelentkezes {
   vizsgajelentkezes_id Int @id @default(autoincrement())
   tanulo_elorehaladas_id Int
   vizsga_id Int
+  jelentkezes_datuma DateTime
   TanuloElorehaladasV TanuloElorehaladas @relation(fields: [tanulo_elorehaladas_id], references: [elorehaladas_id], onDelete: Cascade, onUpdate: Cascade)
   Vizsgak Vizsgak @relation(fields: [vizsga_id], references: [vizsga_id], onDelete: Cascade, onUpdate: Cascade)
 }

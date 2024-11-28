@@ -87,7 +87,7 @@ const loginUser = async (req, res) => {
 
     res.json({ token });
   } else {
-    res.status(401).json("email or password is not valid");
+    res.status(401).json({error : "email or password is not valid"});
   }
 };
 
