@@ -146,7 +146,9 @@ const felhasznaloModositas = async (req, res) => {
 //@route GET /api/users/getUserDetails
 //@access private
 const felhasznaloLekeres = async (req, res) => {
-  const { jogkor_id, email } = req.user.user; // A claims-ból kiolvassuk az ID-t
+  const { email } = req.user.user; // A claims-ból kiolvassuk az ID-t
+  if (!email)
+    return res.status(418).json("Nincs token!");
   res.json({ user: req.user.user });
 };
 
