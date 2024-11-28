@@ -78,8 +78,15 @@ const orarendModositas = async (req, res) => {
   }
 
   if (tanulo_id) {
-    if (isInteger(tanulo_id)) ora_update["tanulo_id"] = tanulo_id;
-    else hibak.tanulo_id = "A tanuló ID nem megfelelő, nem lesz updatelve!";
+    if (isInteger(tanulo_id)) {
+      const aktiv_tanulo = await prisma.felhasznalok.findFirst({
+        where: {
+          felhasznalo_id: tanulo_id,
+        },
+      });
+      if (aktiv_tanulo.aktiv) ora_update["tanulo_id"] = tanulo_id;
+      else hibak.tanulo_id = "A megadott tanuló inaktív!";
+    } else hibak.tanulo_id = "A tanuló ID nem megfelelő, nem lesz updatelve!";
   }
 
   if (Object.keys(ora_update) != 0 && Object.keys(hibak) == 0) {
