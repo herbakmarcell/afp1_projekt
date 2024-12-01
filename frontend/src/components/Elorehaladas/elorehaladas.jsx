@@ -7,16 +7,54 @@ import { Link } from "react-router-dom";
 
 const Elorehaladas = () => {
   const [vizsgaBtn, setVizsgaBtn] = useState(false)
-  const [elorehaladas, setElorehaladas] = useState([{}]);
-  const [lejelentkezesBtn, setLejelentkezesBtn] = useState(false)
+
   const [error, setError] = useState("")
   const [statusz, setStatusz] = useState([])
-  const [elorehaladasError ,setElorehaladasError] = useState("")
+
+  const [data, setData] = useState({});
+  const [eu, setEu] = useState(false);
+  const [gyak, setGyak] = useState(false);
+  const [elmeleti, setElmeleti] = useState(false);
 
   const { user } = useContext(AuthContext);
   useEffect(() => {
-    //TODO:
+
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    const elorehaladas = async () => {
       
+      try {
+        const resp = await axios.get(
+          "http://localhost:5000/api/tanulok/sajatElorehaladas",
+          { withCredentials: true, signal }
+        );
+        const data = await resp.data;
+        if (data) {
+          setData(data);
+          console.log(data);
+          setGyak(data.vizsgak.gyakorlati);
+          console.log(data.vizsgak.eu);
+          setEu(data.vizsgak.eu);
+          setElmeleti(data.vizsgak.elmeleti);
+
+          
+          
+        }
+      } catch (err) {
+        console.log(err);
+        setError(err.response.data.message || err.response.data.message);
+      }
+    };
+    
+      elorehaladas();
+
+      return () => {
+        
+        controller.abort();
+
+      };
+    
   }, []);
 
 
@@ -63,20 +101,20 @@ const Elorehaladas = () => {
                   </div>
                   <div>
                     <p>Felvétel időpontja:</p>
-                    <p>2024.11.12</p>
+                    <p>{eu.jelentkezesDatuma}</p>
                   </div>
                 </div>
                 <div className="w3-light-black">
                   <div
                     className="w3-container  w3-center"
                     style={{
-                      width: "25%",
+                      width: `${eu.sikeres && eu.jelentkezesDatuma !== "" ? 100 : 0}%`,
                       background: "#fbc304",
                       color: "black",
                       fontWeight: "bold",
                     }}
                   >
-                    25%
+                    {eu.sikeres && eu.jelentkezesDatuma !== "" ? 100 : 0}%
                   </div>
                 </div>
               </div>
@@ -89,16 +127,16 @@ const Elorehaladas = () => {
                   </div>
                   <div>
                     <p>Felvétel időpontja:</p>
-                    <p>2024.11.12</p>
+                    <p>{elmeleti.jelentkezesDatuma}</p>
                   </div>
                 </div>
                 <div className="w3-light-black">
                   <div
                     className="w3-container w3-red w3-center"
-                    style={{ width: "75%", fontWeight: "bold" }}
+                    style={{ width: `${elmeleti.sikeres && elmeleti.jelentkezesDatuma !== "" ? 100 : 0}%`, fontWeight: "bold" }}
                   >
                     {" "}
-                    <span style={{ color: "black" }}>75%</span>{" "}
+                    <span style={{ color: "black" }}>{elmeleti.sikeres && elmeleti.jelentkezesDatuma !== "" ? 100 : 0}%</span>{" "}
                   </div>
                 </div>
               </div>
@@ -111,16 +149,16 @@ const Elorehaladas = () => {
                   </div>
                   <div>
                     <p>Felvétel időpontja:</p>
-                    <p>2024.11.12</p>
+                    <p>{gyak.jelentkezesDatuma}</p>
                   </div>
                 </div>
                 <div className="w3-light-black">
                   <div
                     className="w3-container w3-blue w3-center"
-                    style={{ width: "50%", color: "black", fontWeight: "bold" }}
+                    style={{ width: `${Math.round((data.levezetettOrak / 30) * 100)}%`, color: "black", fontWeight: "bold" }}
                   >
                     {" "}
-                    <span style={{ color: "black" }}>50%</span>{" "}
+                    <span style={{ color: "black" }}>{Math.round((data.levezetettOrak / 30) * 100)}%</span>{" "}
                   </div>
                 </div>
               </div>
