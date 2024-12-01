@@ -133,5 +133,59 @@ const kifizetesVegrehajtasa = async (req,res) => {
     }
 }
 
+//@desc Adott tanuló kifizetéseinek lekérése oktató szemszögéből
+//@route POST /api/kifizetes/tanulokifizetesei
+//@access private
+const adottTanuloKifizetese = async (req, res) => {
+  const azon = req.user.user.id //felhasznalo_id
+  const {jogkor_id} = req.user.user
+  const {tanulo_id} = req.body
+  
+  if (jogkor_id != 2)  { // oktato id
+    return res.status(403).send({
+      message: 'Hozzáférés megtagadva'
+    });
+  }
 
-export { tanuloKifizetesei, kifizetesHozzaadas, kifizetesVegrehajtasa }
+  try {
+      const tanuloElorehaladas = await prisma.tanuloElorehaladas.findUnique({
+          where: {
+              tanulo_id: parseInt(tanulo_id),
+              oktato_id: azon,
+          },
+      });
+
+      if (!tanuloElorehaladas) {
+          return res.status(404).json({
+              message: 'A tanuló nem tartozik az oktatóhoz, vagy nem létezik.',
+          });
+      }
+
+      const kifizetesek = await prisma.kifizetesek.findMany({
+          where: {
+              elorehaladas_id: tanuloElorehaladas.elorehaladas_id,
+          },
+          select: {
+              kifizetes_id: true,
+              targy: true,
+              osszeg: true,
+              kifizetve: true,
+          },
+      });
+
+      if (kifizetesek.length === 0) {
+        return res.status(404).json({
+            message: 'A tanulónak nincsenek kifizetései.',
+        });
+      }
+
+      return res.json(kifizetesek);
+  } catch (error) {
+      console.error(error);
+      return res.status(500).json({
+          error: 'Hiba történt a kifizetések lekérdezése során.',
+      });
+  }
+}
+
+export { tanuloKifizetesei, kifizetesHozzaadas, kifizetesVegrehajtasa, adottTanuloKifizetese }
