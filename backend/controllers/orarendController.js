@@ -161,7 +161,6 @@ const oraLetrehozas = async (req, res) => {
     !body_felhasznalo_id ||
     !id
   ) {
-
     return res.status(406).json({ err: "Nincs minden adat megadva!" });
   }
 
@@ -169,9 +168,7 @@ const oraLetrehozas = async (req, res) => {
     isNaN(body_idopont_eleje.getTime()) ||
     isNaN(body_idopont_vege.getTime())
   ) {
-    
     return res.status(406).json({ err: "A dátum nem helyes!" });
-
   }
   body_idopont_eleje.addHours(1);
   body_idopont_vege.addHours(1);
@@ -390,7 +387,7 @@ const oraTorles = async (req, res) => {
     return res.status(202).json({ msg: "Nincs ilyen óra a rendszerben!" });
   }
   //A tanár nem tudja, csak azokat az órákat törölni, amelynél, az ő ID-je szerepel
-  if (ora.felhasznalo_id != id) {
+  if (ora.tanar_id != id) {
     return res.status(401).json({ err: "Csak a saját óráját törölheti!" });
   }
 

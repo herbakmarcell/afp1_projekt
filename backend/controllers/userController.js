@@ -62,10 +62,11 @@ const loginUser = async (req, res) => {
       email: email,
     },
   });
-  if (user.aktiv == 0)
-    return res.status(400).json({ err: "A felhasználó inaktív!" });
+
   //compare password with hashedpassword
   if (user && (await bcrypt.compare(jelszo, user.jelszo))) {
+    if (!user.aktiv)
+      return res.status(400).json({ err: "A felhasználó inaktív!" });
     const token = jwt.sign(
       {
         user: {
@@ -87,7 +88,7 @@ const loginUser = async (req, res) => {
 
     res.json({ token });
   } else {
-    res.status(401).json({error : "email or password is not valid"});
+    res.status(401).json({ error: "email or password is not valid" });
   }
 };
 
@@ -147,8 +148,7 @@ const felhasznaloModositas = async (req, res) => {
 //@access private
 const felhasznaloLekeres = async (req, res) => {
   const { email } = req.user.user; // A claims-ból kiolvassuk az ID-t
-  if (!email)
-    return res.status(418).json("Nincs token!");
+  if (!email) return res.status(418).json("Nincs token!");
   res.json({ user: req.user.user });
 };
 
