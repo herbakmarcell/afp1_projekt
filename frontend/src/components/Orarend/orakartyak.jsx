@@ -20,7 +20,7 @@ const Orak = (props) => {
           withCredentials: true,
         }
       );
-      window.location.reload();
+      props.onRefresh();
     } catch (error) {
       console.error("Hiba történt:", error);
     }
@@ -35,14 +35,14 @@ const Orak = (props) => {
           <strong>Óra eleje: </strong>
           {format(
             new Date(props.formData.Orak.idopont_eleje),
-            "yyyy MM dd hh:mm"
+            "yyyy MM dd HH:mm"
           )}
         </p>
         <p>
           <strong>Óra vége: </strong>
           {format(
             new Date(props.formData.Orak.idopont_vege),
-            "yyyy MM dd hh:mm"
+            "yyyy MM dd HH:mm"
           )}
         </p>
         <p>

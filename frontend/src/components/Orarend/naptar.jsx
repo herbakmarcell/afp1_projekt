@@ -4,31 +4,31 @@ import axios from "axios";
 import Orak from "./orakartyak";
 import AuthContext from "../../AuthContext.jsx";
 
-const Calendar = () => {
+const Calendar = (props) => {
   const [data, setData] = useState([]);
   const [hiba, setHiba] = useState("");
   const { user } = useContext(AuthContext);
   console.log(user);
-  useEffect(() => {
-    const users = async () => {
-      try {
-        const resp = await axios.get(
-          "http://localhost:5000/api/orarend/orarendLekeres",
-          { withCredentials: true }
-        );
-        const adat = resp.data;
-        if (adat) {
-          //setVizsgaBtn(true)
-          setData(adat);
-          console.log(adat);
-        }
-      } catch (error) {
-        console.log(error);
-        setHiba(error.response.data.err);
+  const users = async () => {
+    try {
+      const resp = await axios.get(
+        "http://localhost:5000/api/orarend/orarendLekeres",
+        { withCredentials: true }
+      );
+      const adat = resp.data;
+      if (adat) {
+        //setVizsgaBtn(true)
+        setData(adat);
+        console.log(adat);
       }
-    };
+    } catch (error) {
+      console.log(error);
+      setHiba(error.response.data.err);
+    }
+  };
+  useEffect(() => {
     users();
-  }, []);
+  }, [props.orarendFrissites]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
@@ -55,7 +55,13 @@ const Calendar = () => {
     <div className="orarendMainDiv">
       <div className="orarendCardsDiv">
         {currentItems.map((formData, index) => (
-          <Orak key={index} formData={formData} index={index} user={user} />
+          <Orak
+            key={index}
+            formData={formData}
+            index={index}
+            user={user}
+            onRefresh={users}
+          />
         ))}
       </div>
 
