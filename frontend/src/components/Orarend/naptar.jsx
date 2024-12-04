@@ -53,20 +53,6 @@ const Calendar = () => {
 
   return (
     <div className="orarendMainDiv">
-      {hiba && (
-        <>
-          <p
-            style={{
-              color: "red",
-              fontWeight: "bold",
-              marginTop: "10px",
-            }}
-          >
-            {hiba}
-          </p>
-          <img src={nolesson} style={{ width: "70%" }} alt="" />
-        </>
-      )}
       <div className="orarendCardsDiv">
         {currentItems.map((formData, index) => (
           <Orak key={index} formData={formData} index={index} user={user} />
