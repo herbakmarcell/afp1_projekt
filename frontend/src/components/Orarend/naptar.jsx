@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import "../../Css/naptar.css";
 import axios from "axios";
 import Orak from "./orakartyak";
-import nolesson from "./nolessonmeme.png";
 import AuthContext from "../../AuthContext.jsx";
 
 const Calendar = () => {
