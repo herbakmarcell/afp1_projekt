@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { PrismaClient } from "@prisma/client";
+import { stat } from "fs";
 
 const prisma = new PrismaClient();
 
@@ -54,13 +55,15 @@ const loginUser = async (req, res) => {
   const { email, jelszo } = req.body;
   console.log(email, jelszo);
   if (!email || !jelszo) {
-    return res.status(400).json({error: "All fields are mandatory!"});
+    return res.status(400).json({ err: "A mezők kitöltése kötelező!" });
   }
   const user = await prisma.felhasznalok.findFirst({
     where: {
       email: email,
     },
   });
+  if (user.aktiv == 0)
+    return res.status(400).json({ err: "A felhasználó inaktív!" });
   //compare password with hashedpassword
   if (user && (await bcrypt.compare(jelszo, user.jelszo))) {
     const token = jwt.sign(
@@ -143,7 +146,9 @@ const felhasznaloModositas = async (req, res) => {
 //@route GET /api/users/getUserDetails
 //@access private
 const felhasznaloLekeres = async (req, res) => {
-  const { jogkor_id, email } = req.user.user; // A claims-ból kiolvassuk az ID-t
+  const { email } = req.user.user; // A claims-ból kiolvassuk az ID-t
+  if (!email)
+    return res.status(418).json("Nincs token!");
   res.json({ user: req.user.user });
 };
 
@@ -179,8 +184,14 @@ const jogkor_modositas = async (req, res) => {
     return res
       .status(401)
       .json({ err: "Nincs felhasználó a megadott ID-vel!" });
+  else if (!felhasznalo_letezik.aktiv)
+    return res
+      .satus(401)
+      .json({ err: "Nem lehet inaktív felhasználó jogait megváltoztatni!" });
   else if (felhasznalo_letezik.jogkor_id == 4)
-    return res.status(401).json("Admin jogát nem lehet megváltoztatni!");
+    return res
+      .status(401)
+      .json({ err: "Admin jogát nem lehet megváltoztatni!" });
 
   const update_user = await prisma.felhasznalok.update({
     where: {
@@ -195,6 +206,105 @@ const jogkor_modositas = async (req, res) => {
   else res.status(500).json("A módosítás sikerestelen!");
 };
 
+//@desc Felhasználó logikai törlése
+//@route DELETE /api/users/deleteUser
+//@access private
+const deleteUser = async (req, res) => {
+  const { jogkor_id } = req.user.user;
+  if (jogkor_id != 4)
+    return res.status(401).json({ err: "Nincs joga felhasználót törölni!" });
+
+  const felhasznalo_id = req.body.felhasznalo_id;
+  if (!felhasznalo_id)
+    return res.status(401).json({ err: "A felhasznalo_id megadása kötelező!" });
+  else if (!Number.isInteger(felhasznalo_id))
+    return res
+      .status(401)
+      .json({ err: "A felhasznalo_id-nek egész számnak kell lennie!" });
+
+  const talalt_felhasznalo = await prisma.felhasznalok.findFirst({
+    where: {
+      felhasznalo_id: felhasznalo_id,
+    },
+  });
+  if (!talalt_felhasznalo)
+    return res
+      .status(200)
+      .json("A lekérdezés lefutott, azonban nincs ilyen felhasználó!");
+  if (!talalt_felhasznalo.aktiv)
+    return res.status(200).json("A felhasználó már törölve van!");
+
+  try {
+    const torolt_felhasznalo = await prisma.felhasznalok.update({
+      where: {
+        felhasznalo_id: felhasznalo_id,
+      },
+      data: {
+        aktiv: false,
+      },
+    });
+    if (torolt_felhasznalo) res.status(201).json("A törlés sikeres!");
+  } catch (errormsg) {
+    console.log(errormsg);
+    return res
+      .status(500)
+      .json({ err: "A törlés sikertelen, próbálja meg újra!" });
+  }
+};
+
+const activateUser = async (req, res) => {
+  const { jogkor_id } = req.user.user;
+  if (jogkor_id != 4)
+    return res.status(401).json({ err: "Nincs joga felhasználót aktiválni!" });
+
+  const felhasznalo_id = req.body.felhasznalo_id;
+  if (!felhasznalo_id)
+    return res.status(406).json({ err: "A felhasznalo_id megadása kötelező!" });
+  if (!Number.isInteger(felhasznalo_id))
+    return res
+      .stat(406)
+      .json({ err: "A felhasznalo_id-nek egész számnak kell lennie!" });
+
+  try {
+    const userExist = await prisma.felhasznalok.findFirst({
+      where: {
+        felhasznalo_id: felhasznalo_id,
+      },
+    });
+    if (!userExist)
+      return res
+        .status(406)
+        .json({ err: "Nincs ilyen felhasználó a rendszerben!" });
+    if (userExist.aktiv)
+      return res.status(406).json({ err: "A megadott felhasználó már aktív!" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ err: "A lekérdezés sikertelen, próbálja újra!" });
+  }
+
+  try {
+    const activate = await prisma.felhasznalok.update({
+      where: {
+        felhasznalo_id: felhasznalo_id,
+      },
+      data: {
+        aktiv: true,
+      },
+    });
+    if (!activate)
+      return res
+        .status(500)
+        .json({ err: "Nem tudtuk aktiválni a felhasználót!" });
+
+    return res.status(201).json({ err: "Az aktiválás sikeres!" });
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ err: "Az aktiválás sikertelen, próbálja újra!" });
+  }
+};
+
 export {
   registerUser,
   loginUser,
@@ -202,4 +312,6 @@ export {
   felhasznaloModositas,
   felhasznaloLekeres,
   jogkor_modositas,
+  deleteUser,
+  activateUser,
 };
