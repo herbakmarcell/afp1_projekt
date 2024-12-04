@@ -25,6 +25,7 @@ const OktatoFooldal = () => {
     { name: "Miskolc", code: "4" },
     { name: "Győr", code: "5" },
   ];
+  const [orarendFrissites, setOrarendFrissites] = useState(false);
 
   const orafelvitel = async (e) => {
     e.preventDefault();
@@ -52,6 +53,7 @@ const OktatoFooldal = () => {
         setidopont_eleje("");
         setidopont_vege("");
         setcim([]);
+        setOrarendFrissites(!orarendFrissites);
       }
     } catch (error) {
       console.error("Hiba történt:", error);
@@ -174,7 +176,7 @@ const OktatoFooldal = () => {
             </div>
             <div className="mainOrarendDiv">
               <h2>Órarend</h2>
-              <Calendar />
+              <Calendar orarendFrissites={orarendFrissites} />
             </div>
             <div className="mainOktatoDiaknak">
               <h2>Oktatód</h2>
