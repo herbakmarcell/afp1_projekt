@@ -21,6 +21,7 @@ model Felhasznalok {
   jelszo String @db.VarChar(255)
   bankszamla String @db.VarChar(24)
   jogkor_id Int
+  aktiv Boolean @default(true)
   Jogkorok Jogkorok @relation(fields: [jogkor_id], references: [jogkor_id], onDelete: Cascade, onUpdate: Cascade)
   TanuloOrarend Orarend[] @relation("TanuloRelation")
   TanarOrarend Orarend[] @relation("TanarRelation")
@@ -32,7 +33,7 @@ model Felhasznalok {
 
 model Jogkorok {
   jogkor_id Int @id @default(autoincrement())
-  jogkor Int
+  jogkor String
   Felhasznalok Felhasznalok[]
 }
 
