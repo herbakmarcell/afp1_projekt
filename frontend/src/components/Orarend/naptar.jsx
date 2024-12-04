@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../../Css/naptar.css";
 import axios from "axios";
 import Orak from "./orakartyak";
+import nolesson from "./nolessonmeme.png";
+import AuthContext from "../../AuthContext.jsx";
 
 const Calendar = () => {
   const [data, setData] = useState([]);
-
+  const [hiba, setHiba] = useState("");
+  const { user } = useContext(AuthContext);
+  console.log(user);
   useEffect(() => {
     const users = async () => {
       try {
@@ -21,6 +25,7 @@ const Calendar = () => {
         }
       } catch (error) {
         console.log(error);
+        setHiba(error.response.data.err);
       }
     };
     users();
@@ -49,9 +54,23 @@ const Calendar = () => {
 
   return (
     <div className="orarendMainDiv">
+      {hiba && (
+        <>
+          <p
+            style={{
+              color: "red",
+              fontWeight: "bold",
+              marginTop: "10px",
+            }}
+          >
+            {hiba}
+          </p>
+          <img src={nolesson} style={{ width: "70%" }} alt="" />
+        </>
+      )}
       <div className="orarendCardsDiv">
         {currentItems.map((formData, index) => (
-          <Orak key={index} formData={formData} index={index} />
+          <Orak key={index} formData={formData} index={index} user={user} />
         ))}
       </div>
 
