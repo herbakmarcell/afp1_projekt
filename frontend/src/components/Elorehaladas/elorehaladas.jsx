@@ -9,13 +9,14 @@ const Elorehaladas = () => {
   const [vizsgaBtn, setVizsgaBtn] = useState(false)
 
   const [error, setError] = useState("")
+  const [error2, setError2] = useState("")
   const [statusz, setStatusz] = useState([])
 
   const [data, setData] = useState({});
   const [eu, setEu] = useState(false);
   const [gyak, setGyak] = useState(false);
   const [elmeleti, setElmeleti] = useState(false);
-
+  const [siker, setSiker] = useState(false)
   const { user } = useContext(AuthContext);
   useEffect(() => {
 
@@ -27,7 +28,7 @@ const Elorehaladas = () => {
       try {
         const resp = await axios.get(
           "http://localhost:5000/api/tanulok/sajatElorehaladas",
-          { withCredentials: true, signal }
+          { withCredentials: true }
         );
         const data = await resp.data;
         if (data) {
@@ -37,8 +38,6 @@ const Elorehaladas = () => {
           console.log(data.vizsgak.eu);
           setEu(data.vizsgak.eu);
           setElmeleti(data.vizsgak.elmeleti);
-
-          
           
         }
       } catch (err) {
@@ -49,13 +48,9 @@ const Elorehaladas = () => {
     
       elorehaladas();
 
-      return () => {
-        
-        controller.abort();
-
-      };
+      
     
-  }, []);
+  }, [siker]);
 
 
   useEffect(() => {
@@ -72,10 +67,10 @@ const Elorehaladas = () => {
             setStatusz(prevState => [...prevState, d])
           })}
          
-          setVizsgaBtn(true);
+          setVizsgaBtn(prevState => !prevState);
         }
       } catch (err) {
-        setError(err.response.data.message || err.response.data.error)
+        setError2(err.response.data.message || err.response.data.error)
       }
     };
     vizsga();
@@ -184,9 +179,10 @@ const Elorehaladas = () => {
                     <th className="jelentkezes">Jelentkezés</th>
                   </tr>
                   {error && <td colSpan={5} >{error}</td>}
+                  {error2 && <td colSpan={5} >{error2}</td>}
                   {statusz.length === 0 ? <tr ><td colSpan={5}>Nincsenek meghirdetve vizsgák, kérjük látogasson vissza később.</td></tr> : statusz.map((formData, i) => {
                     
-                    return <VizsgaTable formData={formData} key={i} index={i}  />;
+                    return <VizsgaTable formData={formData} siker={siker} setSiker={setSiker}  key={i} index={i}  />;
                   })}
                 </tbody>
               </table>
