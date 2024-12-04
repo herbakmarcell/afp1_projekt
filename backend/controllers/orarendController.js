@@ -46,23 +46,18 @@ const orarendModositas = async (req, res) => {
   const ora_update = {};
   const hibak = {};
   if (ora_kezdete) {
+    console.log("Óra kezdete megadva...");
     ora_kezdete = new Date(ora_kezdete);
-    if (
-      !isNaN(ora_kezdete.getTime()) &&
-      ora_kezdete >= mai_datum &&
-      (!ora_vege || ora_kezdete < ora_vege)
-    )
+    if (!isNaN(ora_kezdete.getTime()) && ora_kezdete > mai_datum) {
+      console.log("Óra kezdete: " + ora_kezdete);
       ora_update["idopont_eleje"] = ora_kezdete.addHours(1);
-    else
+    } else
       hibak.ora_kezdete = "Az óra kezdete nem megfelelő, nem lesz updatelve!";
   }
 
   if (ora_vege) {
     ora_vege = new Date(ora_vege);
-    if (
-      !isNaN(ora_vege) &&
-      ((!ora_eleje && ora_vege > mai_datum) || ora_vege > ora_eleje)
-    )
+    if (!isNaN(ora_vege) && ora_vege > mai_datum)
       ora_update["idopont_vege"] = ora_vege.addHours(1);
     else hibak.ora_vege = "Az óra vége nem megfelelő, nem lesz updatelve!";
   }
@@ -92,6 +87,30 @@ const orarendModositas = async (req, res) => {
 
   if (Object.keys(ora_update) != 0 && Object.keys(hibak) == 0) {
     try {
+      const ora = await prisma.orak.findFirst({
+        where: {
+          ora_id: ora_id,
+        },
+        select: {
+          idopont_vege: true,
+          idopont_eleje: true,
+        },
+      });
+      if (
+        ora_kezdete > ora.idopont_vege ||
+        (ora_vege && ora_kezdete > ora_vege)
+      )
+        return res
+          .status(406)
+          .json({ err: "Az óra eleje, nem lehet később, mint az óra vége!" });
+      if (
+        ora_vege < ora.idopont_eleje ||
+        (ora_kezdete && ora_vege < ora_kezdete)
+      )
+        return res
+          .status(406)
+          .json({ err: "Az óra vége nem lehet hamarabb, mint az óra eleje!" });
+
       const orarend_update = await prisma.orak.update({
         where: {
           ora_id: ora_id,
@@ -142,6 +161,7 @@ const oraLetrehozas = async (req, res) => {
     !body_felhasznalo_id ||
     !id
   ) {
+
     return res.status(406).json({ err: "Nincs minden adat megadva!" });
   }
 
@@ -149,7 +169,9 @@ const oraLetrehozas = async (req, res) => {
     isNaN(body_idopont_eleje.getTime()) ||
     isNaN(body_idopont_vege.getTime())
   ) {
+    
     return res.status(406).json({ err: "A dátum nem helyes!" });
+
   }
   body_idopont_eleje.addHours(1);
   body_idopont_vege.addHours(1);
@@ -202,6 +224,7 @@ const oraLetrehozas = async (req, res) => {
       },
     });
     console.log("Kapcsolótáblába felvéve...");
+
     res.status(201).json({ msg: "Az óra sikeresen felkerült a rendszerbe!" });
   } catch (error) {
     console.log(error);
@@ -217,9 +240,14 @@ const oraLetrehozas = async (req, res) => {
 const orarendLekeres = async (req, res) => {
   const { id, jogkor_id } = req.user.user;
 
+  const user_id = id;
+
   if (!Number.isInteger(id)) {
     return res.status(406).json({ err: "A ID típusa nem megfelelő!" });
   }
+  const felh_id = {};
+  if (jogkor_id == 1) felh_id["tanulo_id"] = id;
+  else felh_id["tanar_id"] = id;
 
   try {
     let ora;
@@ -380,4 +408,63 @@ const oraTorles = async (req, res) => {
   }
 };
 
-export { orarendModositas, orarendLekeres, oraLetrehozas, oraTorles };
+//@desc Következő óra lekérése
+//@route GET /api/orarend/KovetkezoOra
+//@access public
+const kovetkezoOra = async (req, res) => {
+  const { id, jogkor_id } = req.user.user;
+  let felh_id = {};
+  if (jogkor_id == 1) felh_id["tanulo_id"] = id;
+  else felh_id["tanar_id"] = id;
+
+  try {
+    const kovetkezo_ora = await prisma.orarend.findMany({
+      take: 1,
+      orderBy: [
+        {
+          Orak: {
+            idopont_eleje: "asc",
+          },
+        },
+      ],
+      where: felh_id,
+      select: {
+        Orak: {
+          select: {
+            cim: true,
+            helyszin: true,
+            idopont_eleje: true,
+            idopont_vege: true,
+          },
+        },
+        Tanar: {
+          select: {
+            vezeteknev: true,
+            keresztnev: true,
+          },
+        },
+        Tanulo: {
+          select: {
+            vezeteknev: true,
+            keresztnev: true,
+          },
+        },
+      },
+    });
+    console.table(kovetkezo_ora);
+    return res.status(200).json(kovetkezo_ora);
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ err: "A következő óra lekérdezése során hiba történt!" });
+  }
+};
+
+export {
+  orarendModositas,
+  orarendLekeres,
+  oraLetrehozas,
+  oraTorles,
+  kovetkezoOra,
+};
