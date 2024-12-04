@@ -210,3 +210,17 @@ input:active {
   color: white;
   background-color: var(--navBlue);
 }
+
+.oraModButton {
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(177, 177, 177);
+  padding: 10px;
+}
+
+.oraModButton:hover {
+  cursor: pointer;
+  color: white;
+  background-color: var(--navBlue);
+}
