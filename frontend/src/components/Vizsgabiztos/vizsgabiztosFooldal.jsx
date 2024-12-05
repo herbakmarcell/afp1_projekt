@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
-import Calendar from "../Orarend/naptar.jsx";
+import Calendar from "../Orarend/orarend.jsx";
 import { Link } from "react-router-dom";
 import "../../Css/userFooldal.css";
 import { Dropdown } from "primereact/dropdown";

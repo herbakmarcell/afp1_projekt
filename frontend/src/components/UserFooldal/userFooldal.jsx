@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import AuthContext from "../../AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
-import Calendar from "../Orarend/naptar.jsx";
+import Calendar from "../Orarend/orarend.jsx";
 import { Link } from "react-router-dom";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
@@ -163,7 +163,7 @@ const UserFooldal = () => {
                 />
               </div>
             </div>
-            <div className="mainVizsgaDiaknak">
+            <div className="mainVizsgaDiaknak userVizsga">
               <h2>Vizsgák</h2>
               <ul>
                 <li>
