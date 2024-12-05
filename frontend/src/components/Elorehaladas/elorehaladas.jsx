@@ -5,52 +5,19 @@ import axios from "axios";
 import AuthContext from "../../AuthContext.jsx";
 import { Link } from "react-router-dom";
 
+import useElorehaladas from "../Custom Hooks/useElorehaladas.jsx"; // Custom Hook importálása
+
 const Elorehaladas = () => {
   const [vizsgaBtn, setVizsgaBtn] = useState(false)
-
-  const [error, setError] = useState("")
   const [error2, setError2] = useState("")
   const [statusz, setStatusz] = useState([])
-
-  const [data, setData] = useState({});
-  const [eu, setEu] = useState(false);
-  const [gyak, setGyak] = useState(false);
-  const [elmeleti, setElmeleti] = useState(false);
   const [siker, setSiker] = useState(false)
   const { user } = useContext(AuthContext);
-  useEffect(() => {
 
-    const controller = new AbortController();
-    const signal = controller.signal;
 
-    const elorehaladas = async () => {
-      
-      try {
-        const resp = await axios.get(
-          "http://localhost:5000/api/tanulok/sajatElorehaladas",
-          { withCredentials: true }
-        );
-        const data = await resp.data;
-        if (data) {
-          setData(data);
-          console.log(data);
-          setGyak(data.vizsgak.gyakorlati);
-          console.log(data.vizsgak.eu);
-          setEu(data.vizsgak.eu);
-          setElmeleti(data.vizsgak.elmeleti);
-          
-        }
-      } catch (err) {
-        console.log(err);
-        setError(err.response.data.message || err.response.data.message);
-      }
-    };
-    
-      elorehaladas();
+  const { data, error, eu, gyak, elmeleti } = useElorehaladas(siker); // Custom Hook használata
 
-      
-    
-  }, [siker]);
+  
 
 
   useEffect(() => {

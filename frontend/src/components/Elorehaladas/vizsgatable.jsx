@@ -8,7 +8,6 @@ const VizsgaTable = (props) =>{
     const navigate = useNavigate();
     const [background, setBackground] = useState({backgroundColor: 'none'})
     const [lejelentkezesBtn, setLejelentkezesBtn] = useState(false)
-    const [valtozik, setValtozik] = useState(false)
 
     const updateButtonState = () => {
         if (props.formData.statusz === 'foglalva') {
