@@ -15,12 +15,6 @@ const UserFooldal = () => {
   // Kiolvassuk a felhasználót a Context-ből
 
   const { user } = useContext(AuthContext);
-  const navigate = useNavigate();
-
-  const btnModosit = (e) => {
-    e.preventDefault();
-    navigate("/felhasznaloModositas");
-  };
 
   // console.log(user?.user);
   return (
@@ -146,7 +140,15 @@ const UserFooldal = () => {
               <Calendar />
             </div>
             <div className="mainOktatoDiaknak">
-              <h2>Oktatód</h2>
+              <h2>
+                <Link
+                  to={"/oktatoValasztas"}
+                  style={{ textDecoration: "none" }}
+                >
+                  Oktatód kiválasztása
+                </Link>
+              </h2>
+
               <div className="mainOktatoDiaknakDI">
                 <img
                   src="https://loremflickr.com/320/240/paris,girl/all?random=1"
