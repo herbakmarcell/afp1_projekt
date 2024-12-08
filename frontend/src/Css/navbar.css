@@ -109,3 +109,84 @@ nav a {
   align-items: center;
   text-transform: capitalize;
 }
+
+@media (max-width: 1200px) {
+  .navButtons {
+    width: 30%;
+  }
+  .formDiv {
+    width: 50%;
+  }
+  .formDiv form {
+    width: 80%;
+  }
+}
+
+@media (max-width: 900px) {
+  .navButtons {
+    width: 40%;
+  }
+}
+
+@media (max-width: 770px) {
+  .infoTablaImgDiv {
+    display: none;
+  }
+  .formDiv {
+    width: 95%;
+  }
+
+  .formDiv form {
+    width: 80%;
+  }
+}
+
+@media (max-width: 720px) {
+  nav .menu {
+    display: flex;
+  }
+
+  nav {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  nav .navButtons {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    gap: 30px;
+    /* margin-top: 1rem; */
+    margin-bottom: 0.25rem;
+  }
+
+  nav ul.open {
+    display: flex;
+    background-color: var(--navBlue);
+    padding: 10px;
+    z-index: 1;
+  }
+
+  nav .navButtons li {
+    width: 100%;
+    text-align: center;
+  }
+
+  nav .navButtons li a {
+    margin: 0.2rem 0.5rem;
+  }
+
+  .navbarTitleImg {
+    width: 45%;
+  }
+
+  .infoDiv {
+    margin-top: 5rem;
+    width: 90%;
+  }
+
+  .infoDiv table {
+    width: 90%;
+    border-spacing: 4px;
+  }
+}
