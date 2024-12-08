@@ -22,6 +22,12 @@ const osszesFelhasznalo = async (req, res) => {
         email: true,
         jelszo: true,
         jogkor_id: true,
+        aktiv: true,
+        Jogkorok: {
+          select: {
+            jogkor: true,
+          },
+        },
       },
     });
     res.json(felhasznalok);
