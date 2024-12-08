@@ -64,7 +64,6 @@ const UsersTable = (props) => {
           withCredentials: true,
         }
       );
-
       showSuccess();
       setInterval(() => {
         props.onRefresh();
