@@ -1,5 +1,7 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
+import { Toast } from "primereact/toast";
 
 const UsersTable = (props) => {
   console.log(props.formData);
@@ -13,6 +15,46 @@ const UsersTable = (props) => {
     navigate("/felhasznalojogosultsagmodositas", { state: { id: id } });
   };
 
+  const toast = useRef(null);
+  const toastCenter = useRef(null);
+  const showSuccess = () => {
+    toast.current.show({
+      severity: "success",
+      summary: "Sikeres törlés",
+      detail: "Felhasználó mostantól inaktív",
+      life: 2000,
+    });
+  };
+
+  const showError = (props) => {
+    const errorMess = props;
+    toastCenter.current.show({
+      severity: "error",
+      summary: "HIBA!",
+      detail: errorMess,
+      life: 2000,
+    });
+  };
+
+  const showSuccessActivation = () => {
+    toast.current.show({
+      severity: "success",
+      summary: "Sikeres aktiválás",
+      detail: "Felhasználó mostantól aktív",
+      life: 2000,
+    });
+  };
+
+  const showErrorActivation = (props) => {
+    const errorMess = props;
+    toastCenter.current.show({
+      severity: "error",
+      summary: "HIBA!",
+      detail: errorMess,
+      life: 2000,
+    });
+  };
+
   const btnTorles = async (felhasznalo_id) => {
     try {
       const resp = await axios.delete(
@@ -22,8 +64,12 @@ const UsersTable = (props) => {
           withCredentials: true,
         }
       );
-      props.onRefresh();
+      showSuccess();
+      setInterval(() => {
+        props.onRefresh();
+      }, 2000);
     } catch (error) {
+      showError(error.response.data.err);
       console.error("Hiba történt:", error);
     }
   };
@@ -37,14 +83,20 @@ const UsersTable = (props) => {
         },
         { withCredentials: true }
       );
-      props.onRefresh();
+      showSuccessActivation();
+      setInterval(() => {
+        props.onRefresh();
+      }, 2000);
     } catch (error) {
+      showErrorActivation(error.response.data.err);
       console.error("Hiba történt:", error);
     }
   };
 
   return (
     <>
+      <Toast ref={toast} />
+      <Toast ref={toastCenter} position="center" />
       <tr className="fade-in-row" style={tdStyle}>
         <td className="id" style={tdStyle}>
           {props.formData.vezeteknev}

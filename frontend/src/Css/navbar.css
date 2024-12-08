@@ -128,19 +128,6 @@ nav a {
   }
 }
 
-@media (max-width: 770px) {
-  .infoTablaImgDiv {
-    display: none;
-  }
-  .formDiv {
-    width: 95%;
-  }
-
-  .formDiv form {
-    width: 80%;
-  }
-}
-
 @media (max-width: 720px) {
   nav .menu {
     display: flex;
@@ -178,15 +165,5 @@ nav a {
 
   .navbarTitleImg {
     width: 45%;
-  }
-
-  .infoDiv {
-    margin-top: 5rem;
-    width: 90%;
-  }
-
-  .infoDiv table {
-    width: 90%;
-    border-spacing: 4px;
   }
 }

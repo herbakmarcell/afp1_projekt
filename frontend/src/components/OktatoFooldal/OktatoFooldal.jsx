@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import AuthContext from "../../AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
 import Calendar from "../Orarend/orarend.jsx";
@@ -8,6 +8,7 @@ import { Dropdown } from "primereact/dropdown";
 import axios from "axios";
 import OktatoTanuloiLista from "./OktatoTanuloiLista.jsx";
 import KovetkezoOra from "./Kovetkezoora.jsx";
+import { Toast } from "primereact/toast";
 
 const OktatoFooldal = () => {
   // Kiolvassuk a felhasználót a Context-ből
@@ -28,6 +29,32 @@ const OktatoFooldal = () => {
     { name: "Miskolc", code: "4" },
     { name: "Győr", code: "5" },
   ];
+
+  const toast = useRef(null);
+  const toastCenter = useRef(null);
+  const showSuccess = () => {
+    toast.current.show({
+      severity: "success",
+      summary: "Sikeres órafelvitel",
+      life: 2000,
+    });
+  };
+
+  const showError = (props) => {
+    const errorMess = props;
+    toastCenter.current.show({
+      severity: "error",
+      summary: "HIBA!",
+      detail: errorMess,
+      life: 2000,
+    });
+    setSelectedTanulo([]);
+    setSelectedCity([]);
+    setidopont_eleje("");
+    setidopont_vege("");
+    setcim([]);
+  };
+
   const [orarendFrissites, setOrarendFrissites] = useState(false);
 
   const orafelvitel = async (e) => {
@@ -51,6 +78,7 @@ const OktatoFooldal = () => {
 
       const data = await resp.data;
       if (data) {
+        showSuccess();
         setSelectedTanulo([]);
         setSelectedCity([]);
         setidopont_eleje("");
@@ -59,6 +87,7 @@ const OktatoFooldal = () => {
         setOrarendFrissites(!orarendFrissites);
       }
     } catch (error) {
+      showError(error.response.data.err);
       console.error("Hiba történt:", error);
     }
   };
@@ -195,6 +224,8 @@ const OktatoFooldal = () => {
                     onClick={(e) => orafelvitel(e)}
                   />
                 </form>
+                <Toast ref={toast} />
+                <Toast ref={toastCenter} position="center" />
               </div>
             </div>
             <div className="mainOrarendDiv">

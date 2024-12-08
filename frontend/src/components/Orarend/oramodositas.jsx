@@ -1,9 +1,10 @@
 import React from "react";
 import axios from "axios";
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import AuthContext from "../../AuthContext.jsx";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { Dropdown } from "primereact/dropdown";
+import { Toast } from "primereact/toast";
 
 export const OraoModositas = () => {
   const navigate = useNavigate();
@@ -30,11 +31,37 @@ export const OraoModositas = () => {
   const [cim, setcim] = useState(formData.Orak?.cim || "");
   const [loading, setLoading] = useState(false);
 
+  const toast = useRef(null);
+  const toastCenter = useRef(null);
+  const showSuccess = () => {
+    toast.current.show({
+      severity: "success",
+      summary: "Sikeresen módosult az órad",
+      detail: "Továbbítás a főoldalra",
+      life: 2000,
+    });
+  };
+
+  const showError = (props) => {
+    const errorMess = props;
+    toastCenter.current.show({
+      severity: "error",
+      summary: "HIBA!",
+      detail: errorMess,
+      life: 3000,
+    });
+    setSelectedCity(
+      cities.find((city) => city.name === formData.Orak?.helyszin) || cities[0]
+    );
+    setidopont_eleje(formData.Orak?.idopont_eleje?.slice(0, 16) || "");
+    setidopont_vege(formData.Orak?.idopont_vege?.slice(0, 16) || "");
+    setcim(formData.Orak?.cim || "");
+  };
+
   const oramodositas = async () => {
     const helyszin = helyszinObj.name;
     const tanulo_id = formData.tanulo_id;
     const ora_id = formData.Orak.ora_id;
-    setLoading(true);
     try {
       const resp = await axios.put(
         "http://localhost:5000/api/orarend/oraModositas",
@@ -51,13 +78,15 @@ export const OraoModositas = () => {
 
       const data = await resp.data;
       if (data) {
+        showSuccess();
         setTimeout(() => {
-          navigate("/fooldal", { replace: true });
+          navigate("/fooldal");
         }, 2000);
       }
     } catch (error) {
-      console.error("Hiba történt:", error);
-      setLoading(false);
+      Object.values(error.response.data).forEach((hiba) => {
+        showError(hiba);
+      });
     }
   };
 
@@ -135,7 +164,8 @@ export const OraoModositas = () => {
           disabled={loading}
         />
       </form>
-      {loading && <h2>Feldolgozás...</h2>}
+      <Toast ref={toast} />
+      <Toast ref={toastCenter} position="center" />
       <div className="backToMainPage">
         <Link to="/fooldal">Vissza</Link>
       </div>

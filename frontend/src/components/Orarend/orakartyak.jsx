@@ -1,12 +1,35 @@
 import axios from "axios";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
+import { Toast } from "primereact/toast";
 
 const Orak = (props) => {
   const navigate = useNavigate();
   const btnModosit = (e) => {
     e.preventDefault();
     navigate("/oraModositas", { state: props.formData });
+  };
+
+  const toast = useRef(null);
+  const toastCenter = useRef(null);
+  const showSuccess = () => {
+    toast.current.show({
+      severity: "success",
+      summary: "Sikeres törlés",
+      detail: "Az óra törölve lett",
+      life: 2000,
+    });
+  };
+
+  const showError = (props) => {
+    const errorMess = props;
+    toastCenter.current.show({
+      severity: "error",
+      summary: "HIBA!",
+      detail: errorMess,
+      life: 2000,
+    });
   };
 
   const btnTorles = async (e) => {
@@ -20,15 +43,21 @@ const Orak = (props) => {
           withCredentials: true,
         }
       );
-      props.onRefresh();
+      showSuccess();
+      setInterval(() => {
+        props.onRefresh();
+      }, 1000);
     } catch (error) {
       console.error("Hiba történt:", error);
+      showError(error.response.data.err);
     }
   };
 
   console.log(props);
   return (
     <div className="blackbgc">
+      <Toast ref={toast} />
+      <Toast ref={toastCenter} position="center" />
       <div key={props.index} className="card">
         <h2 style={{ color: "#333" }}>{props.formData.Orak.cim}</h2>
         <p>
