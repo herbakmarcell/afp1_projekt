@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
 import Calendar from "../Orarend/orarend.jsx";
@@ -7,20 +7,18 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import "../../Css/userFooldal.css";
 
-const EUpercentage = 25;
-const Gyakpercentage = 50;
-const Elmpercentage = 75;
+
+import useElorehaladas from "../Custom Hooks/useElorehaladas.jsx"; // Custom Hook importálása
 
 const UserFooldal = () => {
   // Kiolvassuk a felhasználót a Context-ből
 
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+ 
+  const { data, error, eu, gyak, elmeleti } = useElorehaladas(); // Custom Hook használata
+  
 
-  const btnModosit = (e) => {
-    e.preventDefault();
-    navigate("/felhasznaloModositas");
-  };
 
   // console.log(user?.user);
   return (
@@ -35,6 +33,7 @@ const UserFooldal = () => {
           <>
             <div className="processDiv">
               <h2>Előrehaladás</h2>
+              {error && <h2 style={{ color: "red" }}>{error}</h2>}
               <ul>
                 <li>
                   <div>
@@ -42,8 +41,8 @@ const UserFooldal = () => {
                   </div>
                   <div className="progressCircle">
                     <CircularProgressbar
-                      value={EUpercentage}
-                      text={`${EUpercentage}%`}
+                      value={eu.sikeres && eu.jelentkezesDatuma !== "" ? 100 : 0}
+                      text={`${eu.sikeres && eu.jelentkezesDatuma !== "" ? 100 : 0}%`}
                       styles={buildStyles({
                         // Rotation of path and trail, in number of turns (0-1)
                         // rotation: 0.25,
@@ -71,12 +70,12 @@ const UserFooldal = () => {
                 </li>
                 <li>
                   <div>
-                    <p>Gyakrolati vizsga</p>
+                    <p>Gyakorlati vizsga</p>
                   </div>
                   <div className="progressCircle">
                     <CircularProgressbar
-                      value={Gyakpercentage}
-                      text={`${Gyakpercentage}%`}
+                      value={Math.round((data.levezetettOrak / 30) * 100)}
+                      text={`${Math.round((data.levezetettOrak / 30) * 100)}%`}
                       styles={buildStyles({
                         // Rotation of path and trail, in number of turns (0-1)
                         // rotation: 0.25,
@@ -108,8 +107,8 @@ const UserFooldal = () => {
                   </div>
                   <div className="progressCircle">
                     <CircularProgressbar
-                      value={Elmpercentage}
-                      text={`${Elmpercentage}%`}
+                      value={elmeleti.sikeres && eu.jelentkezesDatuma !== "" ? 100 : 0}
+                      text={`${elmeleti.sikeres && eu.jelentkezesDatuma !== "" ? 100 : 0}%`}
                       styles={buildStyles({
                         // Rotation of path and trail, in number of turns (0-1)
                         // rotation: 0.25,
@@ -169,19 +168,32 @@ const UserFooldal = () => {
                 <li>
                   <div>
                     <p>Egészségügy vizsga:</p>
-                    <p className="noResultVizsga">Sikertelen</p>
+                    <p className="noResultVizsga">
+                    {eu.sikeres && eu.jelentkezesDatuma !== null ? "Sikeres" : eu.jelentkezesDatuma !== null ? "Folyamatban" : "Nem jelentkezett"}
+                    </p>
                   </div>
                 </li>
                 <li>
                   <div>
                     <p>Elmélet vizsga:</p>
-                    <p className="noResultVizsga">Sikertelen</p>
+                    <p className="noResultVizsga">
+                    {elmeleti.sikeres && elmeleti.jelentkezesDatuma !== null ? "Sikeres" : elmeleti.jelentkezesDatuma !== null ? "Folyamatban" : "Nem jelentkezett"}
+                    </p>
                   </div>
                 </li>
                 <li>
                   <div>
                     <p>Gyakorlati vizsga:</p>
-                    <p className="noResultVizsga">Sikertelen</p>
+                    <p className="noResultVizsga">
+                      {data.levezetettOrak > 0 && data.levezetettOrak < 30 && gyak.jelentkezesDatuma !== null
+                        ? "Folyamatban"
+                        : data.levezetettOrak >= 30
+                        ? "Sikeres"
+                        : data.levezetettOrak === 0 &&
+                          gyak.jelentkezesDatuma === null
+                        ? "Nincs elkezdve"
+                        : "Folyamatban"}
+                    </p>
                   </div>
                 </li>
               </ul>
