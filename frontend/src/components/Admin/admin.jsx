@@ -12,23 +12,24 @@ const Admin = () => {
 
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    const users = async () => {
-      try {
-        const resp = await axios.get(
-          "http://localhost:5000/api/admin/felhasznalok",
-          { withCredentials: true }
-        );
-        const adat = resp.data;
-        if (adat) {
-          //setVizsgaBtn(true)
-          setData(adat);
-          console.log(adat);
-        }
-      } catch (error) {
-        console.log(error);
+  const users = async () => {
+    try {
+      const resp = await axios.get(
+        "http://localhost:5000/api/admin/felhasznalok",
+        { withCredentials: true }
+      );
+      const adat = resp.data;
+      if (adat) {
+        //setVizsgaBtn(true)
+        setData(adat);
+        console.log(adat);
       }
-    };
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
     users();
   }, []);
 
@@ -53,6 +54,7 @@ const Admin = () => {
                     <th>Keresztnév</th>
                     <th>E-mail</th>
                     <th>Jogosultság</th>
+                    <th>Aktivitás</th>
                     <th className="jelentkezes">Műveletek</th>
                   </tr>
                   {data.map((formData, index) => {
@@ -61,6 +63,7 @@ const Admin = () => {
                         key={user.id}
                         formData={formData}
                         index={index}
+                        onRefresh={users}
                       />
                     );
                   })}

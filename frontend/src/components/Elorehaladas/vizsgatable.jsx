@@ -9,16 +9,19 @@ const VizsgaTable = (props) =>{
     const [background, setBackground] = useState({backgroundColor: 'none'})
     const [lejelentkezesBtn, setLejelentkezesBtn] = useState(false)
 
+    const updateButtonState = () => {
+        if (props.formData.statusz === 'foglalva') {
+            setBackground({ backgroundColor: 'darkred' });
+            setLejelentkezesBtn(true);
+        } else {
+            setBackground({ backgroundColor: 'none' });
+            setLejelentkezesBtn(false);
+        }
+    };
+
     useState(() => {
-        if(props.formData.statusz === 'foglalva'){
-            setBackground({backgroundColor: 'darkred'})
-            setLejelentkezesBtn(true)
-        }
-        else {
-            setBackground({backgroundColor: 'none'})
-            setLejelentkezesBtn(false)
-        }
-    }, [background])
+        updateButtonState();
+    }, [props.formData.statusz]);
 
     
     const jelentkezesBtnClick = async (vizsga_id) => {
@@ -28,9 +31,11 @@ const VizsgaTable = (props) =>{
             
             if(data.sikeres === "Success"){
                 
+                props.setSiker(prevState => !prevState)
                 setBackground({backgroundColor:'darkred'})
                 setLejelentkezesBtn(true)
                 navigate("/elorehaladas")
+                
             }
         } catch (err) {
             setError(err.response.data.error || err.response.data.message)
@@ -48,9 +53,11 @@ const VizsgaTable = (props) =>{
             })
             const data = await resp.data
             if(data.message === "Sikeresen lejelentkeztél a vizsgáról."){
+                props.setSiker(prevState => !prevState)
                 setBackground({backgroundColor: 'none'})
                 setLejelentkezesBtn(false)
                 navigate("/elorehaladas")
+                
             }
         } catch (err) {
             setError(err.response.data.error || err.response.data.message)

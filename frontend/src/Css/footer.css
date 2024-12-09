@@ -115,3 +115,12 @@
     transform: translateY(-50%) translateX(0);
   }
 }
+
+@media (max-width: 720px) {
+  .footer-title {
+    font-size: 30px;
+  }
+  .footer {
+    min-height: 110px;
+  }
+}

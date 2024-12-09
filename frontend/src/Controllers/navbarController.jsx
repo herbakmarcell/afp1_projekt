@@ -15,6 +15,8 @@ import Admin from "../components/Admin/admin.jsx";
 import { FelhasznaloJogosultsagModositas } from "../components/Admin/felhasznaloJogosultsagValtas.jsx";
 import Kifizetesek from "../components/Kifizetesek/kifizetesek.jsx";
 import TanuloOktatoValasztas from "../components/TanuloOktatoValasztas/tanuloOktatoValasztas.jsx";
+import NotFound from "../components/NotFound/notFound.jsx";
+
 
 const ReactRouterSetup = () => {
   return (
@@ -40,6 +42,7 @@ const ReactRouterSetup = () => {
             path="/felhasznalojogosultsagmodositas"
             element={<FelhasznaloJogosultsagModositas />}
           />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
       </Router>
