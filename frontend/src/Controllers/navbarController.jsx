@@ -13,6 +13,8 @@ import Footer from "../components/Footer/footer.jsx";
 import Elorehaladas from "../components/Elorehaladas/elorehaladas.jsx";
 import Admin from "../components/Admin/admin.jsx";
 import { FelhasznaloJogosultsagModositas } from "../components/Admin/felhasznaloJogosultsagValtas.jsx";
+import NotFound from "../components/NotFound/notFound.jsx";
+
 
 const ReactRouterSetup = () => {
   return (
@@ -36,6 +38,7 @@ const ReactRouterSetup = () => {
             path="/felhasznalojogosultsagmodositas"
             element={<FelhasznaloJogosultsagModositas />}
           />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
       </Router>

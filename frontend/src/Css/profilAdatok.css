@@ -109,3 +109,39 @@
   border: none;
   cursor: pointer;
 }
+@media (max-width: 770px) {
+  .infoTablaImgDiv {
+    display: none;
+  }
+  .formDiv {
+    width: 95%;
+  }
+
+  .formDiv form {
+    width: 80%;
+  }
+}
+
+@media (max-width: 720px) {
+  .infoDiv {
+    margin-top: 5rem;
+    width: 90%;
+  }
+
+  .infoTablaDiv {
+    width: 100%;
+    height: 25rem;
+  }
+
+  .infoDiv table {
+    width: 100%;
+    border-spacing: 4px;
+  }
+
+  .infoTablaTableDiv a {
+    text-decoration: none;
+    position: absolute;
+    right: 2px;
+    bottom: -25px;
+  }
+}

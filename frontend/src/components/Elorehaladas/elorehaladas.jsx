@@ -5,19 +5,19 @@ import axios from "axios";
 import AuthContext from "../../AuthContext.jsx";
 import { Link } from "react-router-dom";
 
+import useElorehaladas from "../Custom Hooks/useElorehaladas.jsx"; // Custom Hook importálása
+
 const Elorehaladas = () => {
   const [vizsgaBtn, setVizsgaBtn] = useState(false)
-  const [elorehaladas, setElorehaladas] = useState([{}]);
-  const [lejelentkezesBtn, setLejelentkezesBtn] = useState(false)
-  const [error, setError] = useState("")
+  const [error2, setError2] = useState("")
   const [statusz, setStatusz] = useState([])
-  const [elorehaladasError ,setElorehaladasError] = useState("")
-
+  const [siker, setSiker] = useState(false)
   const { user } = useContext(AuthContext);
-  useEffect(() => {
-    //TODO:
-      
-  }, []);
+
+
+  const { data, error, eu, gyak, elmeleti } = useElorehaladas(siker); // Custom Hook használata
+
+  
 
 
   useEffect(() => {
@@ -34,10 +34,10 @@ const Elorehaladas = () => {
             setStatusz(prevState => [...prevState, d])
           })}
          
-          setVizsgaBtn(true);
+          setVizsgaBtn(prevState => !prevState);
         }
       } catch (err) {
-        setError(err.response.data.message || err.response.data.error)
+        setError2(err.response.data.message || err.response.data.error)
       }
     };
     vizsga();
@@ -63,20 +63,20 @@ const Elorehaladas = () => {
                   </div>
                   <div>
                     <p>Felvétel időpontja:</p>
-                    <p>2024.11.12</p>
+                    <p>{eu.jelentkezesDatuma}</p>
                   </div>
                 </div>
                 <div className="w3-light-black">
                   <div
                     className="w3-container  w3-center"
                     style={{
-                      width: "25%",
+                      width: `${eu.sikeres && eu.jelentkezesDatuma !== "" ? 100 : 0}%`,
                       background: "#fbc304",
                       color: "black",
                       fontWeight: "bold",
                     }}
                   >
-                    25%
+                    {eu.sikeres && eu.jelentkezesDatuma !== "" ? 100 : 0}%
                   </div>
                 </div>
               </div>
@@ -89,16 +89,16 @@ const Elorehaladas = () => {
                   </div>
                   <div>
                     <p>Felvétel időpontja:</p>
-                    <p>2024.11.12</p>
+                    <p>{elmeleti.jelentkezesDatuma}</p>
                   </div>
                 </div>
                 <div className="w3-light-black">
                   <div
                     className="w3-container w3-red w3-center"
-                    style={{ width: "75%", fontWeight: "bold" }}
+                    style={{ width: `${elmeleti.sikeres && elmeleti.jelentkezesDatuma !== "" ? 100 : 0}%`, fontWeight: "bold" }}
                   >
                     {" "}
-                    <span style={{ color: "black" }}>75%</span>{" "}
+                    <span style={{ color: "black" }}>{elmeleti.sikeres && elmeleti.jelentkezesDatuma !== "" ? 100 : 0}%</span>{" "}
                   </div>
                 </div>
               </div>
@@ -111,16 +111,16 @@ const Elorehaladas = () => {
                   </div>
                   <div>
                     <p>Felvétel időpontja:</p>
-                    <p>2024.11.12</p>
+                    <p>{gyak.jelentkezesDatuma}</p>
                   </div>
                 </div>
                 <div className="w3-light-black">
                   <div
                     className="w3-container w3-blue w3-center"
-                    style={{ width: "50%", color: "black", fontWeight: "bold" }}
+                    style={{ width: `${Math.round((data.levezetettOrak / 30) * 100)}%`, color: "black", fontWeight: "bold" }}
                   >
                     {" "}
-                    <span style={{ color: "black" }}>50%</span>{" "}
+                    <span style={{ color: "black" }}>{Math.round((data.levezetettOrak / 30) * 100)}%</span>{" "}
                   </div>
                 </div>
               </div>
@@ -146,9 +146,10 @@ const Elorehaladas = () => {
                     <th className="jelentkezes">Jelentkezés</th>
                   </tr>
                   {error && <td colSpan={5} >{error}</td>}
+                  {error2 && <td colSpan={5} >{error2}</td>}
                   {statusz.length === 0 ? <tr ><td colSpan={5}>Nincsenek meghirdetve vizsgák, kérjük látogasson vissza később.</td></tr> : statusz.map((formData, i) => {
                     
-                    return <VizsgaTable formData={formData} key={i} index={i}  />;
+                    return <VizsgaTable formData={formData} siker={siker} setSiker={setSiker}  key={i} index={i}  />;
                   })}
                 </tbody>
               </table>

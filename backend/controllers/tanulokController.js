@@ -28,6 +28,7 @@ const oktatoTanuloi = async (req, res) => {
         felhasznalo_id: true,
         vezeteknev: true,
         keresztnev: true,
+        email: true,
       },
     });
 
@@ -167,7 +168,10 @@ const tanuloElorehaladasa = async (req, res) => {
 
         switch (tipus) {
           case "eü":
-            vizsgak.eu = { sikeres: vizsga.sikeres, jelentkezesDatuma: formattedDate };
+            vizsgak.eu = {
+              sikeres: vizsga.sikeres,
+              jelentkezesDatuma: formattedDate,
+            };
             break;
           case "elméleti":
             vizsgak.elmeleti = {
@@ -205,7 +209,8 @@ const tanuloSajatHaladasa = async (req, res) => {
   const tanuloId = req.user.user.id; // A bejelentkezett tanuló azonosítója
   const { jogkor_id } = req.user.user;
 
-  if (jogkor_id != 1) { // tanulo id
+  if (jogkor_id != 1) {
+    // tanulo id
     return res.status(403).send({
       message: "Hozzáférés megtagadva",
     });
@@ -274,7 +279,10 @@ const tanuloSajatHaladasa = async (req, res) => {
 
         switch (tipus) {
           case "eü":
-            vizsgak.eu = { sikeres: vizsga.sikeres, jelentkezesDatuma: formattedDate };
+            vizsgak.eu = {
+              sikeres: vizsga.sikeres,
+              jelentkezesDatuma: formattedDate,
+            };
             break;
           case "elméleti":
             vizsgak.elmeleti = {
@@ -299,10 +307,15 @@ const tanuloSajatHaladasa = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .json({ error: "Hiba történt a tanuló előrehaladásának lekérdezése során." });
+    res.status(500).json({
+      error: "Hiba történt a tanuló előrehaladásának lekérdezése során.",
+    });
   }
 };
 
-export { oktatoTanuloi, tanulokLekerese, tanuloElorehaladasa, tanuloSajatHaladasa }
+export {
+  oktatoTanuloi,
+  tanulokLekerese,
+  tanuloElorehaladasa,
+  tanuloSajatHaladasa,
+};

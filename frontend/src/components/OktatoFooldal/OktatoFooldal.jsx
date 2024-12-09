@@ -1,11 +1,14 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import AuthContext from "../../AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
-import Calendar from "../Orarend/naptar.jsx";
+import Calendar from "../Orarend/orarend.jsx";
 import { Link } from "react-router-dom";
 import "../../Css/userFooldal.css";
 import { Dropdown } from "primereact/dropdown";
 import axios from "axios";
+import OktatoTanuloiLista from "./OktatoTanuloiLista.jsx";
+import KovetkezoOra from "./Kovetkezoora.jsx";
+import { Toast } from "primereact/toast";
 
 const OktatoFooldal = () => {
   // Kiolvassuk a felhasználót a Context-ből
@@ -18,6 +21,7 @@ const OktatoFooldal = () => {
   const [idopont_vege, setidopont_vege] = useState("");
   const [cim, setcim] = useState("");
   const [data, setData] = useState([]);
+  const [kovetkezoOra, setKovetkezoOra] = useState([]);
   const cities = [
     { name: "Budapest", code: "1" },
     { name: "Eger", code: "2" },
@@ -25,6 +29,33 @@ const OktatoFooldal = () => {
     { name: "Miskolc", code: "4" },
     { name: "Győr", code: "5" },
   ];
+
+  const toast = useRef(null);
+  const toastCenter = useRef(null);
+  const showSuccess = () => {
+    toast.current.show({
+      severity: "success",
+      summary: "Sikeres órafelvitel",
+      life: 2000,
+    });
+  };
+
+  const showError = (props) => {
+    const errorMess = props;
+    toastCenter.current.show({
+      severity: "error",
+      summary: "HIBA!",
+      detail: errorMess,
+      life: 2000,
+    });
+    setSelectedTanulo([]);
+    setSelectedCity([]);
+    setidopont_eleje("");
+    setidopont_vege("");
+    setcim([]);
+  };
+
+  const [orarendFrissites, setOrarendFrissites] = useState(false);
 
   const orafelvitel = async (e) => {
     e.preventDefault();
@@ -47,13 +78,16 @@ const OktatoFooldal = () => {
 
       const data = await resp.data;
       if (data) {
+        showSuccess();
         setSelectedTanulo([]);
         setSelectedCity([]);
         setidopont_eleje("");
         setidopont_vege("");
         setcim([]);
+        setOrarendFrissites(!orarendFrissites);
       }
     } catch (error) {
+      showError(error.response.data.err);
       console.error("Hiba történt:", error);
     }
   };
@@ -75,6 +109,25 @@ const OktatoFooldal = () => {
       }
     };
     adottTanulok();
+  }, []);
+
+  useEffect(() => {
+    const kovetkezoora = async () => {
+      try {
+        const resp = await axios.get(
+          "http://localhost:5000/api/orarend/KovetkezoOra",
+          { withCredentials: true }
+        );
+        const adat = resp.data;
+        if (adat) {
+          //setVizsgaBtn(true)
+          setKovetkezoOra(adat);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    kovetkezoora();
   }, []);
 
   const formattedData = data.map((tanulo) => ({
@@ -115,6 +168,7 @@ const OktatoFooldal = () => {
                       id="cimTime"
                       value={cim}
                       onChange={(e) => setcim(e.target.value)}
+                      maxLength={15}
                     />
                   </label>
                   <label htmlFor="helyszinObjTime">
@@ -170,19 +224,26 @@ const OktatoFooldal = () => {
                     onClick={(e) => orafelvitel(e)}
                   />
                 </form>
+                <Toast ref={toast} />
+                <Toast ref={toastCenter} position="center" />
               </div>
             </div>
             <div className="mainOrarendDiv">
               <h2>Órarend</h2>
-              <Calendar />
+              <Calendar orarendFrissites={orarendFrissites} />
             </div>
             <div className="mainOktatoDiaknak">
-              <h2>Oktatód</h2>
-              <div className="mainOktatoDiaknakDI">
-                <img
-                  src="https://loremflickr.com/320/240/girl/all?random=1"
-                  alt=""
-                />
+              <h2>Tanulóid</h2>
+              <div className="tanuloLista">
+                {data.map((formData, index) => {
+                  return (
+                    <OktatoTanuloiLista
+                      key={user.id}
+                      formData={formData}
+                      index={index}
+                    />
+                  );
+                })}
               </div>
             </div>
             <div className="mainAutoDiaknak">
@@ -195,31 +256,19 @@ const OktatoFooldal = () => {
               </div>
             </div>
             <div className="mainVizsgaDiaknak">
-              <h2>Vizsgák</h2>
-              <ul>
-                <li>
-                  <div>
-                    <p>Egészségügy vizsga:</p>
-                    <p className="noResultVizsga">Sikertelen</p>
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    <p>Elmélet vizsga:</p>
-                    <p className="noResultVizsga">Sikertelen</p>
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    <p>Gyakorlati vizsga:</p>
-                    <p className="noResultVizsga">Sikertelen</p>
-                  </div>
-                </li>
-              </ul>
-              <p>
-                További információkért kattints{" "}
-                <Link to="/elorehaladas">ide</Link>!
-              </p>
+              <h2>Legközelebbi óra</h2>
+              <div className="koviOra">
+                {kovetkezoOra.map((formData, index) => {
+                  return (
+                    <KovetkezoOra
+                      key={user.id}
+                      formData={formData}
+                      index={index}
+                      user={user}
+                    />
+                  );
+                })}
+              </div>
             </div>
           </>
         ) : (

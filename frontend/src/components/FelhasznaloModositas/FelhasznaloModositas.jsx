@@ -1,9 +1,11 @@
 import React from "react";
 import axios from "axios";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import { FormInput } from "../FormInputDivek/formInputDiv.jsx";
 import AuthContext from "../../AuthContext.jsx";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { faSignature } from "@fortawesome/free-solid-svg-icons";
+import { Toast } from "primereact/toast";
 
 export const FelhasznaloModositas = () => {
   const { user, login } = useContext(AuthContext);
@@ -21,34 +23,63 @@ export const FelhasznaloModositas = () => {
     }
   }, [user]);
 
+  const toast = useRef(null);
+  const toastCenter = useRef(null);
+  const showSuccess = () => {
+    toast.current.show({
+      severity: "success",
+      summary: "Sikeresen módosult a felhasználó profilod",
+      detail: "Továbbítás a főoldalra",
+      life: 2000,
+    });
+  };
+
+  const showError = (props) => {
+    const errorMess = props;
+    toastCenter.current.show({
+      severity: "error",
+      summary: "HIBA!",
+      detail: errorMess,
+      life: 2000,
+    });
+    setKeresztnev("");
+    setVezeteknev("");
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const felh = async () => {
-      
-      
-      const resp = await axios.post(
-        "http://localhost:5000/api/users/profilmodosit",
-        {
-          vezeteknev,
-          keresztnev,
-        },
-        { withCredentials: true }
-      );
-      const data = await resp.data;
-      login(data)
-      navigate("/fooldal")
-    };
-    felh();
-    
-
+    try {
+      const felh = async () => {
+        const resp = await axios.post(
+          "http://localhost:5000/api/users/profilmodosit",
+          {
+            vezeteknev,
+            keresztnev,
+          },
+          { withCredentials: true }
+        );
+        const data = await resp.data;
+        if (data) {
+          showSuccess();
+          setTimeout(() => {
+            login(data);
+            navigate("/fooldal");
+          }, 2000);
+        }
+      };
+      felh();
+    } catch (error) {
+      showError(error.response.data);
+      console.error("Hiba történt:", error);
+    }
   };
 
   return (
     <div className="formDiv">
+      <h1>Adatmódosítás</h1>
       <form>
         <FormInput
-          iconSrc="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS10sXUPcODWCwePZ-wEWZx1BoczFgid58tug&s"
-          iconAlt="emailIcon"
+          spanIcon={faSignature}
           type="text"
           name="vezeteknev"
           placeholder="Vezetéknév"
@@ -57,15 +88,14 @@ export const FelhasznaloModositas = () => {
         />
 
         <FormInput
-          iconSrc="https://img.freepik.com/premium-vector/free-vector-padlock-icon-lock-locked_901408-572.jpg"
-          iconAlt="lockIcon"
+          spanIcon={faSignature}
           type="text"
           name="keresztnev"
           placeholder="Keresztnév"
           value={keresztnev}
           onChange={(e) => setKeresztnev(e.target.value)}
         />
-        <div className="FormDivElement">
+        <div className="FormDivElementButton">
           <input
             type="submit"
             value="Adatok módosítása"
@@ -73,6 +103,11 @@ export const FelhasznaloModositas = () => {
           />
         </div>
       </form>
+      <div className="backToMainPage">
+        <Toast ref={toast} />
+        <Toast ref={toastCenter} position="center" />
+        <Link to="/fooldal">Vissza</Link>
+      </div>
     </div>
   );
 };

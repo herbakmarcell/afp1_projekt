@@ -2,7 +2,7 @@
   display: grid;
   gap: 30px;
   grid-template-columns: 30% 30% 33.5%;
-  grid-template-rows: auto 45rem auto;
+  grid-template-rows: auto 45rem 30rem;
   grid-template-areas:
     "title title title"
     "process timetable timetable"
@@ -91,9 +91,66 @@
   background: #131c21b6;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
+  gap: 10px;
 }
+
+.mainOktatoDiaknak .tanuloLista {
+  overflow-y: scroll;
+  width: 90%;
+  max-height: 80%;
+  white-space: nowrap;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  overflow-x: hidden;
+}
+
+.tanuloLista::-webkit-scrollbar {
+  width: 8px; /* Görgetősáv szélessége */
+  height: 8px; /* Görgetősáv magassága */
+  background: transparent; /* Alapállapotban átlátszó */
+}
+
+.tanuloLista::-webkit-scrollbar-thumb {
+  background: #aaa; /* Görgetősáv színe, ha aktív */
+  border-radius: 4px; /* Sáv kerekítése */
+}
+
+.tanuloLista::-webkit-scrollbar-track {
+  background: transparent; /* Görgetősáv háttér */
+}
+
+.tanuloLista .fade-in-row {
+  width: 100%;
+  margin-top: 5px;
+  display: grid;
+  min-height: 50px;
+  padding: 5px;
+  grid-template-columns: 30% 70%;
+  gap: 5px;
+  justify-content: center;
+  align-self: center;
+  border: none !important;
+}
+
+.fade-in-row .tanuloListaDI {
+  width: 100%;
+}
+
+.tanuloListaDI img {
+  width: 100%;
+  border-width: 4px !important;
+}
+
+.tanuloListaInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 3px solid white;
+}
+
 .mainContent .mainAutoDiaknak {
   grid-area: car;
   background: #131c21b6;
@@ -102,18 +159,23 @@
   text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
+  /* gap: 30px; */
 }
 .mainOktatoDiaknakDI,
 .mainAutoDiaknakDI {
   width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
   margin: 10px auto;
-  border: 10px solid var(--navBlue);
 }
 
 .mainOktatoDiaknak img,
 .mainAutoDiaknak img {
+  border: 10px solid var(--navBlue);
   width: 100%;
 }
 
@@ -124,9 +186,13 @@
   border: 2px solid black;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
 }
+.userVizsga {
+  justify-content: space-between !important;
+}
+
 .mainVizsgaDiaknak ul {
   margin-bottom: 5px;
   display: flex;
@@ -152,6 +218,18 @@
 
 .mainVizsgaDiaknak p {
   background-color: #131c2180;
+  width: 100%;
+}
+
+.mainVizsgaDiaknak .koviOra {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  height: 100%;
+}
+
+.mainVizsgaDiaknak .blackbgc {
   width: 100%;
 }
 
@@ -223,4 +301,57 @@ input:active {
   cursor: pointer;
   color: white;
   background-color: var(--navBlue);
+}
+
+.mainOktatoDiaknak .fade-in-row {
+  /* border: none; Átlátszó border a kezdésnél */
+  opacity: 0;
+  animation: slideIn 0.5s ease forwards;
+  /* Átlátszó border a kezdésnél */
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    border: 1px solid transparent; /* Átlátszó border a kezdésnél */
+    /* border-bottom: 1px solid transparent; */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    border: 1px solid white; /* Átlátszó border a kezdésnél */
+    /* border-bottom: 1px solid white; Átlátszó border a kezdésnél */
+  }
+}
+
+@media (max-width: 1000px) {
+  .mainContent {
+    grid-template-columns: 100%;
+    grid-template-rows: auto auto 29rem auto auto 26rem;
+    grid-template-areas:
+      "title"
+      "process"
+      "timetable"
+      "teacher"
+      "car"
+      "test";
+    margin: 3rem auto;
+    width: 90%;
+  }
+
+  .orarendMainDiv {
+    height: 85%;
+  }
+
+  .orarendCardsDiv {
+    height: 80%;
+    width: 90%;
+    margin: 5px auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-rows: 100%;
+    gap: 30px;
+    margin-bottom: 16px;
+  }
 }

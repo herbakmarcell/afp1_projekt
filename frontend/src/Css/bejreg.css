@@ -109,3 +109,29 @@ input:active {
   border: none;
   outline: none;
 }
+
+/* Customize Toast message */
+/* Általános toast üzenet */
+.p-toast-message {
+  border-radius: 5px;
+  padding: 30px;
+  font-family: "Arial", sans-serif;
+  font-size: 14px;
+  color: #333; /* Szöveg színe */
+}
+
+/* Success toast */
+.p-toast-message-success {
+  background-color: #d4edda; /* Világos zöld háttér */
+  color: #155724; /* Sötét zöld szöveg */
+  border-left: 10px solid #155724; /* Zöld bal oldali border */
+}
+
+/* Error toast */
+.p-toast-message-error {
+  background-color: #edd4d4; /* Világos piros háttér */
+  color: #571515; /* Sötét piros szöveg */
+  border-left: 10px solid #ff0000; /* Piros bal oldali border */
+  /* Egyéb stílusok */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Árnyék */
+}
