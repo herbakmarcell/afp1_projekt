@@ -305,6 +305,34 @@ const activateUser = async (req, res) => {
   }
 };
 
+//@desc Bejelentkezett felhasználó adatainak lekérése
+//@route GET /api/users/felhasznaloAdatai
+//@access private
+const felhasznaloAdatai = async (req, res) => {
+  const felhId = req.user.user.id;
+
+  try {
+    const felhasznalo = await prisma.felhasznalok.findUnique({
+        where: { felhasznalo_id: felhId },
+        select: {
+          vezeteknev: true,
+          keresztnev: true,
+          email: true,
+          bankszamla: true,
+        },
+    });
+
+    if (!felhasznalo) {
+        return res.status(404).json({ error: 'Felhasználó nem található!' });
+    }
+
+    res.json(felhasznalo);
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Hiba történt a kérés feldolgozása során!' });
+  }
+}
+
 export {
   registerUser,
   loginUser,
@@ -314,4 +342,5 @@ export {
   jogkor_modositas,
   deleteUser,
   activateUser,
+  felhasznaloAdatai,
 };
