@@ -12,6 +12,8 @@ const BejelentkezesForm = () => {
 
   const [email, setEmail] = useState("");
   const [jelszo, setJelszo] = useState("");
+  const [error, setError] = useState("");
+
   const navigate = useNavigate();
 
   const toast = useRef(null);
@@ -44,6 +46,7 @@ const BejelentkezesForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
 
     if (!validateEmail(email)) {
       showError("Érvénytelen email");

@@ -62,10 +62,11 @@ const loginUser = async (req, res) => {
       email: email,
     },
   });
-  if (user.aktiv == 0)
-    return res.status(400).json({ err: "A felhasználó inaktív!" });
+
   //compare password with hashedpassword
   if (user && (await bcrypt.compare(jelszo, user.jelszo))) {
+    if (!user.aktiv)
+      return res.status(400).json({ err: "A felhasználó inaktív!" });
     const token = jwt.sign(
       {
         user: {
@@ -87,7 +88,7 @@ const loginUser = async (req, res) => {
 
     res.json({ token });
   } else {
-    res.status(401).json({error : "email or password is not valid"});
+    res.status(401).json({ error: "email or password is not valid" });
   }
 };
 
@@ -147,8 +148,7 @@ const felhasznaloModositas = async (req, res) => {
 //@access private
 const felhasznaloLekeres = async (req, res) => {
   const { email } = req.user.user; // A claims-ból kiolvassuk az ID-t
-  if (!email)
-    return res.status(418).json("Nincs token!");
+  if (!email) return res.status(418).json("Nincs token!");
   res.json({ user: req.user.user });
 };
 
@@ -164,11 +164,11 @@ const jogkor_modositas = async (req, res) => {
   const felhasznalo_id = req.body.id;
   const uj_jogkor = req.body.jogkor;
 
-  if (!felhasznalo_id) res.status(400).json("Az ID megadása kötelező!");
+  if (!felhasznalo_id) return res.status(400).json("Az ID megadása kötelező!");
   if (!Number.isInteger(felhasznalo_id))
     return res.status(400).json({ error: "Az ID egy egész szám!" });
 
-  if (!uj_jogkor) res.status(400).json("A jogkör megadása kötelező!");
+  if (!uj_jogkor) return res.status(400).json("A jogkör megadása kötelező!");
   if (!Number.isInteger(uj_jogkor) || uj_jogkor < 0 || uj_jogkor > 4)
     return res
       .status(400)
@@ -186,7 +186,7 @@ const jogkor_modositas = async (req, res) => {
       .json({ err: "Nincs felhasználó a megadott ID-vel!" });
   else if (!felhasznalo_letezik.aktiv)
     return res
-      .satus(401)
+      .status(401)
       .json({ err: "Nem lehet inaktív felhasználó jogait megváltoztatni!" });
   else if (felhasznalo_letezik.jogkor_id == 4)
     return res
