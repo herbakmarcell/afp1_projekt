@@ -8,6 +8,7 @@ import {
   jogkor_modositas,
   deleteUser,
   activateUser,
+  felhasznaloAdatai,
 } from "../controllers/userController.js";
 import validateToken from "../middleware/validateTokenHandler.js";
 
@@ -28,4 +29,7 @@ router.post("/changeUserPrivileges", validateToken, jogkor_modositas);
 router.delete("/deleteUser", validateToken, deleteUser);
 
 router.put("/activateUser", validateToken, activateUser);
+
+router.get("/felhasznaloAdatai", validateToken, felhasznaloAdatai);
+
 export default router;
