@@ -103,15 +103,15 @@ const logout = (req, res) => {
 //@route POST api/users/profilmodosit
 //@access private
 const felhasznaloModositas = async (req, res) => {
-  const { vezeteknev, keresztnev } = req.body;
+  const { vezeteknev, keresztnev, bankszamla } = req.body;
 
-  console.log(vezeteknev);
-  console.log(keresztnev);
+
   //A felhasználót update-jük a kapott adatok alapján
   const updateUser = await prisma.felhasznalok.update({
     data: {
       vezeteknev,
       keresztnev,
+      bankszamla
     },
     where: {
       email: req.user.user.email,

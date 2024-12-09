@@ -11,15 +11,27 @@ export const FelhasznaloModositas = () => {
   const { user, login } = useContext(AuthContext);
   const [vezeteknev, setVezeteknev] = useState("");
   const [keresztnev, setKeresztnev] = useState("");
+  const [bankszamla, setBankszamla] = useState();
 
   const navigate = useNavigate();
   useEffect(() => {
     if (user !== null) {
-      setKeresztnev(user.user.keresztnev);
-      setVezeteknev(user.user.vezeteknev);
+      const adatok = async () =>{
+        const resp = await axios.get("http://localhost:5000/api/users/felhasznaloAdatai", {withCredentials: true})
+        const data = await resp.data
+        if(data){
+            setVezeteknev(data.vezeteknev)
+            setKeresztnev(data.keresztnev)
+            setBankszamla(data.bankszamla)
+            console.log(data)
+        }
+      }
+      adatok()
+
     } else {
       setKeresztnev("");
       setVezeteknev("");
+      setBankszamla("")
     }
   }, [user]);
 
@@ -55,6 +67,7 @@ export const FelhasznaloModositas = () => {
           {
             vezeteknev,
             keresztnev,
+            bankszamla
           },
           { withCredentials: true }
         );
@@ -94,6 +107,14 @@ export const FelhasznaloModositas = () => {
           placeholder="Keresztnév"
           value={keresztnev}
           onChange={(e) => setKeresztnev(e.target.value)}
+        />
+        <FormInput
+          spanIcon={faSignature}
+          type="number"
+          name="bankszamla"
+          placeholder="Bankszámla"
+          value={bankszamla}
+          onChange={(e) => setBankszamla(e.target.value)}
         />
         <div className="FormDivElementButton">
           <input
