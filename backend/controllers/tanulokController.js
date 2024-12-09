@@ -317,5 +317,5 @@ export {
   oktatoTanuloi,
   tanulokLekerese,
   tanuloElorehaladasa,
-  tanuloSajatHaladasa,
+  tanuloSajatHaladasa
 };

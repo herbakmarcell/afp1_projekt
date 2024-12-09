@@ -6,7 +6,45 @@ const prisma = new PrismaClient()
 //@access private
 
 const oktatokLekerese = async (req, res) => {
+    const azon = req.user.user.id;
+    const {jogkor_id} = req.user.user
+
+    if (jogkor_id != 1) {
+        return res.status(403).send({
+            message: 'Hozzáférés megtagadva',
+        });
+    }
+
     try {
+        const tanuloElorehaladas = await prisma.tanuloElorehaladas.findFirst({
+            where: {
+                tanulo_id: azon,
+            },
+        });
+  
+        if (tanuloElorehaladas) {
+            const oktato = await prisma.felhasznalok.findFirst({
+                where: {
+                    felhasznalo_id: tanuloElorehaladas.oktato_id,
+                },
+                select: {
+                    vezeteknev: true,
+                    keresztnev: true,
+                },
+            });
+
+            if (oktato) {
+                return res.status(200).json({
+                    vanOktato: true,
+                    oktatoAdatok: oktato,
+                });
+            } else {
+                return res.status(404).json({
+                    message: "Az oktató nem található!",
+                });
+            }
+        }
+
         const oktatok = await prisma.felhasznalok.findMany({
             where: {
                 jogkor_id: 2,
@@ -19,7 +57,10 @@ const oktatokLekerese = async (req, res) => {
             }
         })
 
-        res.json(oktatok);
+        res.status(200).json({
+            vanOktato: false,
+            oktatokLista: oktatok
+        });
     } catch (error) {
         console.log(error)
         res.status(500).json({ error: "Hiba történt az oktatók lekérdezése során!" })
