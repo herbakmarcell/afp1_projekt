@@ -1,12 +1,11 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import AuthContext from "../../AuthContext.jsx";
-import { useNavigate } from "react-router-dom";
 import Calendar from "../Orarend/naptar.jsx";
 import { Link } from "react-router-dom";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import "../../Css/userFooldal.css";
-
+import axios from "axios";
 const EUpercentage = 25;
 const Gyakpercentage = 50;
 const Elmpercentage = 75;
@@ -15,6 +14,26 @@ const UserFooldal = () => {
   // Kiolvassuk a felhasználót a Context-ből
 
   const { user } = useContext(AuthContext);
+
+  const [data, setData] = useState({})
+  const [error, setError] = useState("")
+  useEffect(() => {
+    const oktatok = async () => {
+      try {
+        const resp = await axios.get(
+          "http://localhost:5000/api/oktatok/oktatolista",
+          { withCredentials: true }
+        );
+        const data = resp.data;
+        if (data) {
+          setData(data);
+        }
+      } catch (err) {
+        setError(err.response.data.message || err.response.data.error);
+      }
+    };
+    oktatok();
+  }, []);
 
   // console.log(user?.user);
   return (
@@ -141,12 +160,14 @@ const UserFooldal = () => {
             </div>
             <div className="mainOktatoDiaknak">
               <h2>
-                <Link
+                {data.vanOktato && <h2 style={{color:"red"}} >{data.oktatoAdatok.vezeteknev} {data.oktatoAdatok.keresztnev}</h2>}
+                {!data.vanOktato && <Link
                   to={"/oktatoValasztas"}
                   style={{ textDecoration: "none" }}
                 >
                   Oktatód kiválasztása
-                </Link>
+                </Link>}
+                
               </h2>
 
               <div className="mainOktatoDiaknakDI">
