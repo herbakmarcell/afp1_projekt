@@ -18,7 +18,10 @@ const orarendModositas = async (req, res) => {
 
   const ora_id = req.body.ora_id;
   if (!ora_id) return res.status(406).json({ err: "Nincs megadva id!" });
-
+  if (!Number.isInteger(ora_id))
+    return res
+      .status(406)
+      .json({ err: "Az id-nek egész számnak kell lennie!" });
   let ora_kezdete = req.body.idopont_eleje;
   let ora_vege = req.body.idopont_vege;
   const ora_cim = req.body.cim;
