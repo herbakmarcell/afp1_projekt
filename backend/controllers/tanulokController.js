@@ -313,45 +313,9 @@ const tanuloSajatHaladasa = async (req, res) => {
   }
 };
 
-//@desc Lekérdezi hogy a bejelentkezett tanulónak van e oktatója
-//@route GET /api/tanulok/vanoktato
-//@access private
-const vanOktatoEllenorzes = async (req, res) => {
-  const azon = req.user.user.id;
-  const {jogkor_id} = req.user.user
-
-  if (jogkor_id != 1) {
-      return res.status(403).send({
-          message: 'Hozzáférés megtagadva',
-      });
-  }
-
-  try {
-      const tanuloElorehaladas = await prisma.tanuloElorehaladas.findFirst({
-          where: {
-              tanulo_id: azon,
-          },
-      });
-
-      if (tanuloElorehaladas) {
-          return res.status(200).json({ 
-              vanOktato: true
-          });
-      } else {
-          return res.status(200).json({ 
-              vanOktato: false
-          });
-      }
-  } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Hiba történt az ellenőrzés során.' });
-  }
-};
-
 export {
   oktatoTanuloi,
   tanulokLekerese,
   tanuloElorehaladasa,
-  tanuloSajatHaladasa,
-  vanOktatoEllenorzes
+  tanuloSajatHaladasa
 };
