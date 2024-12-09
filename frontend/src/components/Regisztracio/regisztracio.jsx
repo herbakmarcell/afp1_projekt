@@ -174,7 +174,7 @@ const RegisztracióFormDiv = () => {
         />
         <div className="FormDivElementButton">
           <Toast ref={toast} />
-          <input type="submit" value="Bejelentkezés" onClick={handleSubmit} />
+          <input type="submit" value="Regisztráció" onClick={handleSubmit} />
         </div>
       </form>
     </div>

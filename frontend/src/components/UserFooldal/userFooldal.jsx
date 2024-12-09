@@ -3,7 +3,7 @@ import { useContext, useState, useEffect } from "react";
 import AuthContext from "../../AuthContext.jsx";
 
 
-import AuthContext from "../../AuthContext.jsx";
+
 import { useNavigate } from "react-router-dom";
 import Calendar from "../Orarend/orarend.jsx";
 
@@ -23,8 +23,8 @@ const UserFooldal = () => {
 
   const { user } = useContext(AuthContext);
 
-  const [data, setData] = useState({})
-  const [error, setError] = useState("")
+  const [oktatoData, setOktatoData] = useState({})
+  const [oktatoError, setOktatoError] = useState("")
   useEffect(() => {
     const oktatok = async () => {
       try {
@@ -34,10 +34,10 @@ const UserFooldal = () => {
         );
         const data = resp.data;
         if (data) {
-          setData(data);
+          setOktatoData(data);
         }
       } catch (err) {
-        setError(err.response.data.message || err.response.data.error);
+        setOktatoError(err.response.data.message || err.response.data.error);
       }
     };
     oktatok();
@@ -54,6 +54,7 @@ const UserFooldal = () => {
   return (
     <>
       <div className={user ? "mainContent" : "mainContentNo"}>
+        {oktatoError && <h2>{oktatoError}</h2>}
         <h2>
           {user
             ? `Üdvözöllek ${user.user.vezeteknev} ${user.user.keresztnev} `
@@ -176,8 +177,8 @@ const UserFooldal = () => {
             </div>
             <div className="mainOktatoDiaknak">
               <h2>
-                {data.vanOktato && <h2 style={{color:"red"}} >{data.oktatoAdatok.vezeteknev} {data.oktatoAdatok.keresztnev}</h2>}
-                {!data.vanOktato && <Link
+                {oktatoData.vanOktato && <h2 style={{color:"red"}} >{oktatoData.oktatoAdatok.vezeteknev} {oktatoData.oktatoAdatok.keresztnev}</h2>}
+                {!oktatoData.vanOktato && <Link
                   to={"/oktatoValasztas"}
                   style={{ textDecoration: "none" }}
                 >

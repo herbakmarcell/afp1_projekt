@@ -1,19 +1,35 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import AuthContext from "../../AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../../Css/profilAdatok.css";
-
+import axios from "axios";
 const ProfilAdatok = () => {
   // Kiolvassuk a felhasználót a Context-ből
 
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [felhAdatok, setFelhasznaloAdatok] = useState({})
 
   const btnModosit = (e) => {
     e.preventDefault();
     navigate("/felhasznaloModositas");
   };
+
+
+  
+  useEffect(() =>{
+    //api/users/felhasznaloAdatai
+    const adatok = async () =>{
+      const resp = await axios.get("http://localhost:5000/api/users/felhasznaloAdatai", {withCredentials: true})
+      const data = await resp.data
+      if(data){
+          setFelhasznaloAdatok(data)
+          console.log(data)
+      }
+    }
+    adatok()
+  },[])
 
   console.log(user?.user);
   return (
@@ -21,7 +37,7 @@ const ProfilAdatok = () => {
       <div className={user ? "infoDiv" : "infoDivNo"}>
         <h2>
           {user
-            ? `Üdvözöllek ${user.user.vezeteknev} ${user.user.keresztnev} `
+            ? `Üdvözöllek ${felhAdatok.vezeteknev} ${felhAdatok.keresztnev} `
             : `Nem vagy bejelentkezve.`}
         </h2>
         {user ? (
@@ -47,15 +63,19 @@ const ProfilAdatok = () => {
                   <tbody>
                     <tr>
                       <td>Vezetéknév</td>
-                      <td>{user.user.vezeteknev}</td>
+                      <td>{felhAdatok.vezeteknev}</td>
                     </tr>
                     <tr>
                       <td>Keresztnév</td>
-                      <td>{user.user.keresztnev}</td>
+                      <td>{felhAdatok.keresztnev}</td>
                     </tr>
                     <tr>
                       <td>E-mail</td>
-                      <td>{user.user.email}</td>
+                      <td>{felhAdatok.email}</td>
+                    </tr>
+                    <tr>
+                      <td>Bankszámla</td>
+                      <td>{felhAdatok.bankszamla}</td>
                     </tr>
                     <tr>
                       <td>Módosítás</td>
