@@ -12,6 +12,7 @@ import {
   faRightToBracket,
   faRightFromBracket,
   faUserPlus,
+  faBook,
 } from "@fortawesome/free-solid-svg-icons";
 export const NavBar = () => {
   const [menuOpen, SetMenuOpen] = useState(false); // reszponziv nav
@@ -87,6 +88,14 @@ export const NavBar = () => {
                   <FontAwesomeIcon icon={faRightFromBracket} size="xs" />
                 </span>
                 Kijelentkezés
+              </Link>
+            </li>
+            <li>
+              <Link to="/kifizetesek">
+                <span>
+                  <FontAwesomeIcon icon={faBook} size="xs" />
+                </span>
+                Kifizetések
               </Link>
             </li>
           </>

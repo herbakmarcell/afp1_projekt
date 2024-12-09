@@ -1,0 +1,87 @@
+.App {
+  font-family: "Arial", sans-serif;
+  padding: 40px;
+  text-align: center;
+  color: white;
+}
+
+h2 {
+  font-size: 3rem;
+  margin-bottom: 30px;
+}
+
+.table-container {
+  overflow-x: auto;
+  margin-bottom: 40px;
+}
+
+.teacher-table {
+  width: 100%;
+  border-radius: 10px;
+  border-collapse: collapse;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.teacher-table th,
+.teacher-table td {
+  padding: 12px 15px;
+  text-align: left;
+  font-size: 1.1rem;
+}
+
+.teacher-table th {
+  background-color: #2a3d66;
+  border-bottom: 2px solid #1a2b44;
+}
+
+.teacher-table tr {
+  background-color: #3c5a88;
+  transition: background-color 0.3s ease;
+}
+
+.teacher-table tr:hover {
+  background-color: #2a3d66;
+}
+
+.teacher-table .button-column {
+  text-align: right;
+}
+
+.select-button {
+  background-color: #5cb85c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.select-button:hover {
+  background-color: #4cae4c;
+  transform: scale(1.05);
+}
+
+.select-button:active {
+  transform: scale(0.98);
+}
+
+.selection-details {
+  padding: 20px;
+  background-color: #2a3d66;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.selection-details h2 {
+  margin-bottom: 10px;
+}
+
+.selection-details p {
+  font-weight: bold;
+  font-size: 1.1rem;
+}

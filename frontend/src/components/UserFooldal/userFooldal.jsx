@@ -1,11 +1,19 @@
-import { useContext, useEffect, useState } from "react";
+
+import { useContext, useState, useEffect } from "react";
+import AuthContext from "../../AuthContext.jsx";
+
+
 import AuthContext from "../../AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
 import Calendar from "../Orarend/orarend.jsx";
+
 import { Link } from "react-router-dom";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import "../../Css/userFooldal.css";
+
+import axios from "axios";
+
 
 
 import useElorehaladas from "../Custom Hooks/useElorehaladas.jsx"; // Custom Hook importálása
@@ -14,10 +22,32 @@ const UserFooldal = () => {
   // Kiolvassuk a felhasználót a Context-ből
 
   const { user } = useContext(AuthContext);
+
+  const [data, setData] = useState({})
+  const [error, setError] = useState("")
+  useEffect(() => {
+    const oktatok = async () => {
+      try {
+        const resp = await axios.get(
+          "http://localhost:5000/api/oktatok/oktatolista",
+          { withCredentials: true }
+        );
+        const data = resp.data;
+        if (data) {
+          setData(data);
+        }
+      } catch (err) {
+        setError(err.response.data.message || err.response.data.error);
+      }
+    };
+    oktatok();
+  }, []);
+
   const navigate = useNavigate();
  
   const { data, error, eu, gyak, elmeleti } = useElorehaladas(); // Custom Hook használata
   
+
 
 
   // console.log(user?.user);
@@ -145,7 +175,17 @@ const UserFooldal = () => {
               <Calendar />
             </div>
             <div className="mainOktatoDiaknak">
-              <h2>Oktatód</h2>
+              <h2>
+                {data.vanOktato && <h2 style={{color:"red"}} >{data.oktatoAdatok.vezeteknev} {data.oktatoAdatok.keresztnev}</h2>}
+                {!data.vanOktato && <Link
+                  to={"/oktatoValasztas"}
+                  style={{ textDecoration: "none" }}
+                >
+                  Oktatód kiválasztása
+                </Link>}
+                
+              </h2>
+
               <div className="mainOktatoDiaknakDI">
                 <img
                   src="https://loremflickr.com/320/240/paris,girl/all?random=1"
