@@ -44,7 +44,7 @@ const Orak = (props) => {
         }
       );
       showSuccess();
-      setInterval(() => {
+      setTimeout(() => {
         props.onRefresh();
       }, 1000);
     } catch (error) {
