@@ -1,6 +1,6 @@
 # Tesztjegyzőkönyv
 ## Tesztelő: Seres Szabolcs
-## Utolsó módosítás: 2023. 12. 10.
+## Utolsó módosítás: 2024. 12. 10.
 
 Operációs rendszer: Windows 11
 
@@ -46,10 +46,10 @@ A végleges tesztelésben prioritást élvez a vizsgák statisztikáinak javít�
 ## Végleges teszt
  | Vizsgálat | Tesztelés időpontja | Elvárás | Eredmény | Hibák |
 | :---: | --- | --- | --- | --- |
-| Előrehaladás a tanulónál| 2024.12.11 | Előrehaladás tanulónál autómatikusan frissíti az oldalt | Sikeresen működik a funkció | Nem találtam hibát
-| Tanuló oktatót választ | 2024.12.11 | A tanuló ki tudja választani hogy melyik oktatóhoz szeretne jelentkezni aki tartja számára a vizsgát | A funkció sikeresen működik | Nem találtam hibát
-| 404 oldal | 2024.12.11 |A nem megfelelő url látogatása esetén hiba oldalra navigálás | Sikeresen működik a funkció | Nem találtam hibát
-| Vizsga statisztikáinak megjelenítése | 2024.12.11 | A vizsga statisztikák megfelelően jelennek meg | A vizsga statisztikák megfelelően jelennek meg | Nem találtam hibát
+| Előrehaladás a tanulónál| 2024.12.10 | Előrehaladás tanulónál autómatikusan frissíti az oldalt | Sikeresen működik a funkció | Nem találtam hibát
+| Tanuló oktatót választ | 2024.12.10 | A tanuló ki tudja választani hogy melyik oktatóhoz szeretne jelentkezni aki tartja számára a vizsgát | A funkció sikeresen működik | Nem találtam hibát
+| 404 oldal | 2024.12.10 |A nem megfelelő url látogatása esetén hiba oldalra navigálás | Sikeresen működik a funkció | Nem találtam hibát
+| Vizsga statisztikáinak megjelenítése | 2024.12.10 | A vizsga statisztikák megfelelően jelennek meg | A vizsga statisztikák megfelelően jelennek meg | Nem találtam hibát
 
 
 A végleges tesztben az oldal funkciói ellenőrzésre kerültek itt csak az új még nem tesztelt funkciók lettek felsorolva. Nem találtam olyan hibát ami akadályozná az oldal vagy a felhasználók interakcióit a weboldallal. A végleges teszt sikeresnek bizonyult, az oldal sikeresen átadható a megrendelőnek minden nagyobb hibafaktor javításra került.
