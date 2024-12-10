@@ -64,7 +64,7 @@ const UserFooldal = () => {
           <>
             <div className="processDiv">
               <h2>Előrehaladás</h2>
-              {error && <h2 style={{ color: "red" }}>{error}</h2>}
+              {error !== 'A tanuló nem található' && <h2 style={{ color: "red" }}>{error}</h2>}
               <ul>
                 <li>
                   <div>
@@ -105,8 +105,8 @@ const UserFooldal = () => {
                   </div>
                   <div className="progressCircle">
                     <CircularProgressbar
-                      value={Math.round((data.levezetettOrak / 30) * 100)}
-                      text={`${Math.round((data.levezetettOrak / 30) * 100)}%`}
+                      value={data?.levezetettOrak ? Math.round((data.levezetettOrak / 30) * 100) : 0}
+                      text={data?.levezetettOrak ? `${Math.round((data.levezetettOrak / 30) * 100)}%` : `0%`}
                       styles={buildStyles({
                         // Rotation of path and trail, in number of turns (0-1)
                         // rotation: 0.25,
@@ -210,7 +210,8 @@ const UserFooldal = () => {
                   <div>
                     <p>Egészségügy vizsga:</p>
                     <p className="noResultVizsga">
-                    {eu.sikeres && eu.jelentkezesDatuma !== null ? "Sikeres" : eu.jelentkezesDatuma !== null ? "Folyamatban" : "Nem jelentkezett"}
+
+                   {eu.sikeres && eu.jelentkezesDatuma !== null ? "Sikeres" : eu.jelentkezesDatuma !== null ? "Folyamatban" : "Nem jelentkezett"}
                     </p>
                   </div>
                 </li>
@@ -218,6 +219,7 @@ const UserFooldal = () => {
                   <div>
                     <p>Elmélet vizsga:</p>
                     <p className="noResultVizsga">
+                      
                     {elmeleti.sikeres && elmeleti.jelentkezesDatuma !== null ? "Sikeres" : elmeleti.jelentkezesDatuma !== null ? "Folyamatban" : "Nem jelentkezett"}
                     </p>
                   </div>
@@ -226,14 +228,11 @@ const UserFooldal = () => {
                   <div>
                     <p>Gyakorlati vizsga:</p>
                     <p className="noResultVizsga">
-                      {data.levezetettOrak > 0 && data.levezetettOrak < 30 && gyak.jelentkezesDatuma !== null
-                        ? "Folyamatban"
-                        : data.levezetettOrak >= 30
-                        ? "Sikeres"
-                        : data.levezetettOrak === 0 &&
-                          gyak.jelentkezesDatuma === null
-                        ? "Nincs elkezdve"
-                        : "Folyamatban"}
+                      {console.log("hhh")}
+                      {console.log(data)}
+                      {!data?.levezetettOrak || data?.levezetettOrak === 0  &&  "Nincs elkezdve"}
+                      {data?.levezetettOrak > 0 && data?.vizsgak.gyakorlati.sikeres === true && "Sikeres"}
+                      {data?.levezetettOrak > 0 && data?.vizsgak.gyakorlati.sikeres === false && "Nincs meg"}
                     </p>
                   </div>
                 </li>
