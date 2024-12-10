@@ -2,7 +2,7 @@
 
 ## Tesztelő: Vastag Demeter
 
-## Utolsó módosítás: 2023. 12. 10.
+## Utolsó módosítás: 2024. 12. 10.
 
 Operációs rendszer: Windows 11, Linux Mint
 
