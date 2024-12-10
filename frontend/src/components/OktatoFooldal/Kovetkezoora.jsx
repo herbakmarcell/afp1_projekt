@@ -1,7 +1,10 @@
 import { format } from "date-fns";
+import { useEffect } from "react";
 
 const KovetkezoOra = (props) => {
-  console.log(props.formData);
+  useEffect(() => {
+    console.log(props.formData);
+  }, [props.formData]);
   return (
     <>
       <div className="blackbgc">
