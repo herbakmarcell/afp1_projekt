@@ -132,7 +132,7 @@ const Elorehaladas = () => {
           </div>
         </div>
         
-        <h2 style={{margin: "0"}} >Viszgaalkalmak</h2>
+        <h2 style={{margin: "0"}} >Vizsgaalkalmak</h2>
         {vizsgaBtn && (
           <>
             <div className="vizsgaTable">
