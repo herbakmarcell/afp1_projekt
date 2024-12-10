@@ -35,7 +35,7 @@ Az alfa tesztelésnél a funkciók a frontend és backend területén is rendelt
 | Admin oldal, jogkörök módosítása | 2024.11.24 | Admin felhasználói jogosultsággal rendelkező felhasználó az admin oldalra jut, tudja módosítani a jogköröket az adott felhasználónak |Az admin tudja módosítani mások jogosultsági körét a sajátját nem | Nem találtam problémát
 | Órarend | 2024.11.24 | A felhasználó meg tudja tekinteni az órarendet ha oktató, tanuló, mindenki csak a sajátját | Rendeltetésszerűen működik a funkció | Nem találtam problémát
 | Oktató módosítja az órákat | 2024.11.24 | Az oktató tudja a meglévő órarendet módosítani | Sikeresen történik meg az elvárt funkció | Nem találtam problémát
-| Vizsga statisztikáinak megjelenítése | 2024.12.11 | A vizsga statisztikák megfelelően jelennek meg | A vizsga statisztikák nem megfelelően jelennek meg | Hibát találtam
+| Vizsga statisztikáinak megjelenítése | 2024.11.24 | A vizsga statisztikák megfelelően jelennek meg | A vizsga statisztikák nem megfelelően jelennek meg | Hibát találtam
 
 A Béta tesztben az előrehaladás megtekintése a tanulónál csak frissítés alapján hozza az elvárt eredményt. 
 A végleges tesztelésben prioritást fog élvezni ezen funkció kijavítása.
