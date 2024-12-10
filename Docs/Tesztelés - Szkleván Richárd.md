@@ -26,16 +26,17 @@ A következő tesztelés során a többi funkció kerül vizsgálatra, tesztelé
 
 | Vizsgálat | Tesztelés időpontja | Elvárás | Eredmény | Hibák |
 | :---: | --- | --- | --- | --- |
-| Órafelvitel | 2024.12.09. | Oktató órákat tud felvinni | Megjelentek a tanulók, akiknek órát tud felvinni egy adott oktató. | Hibát nem találtam |
-| Órarend | 2024.12.09. | Felvitt órák megjelenítése | Minden fontos adat megjelenik a kártyákon (név, időpont) és teljesen elkülönülve jelennek meg a kártyák. | Hibát nem találtam |
-| Felhasználók listázása | 2024.12.09. | Az admin jogosultsággal rendelkezők számára kilistázzuk a felhasználókat | A kiírás csak egyszer fut le, így nem terheli le az oldalt. | Hibát nem találtam |
-| Navigációs sáv | 2024.12.09. | A menüpontokon kattintva az adott oldalra átirányít | A megfelelő oldalakra irányít át | Hibát nem találtam |
-| Adott tanulók kilistázása | 2024.12.09. | Az oktató tanulóinak kilistázása | Táblázatszerűen kilistázzuk egy adott oktató tanulóit. | Hibát nem találtam |
-| Óra műveletek | 2024.12.09. | Felvitt órák módosítása vagy törlése | Az időpontot nem engedte módosítani, törlést követően nem frissült az órarend. A törölt óra megjelenítve maradt | Hibát találtam |
-| Felhasználó műveletek | 2024.12.09. | Felhasználó törlése | Logikai törlést hajtunk végre. | Hibát nem találtam |
-| Backend Jogosultság lekérés | 2024.12.09. | A felhasználó adait között lekérjük a jogosultságát. | A backend lekérés nem tartalmazta a jogosultság nevét, csak a kódját. | Hibát találtam |
-| Backend Jogosultság változtatás | 2024.12.09. | Megfelelően kezeli a különböző hibákat a lekérdezés | Egyes hibaesetekkor nem küldte vissza a hibaüzenetet a backend, hanem leállt. | Hibát találtam |
-| Backend Óra műveletek | 2024.12.09. | A backendben megírt óra műveletek megfelelő kezelése | Több helyen is elírást találtam a kódban. | Hibát találtam |
+| Órafelvitel | 2024.11.24. | Oktató órákat tud felvinni | Megjelentek a tanulók, akiknek órát tud felvinni egy adott oktató. | Hibát nem találtam |
+| Órarend | 2024.11.24. | Felvitt órák megjelenítése | Minden fontos adat megjelenik a kártyákon (név, időpont) és teljesen elkülönülve jelennek meg a kártyák. | Hibát nem találtam |
+| Felhasználók listázása | 2024.11.24. | Az admin jogosultsággal rendelkezők számára kilistázzuk a felhasználókat | A kiírás csak egyszer fut le, így nem terheli le az oldalt. | Hibát nem találtam |
+| Navigációs sáv | 2024.11.24. | A menüpontokon kattintva az adott oldalra átirányít | A megfelelő oldalakra irányít át | Hibát nem találtam |
+| Adott tanulók kilistázása | 2024.11.24. | Az oktató tanulóinak kilistázása | Táblázatszerűen kilistázzuk egy adott oktató tanulóit. | Hibát nem találtam |
+| Óra műveletek | 2024.11.24. | Felvitt órák módosítása vagy törlése | Az időpontot nem engedte módosítani, törlést követően nem frissült az órarend. A törölt óra megjelenítve maradt | Hibát találtam |
+| Óra műveletek | 2024.11.24. | Felvitt órák megjelenítése | Végtelenszer futott le a metódus, ami megjeleníti az órákat | Hibát találtam |
+| Felhasználó műveletek | 2024.11.24. | Felhasználó törlése | Logikai törlést hajtunk végre. | Hibát nem találtam |
+| Backend Jogosultság lekérés | 2024.11.24. | A felhasználó adait között lekérjük a jogosultságát. | A backend lekérés nem tartalmazta a jogosultság nevét, csak a kódját. | Hibát találtam |
+| Backend Jogosultság változtatás | 2024.11.24. | Megfelelően kezeli a különböző hibákat a lekérdezés | Egyes hibaesetekkor nem küldte vissza a hibaüzenetet a backend, hanem leállt. | Hibát találtam |
+| Backend Óra műveletek | 2024.11.24. | A backendben megírt óra műveletek megfelelő kezelése | Több helyen is elírást találtam a kódban. | Hibát találtam |
 
 Az Alfa tesztben hibásan működő órafelvitel, órarend és felhasználó kilistázása prioritást élvezett, így már javításra került a béta tesztelésre.
 
@@ -54,6 +55,7 @@ A végleges tesztelésnél prioritást élvez a Béta teszt során még hibásna
 | Navigációs sáv | 2024.12.10. | A menüpontokon kattintva az adott oldalra átirányít | A megfelelő oldalakra irányít át | Hibát nem találtam |
 | Adott tanulók kilistázása | 2024.12.10. | Az oktató tanulóinak kilistázása | Táblázatszerűen kilistázzuk egy adott oktató tanulóit. | Hibát nem találtam |
 | Óra műveletek | 2024.12.10. | Felvitt órák módosítása vagy törlése | Az időpontot engedte módosítani, törlést követően frissült az órarend. A törölt óra rövid időn belül eltűnik a felületről. | Hibát nem találtam |
+| Óra műveletek | 2024.12.10. | Felvitt órák megjelenítése | Egyszer fut le a metódus, ami megjeleníti az órákat. Így nem terheli le az oldalt. | Hibát nem találtam |
 | Felhasználó műveletek | 2024.12.10. | Felhasználó törlése | Logikai törlést hajtunk végre. | Hibát nem találtam |
 | Backend Jogosultság lekérés | 2024.12.10. | A felhasználó adait között lekérjük a jogosultságát. | A backend lekérés mostmár tartalmazza a jogosultság nevét is. | Hibát nem találtam |
 | Backend Jogosultság változtatás | 2024.12.10. | Megfelelően kezeli a különböző hibákat a lekérdezés | Egyes hibaesetekkor visszaküldi a backend a frontend számára a hibaüzenetet anélkül, hogy leállna | Hibát nem találtam |
