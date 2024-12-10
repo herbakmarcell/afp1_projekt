@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
       const checkAuth = async () => {
         try {
           const response = await axios.get(
-            "http://localhost:5000/api/orarend/orarendModositas",
+            "http://localhost:5000/api/users/getUserDetails",
             { withCredentials: true }
           );
           if (response.data.user) {
