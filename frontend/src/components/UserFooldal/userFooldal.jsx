@@ -166,9 +166,15 @@ const UserFooldal = () => {
                   </div>
                 </li>
               </ul>
-              <p>
+              <p >
+              {!oktatoData.vanOktato && "Válassz oktatót, hogy meg tudd tekinteni az előrehaladásodat."}
+                {oktatoData.vanOktato && 
+                <>
                 További információkért kattints{" "}
-                <Link to="/elorehaladas">ide</Link>!
+                <Link to="/elorehaladas">ide!</Link>
+                </>}
+                
+                
               </p>
             </div>
             <div className="mainOrarendDiv">
@@ -219,7 +225,6 @@ const UserFooldal = () => {
                   <div>
                     <p>Elmélet vizsga:</p>
                     <p className="noResultVizsga">
-                      
                     {elmeleti.sikeres && elmeleti.jelentkezesDatuma !== null ? "Sikeres" : elmeleti.jelentkezesDatuma !== null ? "Folyamatban" : "Nem jelentkezett"}
                     </p>
                   </div>
@@ -228,9 +233,7 @@ const UserFooldal = () => {
                   <div>
                     <p>Gyakorlati vizsga:</p>
                     <p className="noResultVizsga">
-                      {console.log("hhh")}
-                      {console.log(data)}
-                      {!data?.levezetettOrak || data?.levezetettOrak === 0  &&  "Nincs elkezdve"}
+                      {(!data?.levezetettOrak || data?.levezetettOrak === 0)  &&  "Nincs elkezdve"}
                       {data?.levezetettOrak > 0 && data?.vizsgak.gyakorlati.sikeres === true && "Sikeres"}
                       {data?.levezetettOrak > 0 && data?.vizsgak.gyakorlati.sikeres === false && "Nincs meg"}
                     </p>
@@ -238,8 +241,12 @@ const UserFooldal = () => {
                 </li>
               </ul>
               <p>
-                További információkért kattints{" "}
-                <Link to="/elorehaladas">ide</Link>!
+                {oktatoData.vanOktato && <>
+                  További információkért kattints{" "}
+                  <Link to="/elorehaladas">ide</Link>!
+                </>}
+                {!oktatoData.vanOktato && "Válassz oktatót, hogy tudj jelentkezni a vizsgákra."}
+                
               </p>
             </div>
           </>

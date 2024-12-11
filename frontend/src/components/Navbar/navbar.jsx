@@ -19,6 +19,7 @@ export const NavBar = () => {
   const { user, logout } = useContext(AuthContext); // Használjuk a Context-et
   const navigate = useNavigate();
 
+  
   const logoutBtn = async () => {
     await axios.post(
       "http://localhost:5000/api/users/logout",
@@ -28,6 +29,8 @@ export const NavBar = () => {
     logout(); // A context-ből töröljük a felhasználót
     navigate("/bejelentkezes"); // Visszairányítás a bejelentkezés felületre
   };
+
+
 
   return (
     <nav>
@@ -83,6 +86,15 @@ export const NavBar = () => {
               </Link>
             </li>
             <li>
+              {user.user.jogkor_id > 1 && ""}
+              {user.user.jogkor_id === 1 && <Link to="/kifizetesek">
+                <span>
+                  <FontAwesomeIcon icon={faBook} size="xs" />
+                </span>
+                Kifizetések
+              </Link>}
+            </li>
+            <li>
               <Link to="/bejelentkezes" onClick={logoutBtn}>
                 <span>
                   <FontAwesomeIcon icon={faRightFromBracket} size="xs" />
@@ -90,14 +102,7 @@ export const NavBar = () => {
                 Kijelentkezés
               </Link>
             </li>
-            <li>
-              <Link to="/kifizetesek">
-                <span>
-                  <FontAwesomeIcon icon={faBook} size="xs" />
-                </span>
-                Kifizetések
-              </Link>
-            </li>
+           
           </>
         )}
       </ul>
