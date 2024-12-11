@@ -13,6 +13,7 @@ import Footer from "../components/Footer/footer.jsx";
 import Elorehaladas from "../components/Elorehaladas/elorehaladas.jsx";
 import Admin from "../components/Admin/admin.jsx";
 import { FelhasznaloJogosultsagModositas } from "../components/Admin/felhasznaloJogosultsagValtas.jsx";
+import { OraoModositas } from "../components/Orarend/oramodositas.jsx";
 import Kifizetesek from "../components/Kifizetesek/kifizetesek.jsx";
 import TanuloOktatoValasztas from "../components/TanuloOktatoValasztas/tanuloOktatoValasztas.jsx";
 import NotFound from "../components/NotFound/notFound.jsx";
@@ -33,6 +34,7 @@ const ReactRouterSetup = () => {
             path="/felhasznaloModositas"
             element={<FelhasznaloModositas />}
           />
+          <Route path="/oraModositas" element={<OraoModositas />} />
           <Route path="/profilAdatok" element={<ProfilAdatok />} />
           <Route path="/elorehaladas" element={<Elorehaladas />} />
           <Route path="/admin" element={<Admin />} />
