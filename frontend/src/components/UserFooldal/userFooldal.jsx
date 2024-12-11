@@ -209,7 +209,7 @@ const UserFooldal = () => {
 
               <div className="mainOktatoDiaknakDI">
                 <img
-                  src="https://loremflickr.com/320/240/paris,girl/all?random=1"
+                  src="https://static.vecteezy.com/system/resources/previews/003/715/527/non_2x/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-vector.jpg"
                   alt=""
                 />
               </div>
