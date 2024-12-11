@@ -52,7 +52,11 @@
 .infoTablaImgDiv {
   margin: 20px;
   /* width: 90%; */
+}
+
+.infoTablaImgDiv img {
   border: 10px solid var(--navBlue);
+  width: 50%;
 }
 
 .infoTablaDiv .infoTablaTableDiv {

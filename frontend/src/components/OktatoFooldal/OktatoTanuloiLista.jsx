@@ -6,7 +6,10 @@ const OktatoTanuloiLista = (props) => {
     <>
       <div className="fade-in-row" style={tdStyle}>
         <div className="tanuloListaDI">
-          <img src="https://loremflickr.com/320/240/girl/all?random=1" alt="" />
+          <img
+            src="https://static.vecteezy.com/system/resources/previews/003/715/527/non_2x/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-vector.jpg"
+            alt=""
+          />
         </div>
         <div className="tanuloListaInfo">
           <div className="id" style={tdStyle}>

@@ -250,7 +250,7 @@ const OktatoFooldal = () => {
               <h2>Autód</h2>
               <div className="mainAutoDiaknakDI">
                 <img
-                  src="https://loremflickr.com/320/240/car/all?random=1"
+                  src="https://gepardcar.hu/wp-content/uploads/2023/06/tanulo-vezeto-auto-berles-tatabanya-1-1-scaled.jpg"
                   alt=""
                 />
               </div>
