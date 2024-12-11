@@ -1,5 +1,5 @@
 import axios from "axios";
-import { format } from "date-fns";
+import { format, subHours } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import { Toast } from "primereact/toast";
@@ -21,6 +21,34 @@ const Orak = (props) => {
       life: 2000,
     });
   };
+
+const ora_eleje_datum = () =>{
+    // Az időpont, amit formázni szeretnél
+  const dateString = props.formData.Orak.idopont_eleje;  // Ezt az időpontot kivonjuk
+  const date = new Date(dateString);  // Átalakítjuk a dátumot Date objektummá
+
+  // 1 óra kivonása
+  const updatedDate = subHours(date, 1);
+
+  // A formázott dátum
+  const formattedDate = format(updatedDate, 'yyyy MM dd HH:mm');
+
+  return formattedDate  // A kivont dátum
+}
+
+const ora_vege_datum = () =>{
+  // Az időpont, amit formázni szeretnél
+  const dateString = props.formData.Orak.idopont_vege;  // Ezt az időpontot kivonjuk
+  const date = new Date(dateString);  // Átalakítjuk a dátumot Date objektummá
+
+  // 1 óra kivonása
+  const updatedDate = subHours(date, 1);
+
+  // A formázott dátum
+  const formattedDate = format(updatedDate, 'yyyy MM dd HH:mm');
+
+  return formattedDate  // A kivont dátum
+}
 
   const showError = (props) => {
     const errorMess = props;
@@ -59,20 +87,16 @@ const Orak = (props) => {
       <Toast ref={toast} />
       <Toast ref={toastCenter} position="center" />
       <div key={props.index} className="card">
+        {console.log(ora_eleje_datum())}
+        
         <h2 style={{ color: "#333" }}>{props.formData.Orak.cim}</h2>
         <p>
           <strong>Óra eleje: </strong>
-          {format(
-            new Date(props.formData.Orak.idopont_eleje),
-            "yyyy MM dd HH:mm"
-          )}
+          {ora_eleje_datum()}
         </p>
         <p>
           <strong>Óra vége: </strong>
-          {format(
-            new Date(props.formData.Orak.idopont_vege),
-            "yyyy MM dd HH:mm"
-          )}
+          { ora_vege_datum()}
         </p>
         <p>
           <strong>Helyszín:</strong> {props.formData.Orak.helyszin}
