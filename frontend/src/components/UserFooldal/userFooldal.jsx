@@ -1,8 +1,5 @@
-
 import { useContext, useState, useEffect } from "react";
 import AuthContext from "../../AuthContext.jsx";
-
-
 
 import { useNavigate } from "react-router-dom";
 import Calendar from "../Orarend/orarend.jsx";
@@ -14,8 +11,6 @@ import "../../Css/userFooldal.css";
 
 import axios from "axios";
 
-
-
 import useElorehaladas from "../Custom Hooks/useElorehaladas.jsx"; // Custom Hook importálása
 
 const UserFooldal = () => {
@@ -23,8 +18,8 @@ const UserFooldal = () => {
 
   const { user } = useContext(AuthContext);
 
-  const [oktatoData, setOktatoData] = useState({})
-  const [oktatoError, setOktatoError] = useState("")
+  const [oktatoData, setOktatoData] = useState({});
+  const [oktatoError, setOktatoError] = useState("");
   useEffect(() => {
     const oktatok = async () => {
       try {
@@ -44,11 +39,8 @@ const UserFooldal = () => {
   }, []);
 
   const navigate = useNavigate();
- 
+
   const { data, error, eu, gyak, elmeleti } = useElorehaladas(); // Custom Hook használata
-  
-
-
 
   // console.log(user?.user);
   return (
@@ -64,7 +56,9 @@ const UserFooldal = () => {
           <>
             <div className="processDiv">
               <h2>Előrehaladás</h2>
-              {error !== 'A tanuló nem található' && <h2 style={{ color: "red" }}>{error}</h2>}
+              {error !== "A tanuló nem található" && (
+                <h2 style={{ color: "red" }}>{error}</h2>
+              )}
               <ul>
                 <li>
                   <div>
@@ -72,8 +66,12 @@ const UserFooldal = () => {
                   </div>
                   <div className="progressCircle">
                     <CircularProgressbar
-                      value={eu.sikeres && eu.jelentkezesDatuma !== "" ? 100 : 0}
-                      text={`${eu.sikeres && eu.jelentkezesDatuma !== "" ? 100 : 0}%`}
+                      value={
+                        eu.sikeres && eu.jelentkezesDatuma !== "" ? 100 : 0
+                      }
+                      text={`${
+                        eu.sikeres && eu.jelentkezesDatuma !== "" ? 100 : 0
+                      }%`}
                       styles={buildStyles({
                         // Rotation of path and trail, in number of turns (0-1)
                         // rotation: 0.25,
@@ -105,8 +103,16 @@ const UserFooldal = () => {
                   </div>
                   <div className="progressCircle">
                     <CircularProgressbar
-                      value={data?.levezetettOrak ? Math.round((data.levezetettOrak / 30) * 100) : 0}
-                      text={data?.levezetettOrak ? `${Math.round((data.levezetettOrak / 30) * 100)}%` : `0%`}
+                      value={
+                        data?.levezetettOrak
+                          ? Math.round((data.levezetettOrak / 30) * 100)
+                          : 0
+                      }
+                      text={
+                        data?.levezetettOrak
+                          ? `${Math.round((data.levezetettOrak / 30) * 100)}%`
+                          : `0%`
+                      }
                       styles={buildStyles({
                         // Rotation of path and trail, in number of turns (0-1)
                         // rotation: 0.25,
@@ -138,8 +144,16 @@ const UserFooldal = () => {
                   </div>
                   <div className="progressCircle">
                     <CircularProgressbar
-                      value={elmeleti.sikeres && eu.jelentkezesDatuma !== "" ? 100 : 0}
-                      text={`${elmeleti.sikeres && eu.jelentkezesDatuma !== "" ? 100 : 0}%`}
+                      value={
+                        elmeleti.sikeres && eu.jelentkezesDatuma !== ""
+                          ? 100
+                          : 0
+                      }
+                      text={`${
+                        elmeleti.sikeres && eu.jelentkezesDatuma !== ""
+                          ? 100
+                          : 0
+                      }%`}
                       styles={buildStyles({
                         // Rotation of path and trail, in number of turns (0-1)
                         // rotation: 0.25,
@@ -177,14 +191,20 @@ const UserFooldal = () => {
             </div>
             <div className="mainOktatoDiaknak">
               <h2>
-                {oktatoData.vanOktato && <h2 style={{color:"red"}} >{oktatoData.oktatoAdatok.vezeteknev} {oktatoData.oktatoAdatok.keresztnev}</h2>}
-                {!oktatoData.vanOktato && <Link
-                  to={"/oktatoValasztas"}
-                  style={{ textDecoration: "none" }}
-                >
-                  Oktatód kiválasztása
-                </Link>}
-                
+                {oktatoData.vanOktato && (
+                  <h2 style={{ color: "red" }}>
+                    {oktatoData.oktatoAdatok.vezeteknev}{" "}
+                    {oktatoData.oktatoAdatok.keresztnev}
+                  </h2>
+                )}
+                {!oktatoData.vanOktato && (
+                  <Link
+                    to={"/oktatoValasztas"}
+                    style={{ textDecoration: "none" }}
+                  >
+                    Oktatód kiválasztása
+                  </Link>
+                )}
               </h2>
 
               <div className="mainOktatoDiaknakDI">
@@ -198,7 +218,7 @@ const UserFooldal = () => {
               <h2>Autód</h2>
               <div className="mainAutoDiaknakDI">
                 <img
-                  src="https://loremflickr.com/320/240/car/all?random=1"
+                  src="https://gepardcar.hu/wp-content/uploads/2023/06/tanulo-vezeto-auto-berles-tatabanya-1-1-scaled.jpg"
                   alt=""
                 />
               </div>
@@ -210,8 +230,11 @@ const UserFooldal = () => {
                   <div>
                     <p>Egészségügy vizsga:</p>
                     <p className="noResultVizsga">
-
-                   {eu.sikeres && eu.jelentkezesDatuma !== null ? "Sikeres" : eu.jelentkezesDatuma !== null ? "Folyamatban" : "Nem jelentkezett"}
+                      {eu.sikeres && eu.jelentkezesDatuma !== null
+                        ? "Sikeres"
+                        : eu.jelentkezesDatuma !== null
+                        ? "Folyamatban"
+                        : "Nem jelentkezett"}
                     </p>
                   </div>
                 </li>
@@ -219,8 +242,11 @@ const UserFooldal = () => {
                   <div>
                     <p>Elmélet vizsga:</p>
                     <p className="noResultVizsga">
-                      
-                    {elmeleti.sikeres && elmeleti.jelentkezesDatuma !== null ? "Sikeres" : elmeleti.jelentkezesDatuma !== null ? "Folyamatban" : "Nem jelentkezett"}
+                      {elmeleti.sikeres && elmeleti.jelentkezesDatuma !== null
+                        ? "Sikeres"
+                        : elmeleti.jelentkezesDatuma !== null
+                        ? "Folyamatban"
+                        : "Nem jelentkezett"}
                     </p>
                   </div>
                 </li>
@@ -230,9 +256,14 @@ const UserFooldal = () => {
                     <p className="noResultVizsga">
                       {console.log("hhh")}
                       {console.log(data)}
-                      {!data?.levezetettOrak || data?.levezetettOrak === 0  &&  "Nincs elkezdve"}
-                      {data?.levezetettOrak > 0 && data?.vizsgak.gyakorlati.sikeres === true && "Sikeres"}
-                      {data?.levezetettOrak > 0 && data?.vizsgak.gyakorlati.sikeres === false && "Nincs meg"}
+                      {!data?.levezetettOrak ||
+                        (data?.levezetettOrak === 0 && "Nincs elkezdve")}
+                      {data?.levezetettOrak > 0 &&
+                        data?.vizsgak.gyakorlati.sikeres === true &&
+                        "Sikeres"}
+                      {data?.levezetettOrak > 0 &&
+                        data?.vizsgak.gyakorlati.sikeres === false &&
+                        "Nincs meg"}
                     </p>
                   </div>
                 </li>
