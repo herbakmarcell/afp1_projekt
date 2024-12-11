@@ -11,6 +11,15 @@
   width: 90%;
 }
 
+.vizsgaFooldal {
+  display: block;
+}
+
+.vizsgaFooldal h3 {
+  text-align: center;
+  background-color: var(--navBlue);
+}
+
 .mainContentNo {
   display: block;
   height: auto;
@@ -189,10 +198,10 @@
   /* justify-content: space-between; */
   align-items: center;
 }
+
 .userVizsga {
   justify-content: space-between !important;
 }
-
 .mainVizsgaDiaknak ul {
   margin-bottom: 5px;
   display: flex;

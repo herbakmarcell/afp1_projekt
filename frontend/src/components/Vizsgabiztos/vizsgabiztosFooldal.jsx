@@ -14,7 +14,11 @@ const OktatoFooldal = () => {
 
   return (
     <>
-      <div className={user ? "mainContent" : "mainContentNo"}>
+      <div
+        className={
+          user ? "mainContent vizsgaFooldal" : "mainContentNo vizsgaFooldal"
+        }
+      >
         <h2>
           {user
             ? `Üdvözöllek ${user.user.vezeteknev} ${user.user.keresztnev} `
