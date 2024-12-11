@@ -15,20 +15,22 @@ const orarendModositas = async (req, res) => {
     return res.status(403).json({ err: "Tanuló nem módosíthat órát!" });
 
   const { id } = req.user.user;
-
+  
   const ora_id = req.body.ora_id;
   if (!ora_id) return res.status(406).json({ err: "Nincs megadva id!" });
   if (!Number.isInteger(ora_id))
     return res
       .status(406)
       .json({ err: "Az id-nek egész számnak kell lennie!" });
+
   let ora_kezdete = req.body.idopont_eleje;
   let ora_vege = req.body.idopont_vege;
   const ora_cim = req.body.cim;
   const ora_helyszin = req.body.helyszin;
-  const tanulo_id = req.body.felhasznalo_id;
+  const tanulo_id = Number(req.body.tanulo_id);
+  
   const mai_datum = new Date();
-  console.log("Mai dátum: " + mai_datum);
+  
 
   const ora = await prisma.orak.findFirst({
     where: {
@@ -48,12 +50,15 @@ const orarendModositas = async (req, res) => {
   //Ebbe gyűjtöm össze az adatokat, amit updatelni kell
   const ora_update = {};
   const hibak = {};
+
   if (ora_kezdete) {
     console.log("Óra kezdete megadva...");
     ora_kezdete = new Date(ora_kezdete);
+   
     if (!isNaN(ora_kezdete.getTime()) && ora_kezdete > mai_datum) {
-      console.log("Óra kezdete: " + ora_kezdete);
+      
       ora_update["idopont_eleje"] = ora_kezdete.addHours(1);
+      
     } else
       hibak.ora_kezdete = "Az óra kezdete nem megfelelő, nem lesz updatelve!";
   }
@@ -76,7 +81,7 @@ const orarendModositas = async (req, res) => {
   }
 
   if (tanulo_id) {
-    if (isInteger(tanulo_id)) {
+    if (Number(tanulo_id)) {
       const aktiv_tanulo = await prisma.felhasznalok.findFirst({
         where: {
           felhasznalo_id: tanulo_id,
@@ -99,35 +104,34 @@ const orarendModositas = async (req, res) => {
           idopont_eleje: true,
         },
       });
-      if (
-        ora_kezdete > ora.idopont_vege ||
-        (ora_vege && ora_kezdete > ora_vege)
-      )
-        return res
-          .status(406)
-          .json({ err: "Az óra eleje, nem lehet később, mint az óra vége!" });
-      if (
-        ora_vege < ora.idopont_eleje ||
-        (ora_kezdete && ora_vege < ora_kezdete)
-      )
-        return res
-          .status(406)
-          .json({ err: "Az óra vége nem lehet hamarabb, mint az óra eleje!" });
 
-      const orarend_update = await prisma.orak.update({
+     
+
+
+      
+
+      // Frissítjük az orak táblát is
+      const orak_update = await prisma.orak.update({
         where: {
           ora_id: ora_id,
         },
-        data: ora_update,
+        data: {
+          idopont_eleje : ora_update["idopont_eleje"],
+          idopont_vege : ora_update["idopont_vege"],
+          cim : ora_update["cim"],
+          helyszin : ora_update["helyszin"]
+        },
       });
-      if (orarend_update)
+   
+
+      if (orak_update)
         return res.status(201).json({ res: "A módosítás sikeres!" });
       else
         return res.status(500).json({
           err: "Nem sikerült módosítani az órát, próbálja meg újra!",
         });
     } catch (err) {
-      console.log(err);
+     
       return res
         .status(500)
         .json({ err: "Nem sikerült módosítani az órát, szerverhiba miatt!" });
@@ -139,6 +143,7 @@ const orarendModositas = async (req, res) => {
     .status(200)
     .json({ msg: "Nem volt megadva adat, amit módosítani kéne!" });
 };
+
 
 //@desc Új óra létrehozása
 //@route POST /api/orarend/oraLetrehozas
@@ -302,6 +307,8 @@ const orarendLekeres = async (req, res) => {
           return res
             .status(500)
             .json({ err: "Hiba a lekérdezés során, próbálja újra!" });
+        
+        console.log(ora)
         return res.status(202).json(ora);
         break;
       case 4:
